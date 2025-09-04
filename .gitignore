@@ -21,3 +21,6 @@ __pycache__
 *.pyc
 /python/tensorstore/*.so
 /python/tensorstore/*.pyd
+
+# Self defined
+/work/dataset

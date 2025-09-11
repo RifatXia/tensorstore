@@ -1,0 +1,6 @@
+# Dependencies for OPT-125M TensorStore checkpointing demo
+torch>=2.2,<3.0
+transformers>=4.40,<5.0
+tensorstore>=0.1.56,<0.2
+matplotlib>=3.8,<4.0
+notebook>=7.0,<8.0

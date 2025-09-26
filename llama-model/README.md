@@ -8,6 +8,11 @@
 <!-- - we will be using Pytorch and it's librarires throughout the project, so start with loading the pretrained model, and saving it accordingly, do all of it in main.ipynb file, run and execute it to fix all of the erros and issues -->
 <!-- - I will be providing some comparisons of the time required for saving the model using some various approaches which I will explain in the next steps, for now save using Pytorch's approach -->
 
+<!-- Phase 2 -->
+- so add the necessary cells in the main.ipynb as all of the executions would be taking place here, handle all the requirements and dependencies as well and do all of it in main.ipynb file, run and execute it to fix all of the erros and issues
+- now let's move on to the process of saving and loading using tensorstore, as you can see you have already saved the model weights and stuff, I want to mimic the whole process, but instead of the basic python.save() we would be using the tensorstore library for the processing to save the models and it's weights accordingly
+- then plot a graph to compare the performance (time take) for the pytorch's basic approach as well as the tensorstore's read and write to provide a comparison, you can use matplotlib
+
 ## Phase 1 - Complete ✅
 
 This phase focuses on setting up the basic infrastructure for loading and saving the OpenLLaMA-7B model.

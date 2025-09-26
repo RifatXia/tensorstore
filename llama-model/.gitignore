@@ -34,6 +34,7 @@ wheels/
 models/
 checkpoints/
 saved_models/
+saved_models_tensorstore/
 offload_cache/
 
 # IDE

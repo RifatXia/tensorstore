@@ -8,10 +8,17 @@
 <!-- - we will be using Pytorch and it's librarires throughout the project, so start with loading the pretrained model, and saving it accordingly, do all of it in main.ipynb file, run and execute it to fix all of the erros and issues -->
 <!-- - I will be providing some comparisons of the time required for saving the model using some various approaches which I will explain in the next steps, for now save using Pytorch's approach -->
 
-<!-- Phase 2 -->
+<!-- Phase 2
 - so add the necessary cells in the main.ipynb as all of the executions would be taking place here, handle all the requirements and dependencies as well and do all of it in main.ipynb file, run and execute it to fix all of the erros and issues
 - now let's move on to the process of saving and loading using tensorstore, as you can see you have already saved the model weights and stuff, I want to mimic the whole process, but instead of the basic python.save() we would be using the tensorstore library for the processing to save the models and it's weights accordingly
-- then plot a graph to compare the performance (time take) for the pytorch's basic approach as well as the tensorstore's read and write to provide a comparison, you can use matplotlib
+- then plot a graph to compare the performance (time take) for the pytorch's basic approach as well as the tensorstore's read and write to provide a comparison, you can use matplotlib -->
+
+<!-- Phase 3 -->
+- now let's instroduce the third approach, that is tensorstore using t5x approach: https://t5x.readthedocs.io/en/latest/_modules/t5x/checkpoints.html#Checkpointer.all_steps where there would be methods such as _read_state_from_tensorstore and _write_state_to_tensorstore which you can explore
+- go through the whole document and then you can use it to come up with the third approach tensorstore - t5x
+- then plot a graph to compare the performance (time take) for the pytorch's basic approach as well as the tensorstore's read and write to provide a comparison, you can use matplotlib, as well as this approach so we have 3 comparisons, keep the results in ms instead of second, and no need to keep the value at the top of the bar, it looks out of place
+- we would still be using main.ipynb, execute and fix all the issues that come along the way
+- follow t5x approach as closely as possible and generate a comparsion.md file where you would elaborate about which approach is better, which takes less time, which performs better and include all the reasons why, as well as the table comparisons of the generated results along with the graph and plot comparisons
 
 ## Phase 1 - Complete ✅
 

@@ -35,6 +35,7 @@ models/
 checkpoints/
 saved_models/
 saved_models_tensorstore/
+saved_models_t5x/
 offload_cache/
 
 # IDE

@@ -1,4 +1,4 @@
-# configuration for llama checkpointing project
+# configuration for model checkpointing project
 
 import os
 
@@ -7,13 +7,22 @@ import os
 # ============================================================================
 # set MODEL_NAME via environment variable or edit the default below
 # examples:
-#   - "openlm-research/open_llama_3b"
-#   - "meta-llama/Llama-2-7b-hf"
-#   - "meta-llama/Llama-2-13b-hf"
-#   - "mistralai/Mistral-7B-v0.1"
+#   - "openlm-research/open_llama_3b" (llama)
+#   - "meta-llama/Llama-2-7b-hf" (llama)
+#   - "meta-llama/Llama-2-13b-hf" (llama)
+#   - "mistralai/Mistral-7B-v0.1" (mistral)
+#   - "Qwen/Qwen2.5-7B" (qwen2)
 # ============================================================================
 MODEL_NAME = os.environ.get('MODEL_NAME', "openlm-research/open_llama_3b")
 DEVICE = "cpu"
+
+# auto-detect model type from name
+if 'qwen' in MODEL_NAME.lower():
+    MODEL_TYPE = 'qwen'
+elif 'mistral' in MODEL_NAME.lower():
+    MODEL_TYPE = 'mistral'
+else:
+    MODEL_TYPE = 'llama'
 
 # extract model identifier for filenames (e.g., "open_llama_3b" from "openlm-research/open_llama_3b")
 MODEL_ID = MODEL_NAME.split('/')[-1] if '/' in MODEL_NAME else MODEL_NAME

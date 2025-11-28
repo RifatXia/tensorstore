@@ -3,14 +3,15 @@
 import sys
 import torch
 import os
-from transformers import LlamaForCausalLM
-from config import MODEL_NAME, DEVICE
+from transformers import AutoModelForCausalLM
+from config import MODEL_NAME, MODEL_TYPE, DEVICE
 from utils import Timer
 
 def load_model():
-    """load llama model from huggingface"""
+    """load model from huggingface (supports llama, qwen, mistral, etc.)"""
     print("=" * 50)
     print(f"loading model: {MODEL_NAME}")
+    print(f"model type: {MODEL_TYPE}")
     print(f"device: {DEVICE}")
     print(f"cpu count: {os.cpu_count()}")
     print("=" * 50)
@@ -19,13 +20,15 @@ def load_model():
     
     try:
         with Timer("model loading"):
-            # load model with optimizations
+            # use AutoModelForCausalLM for universal model loading
+            # works with llama, qwen, mistral, and other architectures
             # use local_files_only to prevent internet access on compute nodes
-            model = LlamaForCausalLM.from_pretrained(
+            model = AutoModelForCausalLM.from_pretrained(
                 MODEL_NAME,
                 dtype=torch.float16,
                 low_cpu_mem_usage=True,
-                local_files_only=True
+                local_files_only=True,
+                trust_remote_code=True  # required for qwen and some other models
             )
             
             # move to device

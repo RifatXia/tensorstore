@@ -13,7 +13,7 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from transformers import LlamaForCausalLM
+from transformers import AutoModelForCausalLM
 from tqdm import tqdm
 
 from utils import calculate_chunk_shape, format_size, get_directory_size
@@ -38,7 +38,7 @@ if args.device:
     os.environ['DEVICE'] = args.device
 
 # now import config (after setting env vars)
-from config import MODEL_NAME, MODEL_ID, DEVICE, MODEL_DIR, PLOTS_DIR
+from config import MODEL_NAME, MODEL_ID, MODEL_TYPE, DEVICE, MODEL_DIR, PLOTS_DIR
 
 # parse which phases to run
 phases_to_run = set(args.phases.split(','))
@@ -46,6 +46,7 @@ print(f"phases to run: {sorted(phases_to_run)}")
 
 print("="*70)
 print(f"6-WAY CHECKPOINTING COMPARISON: {MODEL_NAME}")
+print(f"model type: {MODEL_TYPE}")
 print("="*70)
 
 # create directories
@@ -59,11 +60,13 @@ print(f"\nloading model...")
 print(f"using cache: {os.environ.get('HF_HOME', 'default')}")
 
 # force offline mode to avoid internet access on compute nodes
-model = LlamaForCausalLM.from_pretrained(
+# use AutoModelForCausalLM for universal support (llama, qwen, mistral, etc.)
+model = AutoModelForCausalLM.from_pretrained(
     MODEL_NAME,
     dtype=torch.float16,
     low_cpu_mem_usage=True,
-    local_files_only=True  # critical: prevents internet access
+    local_files_only=True,  # critical: prevents internet access
+    trust_remote_code=True  # required for qwen and some other models
 )
 model = model.to(DEVICE)
 print(f"✓ model loaded: {sum(p.numel() for p in model.parameters()) / 1e6:.1f}m parameters")

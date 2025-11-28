@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --time=2:00:00
-#SBATCH --job-name=llama-t5x
+#SBATCH --job-name=model-t5x
 #SBATCH --output=logs/t5x-%j.out
 
 # run t5x-optimized tensorstore checkpointing only

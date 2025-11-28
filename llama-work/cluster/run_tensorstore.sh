@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --time=2:00:00
-#SBATCH --job-name=llama-tensorstore
+#SBATCH --job-name=model-tensorstore
 #SBATCH --output=logs/tensorstore-%j.out
 
 # run tensorstore checkpointing only

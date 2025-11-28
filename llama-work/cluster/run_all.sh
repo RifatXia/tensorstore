@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --time=4:00:00
-#SBATCH --job-name=llama-checkpoint
+#SBATCH --job-name=model-checkpoint
 #SBATCH --output=logs/checkpoint-%j.out
 
 # main script to run all checkpointing phases with configurable options
@@ -19,8 +19,8 @@
 #   SKIP_PLOTS      - set to 1 to skip plot generation (default: 0)
 
 echo "=========================================="
-echo "llama checkpointing - configurable run"
-echo "=========================================="
+echo "model checkpointing - configurable run"
+echo "========================================="
 echo "job started: $(date)"
 echo "node: $(hostname)"
 echo "job id: $SLURM_JOB_ID"

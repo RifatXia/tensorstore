@@ -3,8 +3,8 @@
 # setup script - run this first on login node
 
 echo "=========================================="
-echo "llama checkpointing setup"
-echo "=========================================="
+echo "model checkpointing setup"
+echo "========================================="
 
 # load modules
 echo "loading modules..."

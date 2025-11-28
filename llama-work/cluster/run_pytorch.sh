@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --time=1:00:00
-#SBATCH --job-name=llama-pytorch
+#SBATCH --job-name=model-pytorch
 #SBATCH --output=logs/pytorch-%j.out
 
 # run pytorch checkpointing only

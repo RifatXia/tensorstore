@@ -1,20 +1,25 @@
 # download model from huggingface
 
 import sys
-from transformers import LlamaForCausalLM
-from config import MODEL_NAME, HF_CACHE
+from transformers import AutoModelForCausalLM
+from config import MODEL_NAME, MODEL_TYPE, HF_CACHE
 from utils import Timer
 
 def download_model():
-    """download model from huggingface hub"""
+    """download model from huggingface hub (supports llama, qwen, mistral, etc.)"""
     print("=" * 50)
     print(f"downloading model: {MODEL_NAME}")
+    print(f"model type: {MODEL_TYPE}")
     print(f"cache location: {HF_CACHE}")
     print("=" * 50)
     
     try:
         with Timer("model download"):
-            model = LlamaForCausalLM.from_pretrained(MODEL_NAME)
+            # use AutoModelForCausalLM for universal model loading
+            model = AutoModelForCausalLM.from_pretrained(
+                MODEL_NAME,
+                trust_remote_code=True  # required for qwen and some other models
+            )
         
         print(f"\nmodel downloaded successfully!")
         print(f"total parameters: {sum(p.numel() for p in model.parameters()) / 1e6:.1f}m")

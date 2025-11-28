@@ -71,8 +71,15 @@ model = AutoModelForCausalLM.from_pretrained(
 model = model.to(DEVICE)
 print(f"✓ model loaded: {sum(p.numel() for p in model.parameters()) / 1e6:.1f}m parameters")
 
-# storage for results
-results = {'model_name': MODEL_NAME, 'model_id': MODEL_ID, 'phases': {}}
+# storage for results with configuration metadata
+results = {
+    'model_name': MODEL_NAME,
+    'model_id': MODEL_ID,
+    'model_type': MODEL_TYPE,
+    'device': DEVICE,
+    'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
+    'phases': {}
+}
 
 # helper function for tensorstore variants
 def save_tensorstore_variant(model_state, save_dir, phase_name, use_compression=False, 
@@ -128,7 +135,16 @@ def save_tensorstore_variant(model_state, save_dir, phase_name, use_compression=
     print(f"✓ saved {saved_count} parameters in {save_time:.1f} ms")
     print(f"✓ total size: {format_size(dir_size)}")
     
-    return save_time, dir_size
+    # return configuration details along with metrics
+    config = {
+        'chunk_size_mb': chunk_size_mb,
+        'compression': 'gzip-1' if use_compression else 'none',
+        'concurrency': 128 if use_concurrency else 1,
+        'dtype': 'float16',
+        'parameters_saved': saved_count
+    }
+    
+    return save_time, dir_size, config
 
 def load_tensorstore_variant(save_dir, phase_name):
     """load model from tensorstore variant"""
@@ -176,7 +192,13 @@ if '1' in phases_to_run:
         'save_time_ms': pytorch_save_time,
         'load_time_ms': pytorch_load_time,
         'file_size_bytes': pytorch_size,
-        'file_size_gb': pytorch_size / (1024**3)
+        'file_size_gb': pytorch_size / (1024**3),
+        'configuration': {
+            'method': 'torch.save',
+            'dtype': 'float16',
+            'compression': 'none',
+            'format': 'pytorch'
+        }
     }
 
     del state_dict
@@ -193,7 +215,7 @@ model_state = model.state_dict()
 
 if '2' in phases_to_run:
     ts_dir = os.path.join(MODEL_DIR, "tensorstore")
-    ts_save_time, ts_size = save_tensorstore_variant(
+    ts_save_time, ts_size, ts_config = save_tensorstore_variant(
         model_state, ts_dir, "PHASE 2: TENSORSTORE (BASIC)",
         use_compression=False, use_concurrency=False, chunk_size_mb=args.chunk_size
     )
@@ -203,7 +225,8 @@ if '2' in phases_to_run:
         'save_time_ms': ts_save_time,
         'load_time_ms': ts_load_time,
         'file_size_bytes': ts_size,
-        'file_size_gb': ts_size / (1024**3)
+        'file_size_gb': ts_size / (1024**3),
+        'configuration': ts_config
     }
     gc.collect()
 else:
@@ -216,7 +239,7 @@ else:
 # ============================================================================
 if '3' in phases_to_run:
     t5x_dir = os.path.join(MODEL_DIR, "t5x_tensorstore")
-    t5x_save_time, t5x_size = save_tensorstore_variant(
+    t5x_save_time, t5x_size, t5x_config = save_tensorstore_variant(
         model_state, t5x_dir, "PHASE 3: T5X-OPTIMIZED",
         use_compression=True, use_concurrency=True, chunk_size_mb=args.chunk_size
     )
@@ -226,7 +249,8 @@ if '3' in phases_to_run:
         'save_time_ms': t5x_save_time,
         'load_time_ms': t5x_load_time,
         'file_size_bytes': t5x_size,
-        'file_size_gb': t5x_size / (1024**3)
+        'file_size_gb': t5x_size / (1024**3),
+        'configuration': t5x_config
     }
     gc.collect()
 else:
@@ -239,7 +263,7 @@ else:
 # ============================================================================
 if '4a' in phases_to_run:
     p4a_dir = os.path.join(MODEL_DIR, "phase4a_concurrency")
-    p4a_save_time, p4a_size = save_tensorstore_variant(
+    p4a_save_time, p4a_size, p4a_config = save_tensorstore_variant(
         model_state, p4a_dir, "PHASE 4A: CONCURRENCY ONLY",
         use_compression=False, use_concurrency=True, chunk_size_mb=args.chunk_size
     )
@@ -249,7 +273,8 @@ if '4a' in phases_to_run:
         'save_time_ms': p4a_save_time,
         'load_time_ms': p4a_load_time,
         'file_size_bytes': p4a_size,
-        'file_size_gb': p4a_size / (1024**3)
+        'file_size_gb': p4a_size / (1024**3),
+        'configuration': p4a_config
     }
     gc.collect()
 else:
@@ -262,7 +287,7 @@ else:
 # ============================================================================
 if '4b' in phases_to_run:
     p4b_dir = os.path.join(MODEL_DIR, "phase4b_chunks")
-    p4b_save_time, p4b_size = save_tensorstore_variant(
+    p4b_save_time, p4b_size, p4b_config = save_tensorstore_variant(
         model_state, p4b_dir, "PHASE 4B: 1 MIB CHUNKS",
         use_compression=False, use_concurrency=False, chunk_size_mb=1
     )
@@ -272,7 +297,8 @@ if '4b' in phases_to_run:
         'save_time_ms': p4b_save_time,
         'load_time_ms': p4b_load_time,
         'file_size_bytes': p4b_size,
-        'file_size_gb': p4b_size / (1024**3)
+        'file_size_gb': p4b_size / (1024**3),
+        'configuration': p4b_config
     }
     gc.collect()
 else:
@@ -285,7 +311,7 @@ else:
 # ============================================================================
 if '4c' in phases_to_run:
     p4c_dir = os.path.join(MODEL_DIR, "phase4c_compression")
-    p4c_save_time, p4c_size = save_tensorstore_variant(
+    p4c_save_time, p4c_size, p4c_config = save_tensorstore_variant(
         model_state, p4c_dir, "PHASE 4C: COMPRESSION ONLY",
         use_compression=True, use_concurrency=False, chunk_size_mb=args.chunk_size
     )
@@ -295,7 +321,8 @@ if '4c' in phases_to_run:
         'save_time_ms': p4c_save_time,
         'load_time_ms': p4c_load_time,
         'file_size_bytes': p4c_size,
-        'file_size_gb': p4c_size / (1024**3)
+        'file_size_gb': p4c_size / (1024**3),
+        'configuration': p4c_config
     }
     gc.collect()
 else:

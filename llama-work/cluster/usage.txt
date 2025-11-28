@@ -1,0 +1,11 @@
+# Qwen2.5-7B
+MODEL_NAME="Qwen/Qwen2.5-7B" bash download.sh
+MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_all.sh
+
+# Mistral
+MODEL_NAME="mistralai/Mistral-7B-v0.1" bash download.sh
+MODEL_NAME="mistralai/Mistral-7B-v0.1" sbatch run_all.sh
+
+# LLaMA-3
+MODEL_NAME="meta-llama/Meta-Llama-3-8B" bash download.sh
+MODEL_NAME="meta-llama/Meta-Llama-3-8B" sbatch run_all.sh

@@ -48,7 +48,9 @@ def calculate_chunk_shape(shape, target_elements):
     return chunk_shape
 
 class Timer:
-    """simple timer context manager"""
+    """simple timer context manager and static timer"""
+    _last_time = None
+    
     def __init__(self, name="operation"):
         self.name = name
         self.start_time = None
@@ -60,4 +62,22 @@ class Timer:
     
     def __exit__(self, *args):
         self.elapsed_ms = (time.time() - self.start_time) * 1000
+        Timer._last_time = self.elapsed_ms
         print(f"{self.name} completed in {format_time(self.elapsed_ms)}")
+    
+    @staticmethod
+    def start():
+        """start a timer and return start time"""
+        return time.time()
+    
+    @staticmethod
+    def end(start_time):
+        """end timer and return elapsed time in ms"""
+        elapsed_ms = (time.time() - start_time) * 1000
+        Timer._last_time = elapsed_ms
+        return elapsed_ms
+    
+    @staticmethod
+    def get_last_time():
+        """get the last recorded time"""
+        return Timer._last_time

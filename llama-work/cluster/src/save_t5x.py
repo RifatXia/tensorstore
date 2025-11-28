@@ -7,12 +7,12 @@ import tensorstore as ts
 import numpy as np
 from tqdm import tqdm
 from load_model import load_model
-from config import SAVED_MODELS_DIR, MODEL_ID, T5X_CHUNK_SIZE_MB, CONCURRENCY_LIMIT
+from config import MODEL_DIR, MODEL_ID, T5X_CHUNK_SIZE_MB, CONCURRENCY_LIMIT
 from utils import Timer, format_size, get_directory_size, calculate_chunk_shape
 
 def save_t5x_tensorstore(model):
     """save model using t5x-optimized tensorstore approach"""
-    save_dir = os.path.join(SAVED_MODELS_DIR, f"{MODEL_ID}_t5x_tensorstore")
+    save_dir = os.path.join(MODEL_DIR, "t5x_tensorstore")
     os.makedirs(save_dir, exist_ok=True)
     
     print("\n" + "=" * 50)

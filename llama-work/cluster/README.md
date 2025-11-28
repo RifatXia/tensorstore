@@ -133,29 +133,46 @@ tail -f logs/tensorstore-JOBID.out
 tail -f logs/t5x-JOBID.out
 ```
 
-## checkpointing phases
+## checkpointing phases (6 total)
 
-### phase 1: pytorch
+### phase 1: pytorch (baseline)
 - uses pytorch's native `torch.save()` and `torch.load()`
 - fastest save/load times
 - single .pth file
 - baseline for comparison
-- saves all model parameters
+- saves all 237 model parameters
 
 ### phase 2: tensorstore (basic)
-- uses tensorstore with zarr format
-- dynamic 64mib chunking (adaptive per tensor)
-- separate zarr file per parameter
-- no compression, default concurrency
-- metadata.json for parameter info
+- tensorstore with zarr format
+- dynamic 64 mib chunking (adaptive per tensor)
+- separate zarr file per parameter (237 files)
+- no compression, no concurrency
+- baseline for tensorstore variants
 
 ### phase 3: t5x-optimized tensorstore
 - t5x-style optimizations
-- dynamic 64mib chunks with gzip compression (level 1)
+- dynamic 64 mib chunks + gzip compression (level 1)
 - high concurrency (128 concurrent file i/o ops)
 - optimized for distributed systems
 - ~23% smaller due to compression
-- saves all model parameters successfully
+
+### phase 4a: tensorstore + concurrency only
+- tests impact of concurrency alone
+- 64 mib chunks, no compression
+- 128 concurrent operations
+- isolates concurrency benefit
+
+### phase 4b: tensorstore + 1 mib chunks
+- tests impact of smaller chunks
+- 1 mib chunks (vs 64 mib baseline)
+- no compression, no concurrency
+- isolates chunk size impact
+
+### phase 4c: tensorstore + compression only
+- tests impact of compression alone
+- 64 mib chunks + gzip compression
+- no concurrency
+- isolates compression benefit
 
 ## output files
 
@@ -163,23 +180,38 @@ after running, you'll find:
 
 ```
 saved_models/
-├── {model_name}_pytorch.pth                    # pytorch checkpoint
-├── {model_name}_tensorstore/                   # tensorstore checkpoint
-│   ├── *.zarr                                  # parameter files (237 files)
-│   └── metadata.json                           # parameter metadata
-├── {model_name}_t5x_tensorstore/               # t5x checkpoint
-│   ├── *.zarr                                  # parameter files (237 files)
-│   └── metadata.json                           # parameter metadata
-├── comparison_results.json                     # performance comparison
-└── 3way_comparison.png                         # visualization chart
+└── {model_name}/                              # e.g., open_llama_3b/
+    ├── pytorch.pth                            # phase 1: pytorch checkpoint
+    ├── tensorstore/                           # phase 2: basic tensorstore
+    │   ├── *.zarr                            # 237 parameter files
+    │   └── metadata.json
+    ├── t5x_tensorstore/                       # phase 3: t5x-optimized
+    │   ├── *.zarr                            # 237 parameter files (compressed)
+    │   └── metadata.json
+    ├── phase4a_concurrency/                   # phase 4a: concurrency only
+    │   ├── *.zarr
+    │   └── metadata.json
+    ├── phase4b_chunks/                        # phase 4b: 1 mib chunks
+    │   ├── *.zarr
+    │   └── metadata.json
+    ├── phase4c_compression/                   # phase 4c: compression only
+    │   ├── *.zarr
+    │   └── metadata.json
+    ├── plots/                                 # visualization charts
+    │   ├── 6way_comparison.png               # comprehensive 6-way comparison
+    │   └── tensorstore_variants.png          # tensorstore variants analysis
+    ├── all_phases_results.json               # complete results data
+    └── comparison_results.json               # file size comparison
 ```
 
-**automatic file naming:**
+**automatic organization:**
 
 `{model_name}` is extracted from `MODEL_NAME`:
-- `openlm-research/open_llama_3b` → `open_llama_3b_pytorch.pth`
-- `meta-llama/Llama-2-7b-hf` → `Llama-2-7b-hf_pytorch.pth`
-- `mistralai/Mistral-7B-v0.1` → `Mistral-7B-v0.1_pytorch.pth`
+- `openlm-research/open_llama_3b` → `saved_models/open_llama_3b/`
+- `meta-llama/Llama-2-7b-hf` → `saved_models/Llama-2-7b-hf/`
+- `mistralai/Mistral-7B-v0.1` → `saved_models/Mistral-7B-v0.1/`
+
+each model gets its own directory with all checkpoints and plots
 
 ## configuration
 
@@ -206,25 +238,49 @@ MODEL_ID = MODEL_NAME.split('/')[-1]  # extracted for filenames
 
 ## how it works
 
+### 6-phase comparison workflow
+
+1. **load model** - loads model from huggingface with float16 precision
+2. **run all 6 phases** - sequentially saves and loads with each method
+3. **collect metrics** - records save time, load time, file size for each phase
+4. **generate visualizations** - creates 2 comprehensive comparison charts
+5. **save results** - stores all data in JSON for analysis
+
 ### dynamic model handling
 
 1. **set model name** - via environment variable or config file
 2. **automatic extraction** - `MODEL_ID` extracted from `MODEL_NAME`
-3. **all files adapt** - checkpoints, logs, plots use `MODEL_ID`
-4. **no conflicts** - different models create different files
+3. **organized structure** - each model gets its own directory
+4. **no conflicts** - different models don't interfere
 
 example:
 ```bash
 # run 1
 export MODEL_NAME="openlm-research/open_llama_3b"
 sbatch run_all.sh
-# creates: open_llama_3b_pytorch.pth, open_llama_3b_tensorstore/, etc.
+# creates: saved_models/open_llama_3b/ with all 6 phases + plots
 
 # run 2
 export MODEL_NAME="meta-llama/Llama-2-7b-hf"
 sbatch run_all.sh
-# creates: Llama-2-7b-hf_pytorch.pth, Llama-2-7b-hf_tensorstore/, etc.
+# creates: saved_models/Llama-2-7b-hf/ with all 6 phases + plots
 ```
+
+### visualization charts
+
+**chart 1: 6-way comprehensive comparison** (2x3 grid)
+- save time comparison
+- load time comparison
+- file size comparison
+- save speedup vs pytorch
+- load speedup vs pytorch
+- overall efficiency score
+
+**chart 2: tensorstore variants** (2x2 grid)
+- save time for all tensorstore variants
+- load time for all tensorstore variants
+- file size for all tensorstore variants
+- improvement vs basic tensorstore
 
 ### code structure
 
@@ -234,22 +290,23 @@ all python files import from `config.py`:
 # src/config.py
 MODEL_NAME = os.environ.get('MODEL_NAME', "openlm-research/open_llama_3b")
 MODEL_ID = MODEL_NAME.split('/')[-1]
+MODEL_DIR = f"saved_models/{MODEL_ID}/"
+PLOTS_DIR = f"saved_models/{MODEL_ID}/plots/"
 
-# all other files
-from config import MODEL_NAME, MODEL_ID
-
-# automatic usage
-save_path = f"{MODEL_ID}_pytorch.pth"  # dynamic!
+# all files use these dynamic paths
+from config import MODEL_NAME, MODEL_ID, MODEL_DIR, PLOTS_DIR
 ```
 
-**no hardcoded model names anywhere in the code.**
+**no hardcoded model names or paths anywhere in the code.**
 
 ## features
 
+- **6-phase comparison**: comprehensive analysis of pytorch vs tensorstore variants
 - **fully dynamic**: all model names and paths from config
-- **modular design**: each phase is a separate python script
-- **automatic plots**: generates 4-subplot comparison visualization
-- **detailed logging**: timestamps and performance metrics
+- **organized structure**: each model in its own directory with plots
+- **automatic visualizations**: generates 2 comprehensive comparison charts
+- **detailed metrics**: save time, load time, file size for all phases
+- **isolation testing**: phases 4a-4c isolate individual optimizations
 - **dynamic chunking**: automatic optimal chunk size per tensor
 - **easy to modify**: change model via environment variable or config
 - **slurm integration**: ready-to-use batch scripts

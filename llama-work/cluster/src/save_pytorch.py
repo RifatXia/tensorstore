@@ -4,13 +4,13 @@ import sys
 import torch
 import os
 from load_model import load_model
-from config import SAVED_MODELS_DIR, MODEL_ID
+from config import MODEL_DIR, MODEL_ID
 from utils import Timer, format_size, get_directory_size
 
 def save_pytorch(model):
     """save model using pytorch's native serialization"""
-    save_path = os.path.join(SAVED_MODELS_DIR, f"{MODEL_ID}_pytorch.pth")
-    os.makedirs(SAVED_MODELS_DIR, exist_ok=True)
+    save_path = os.path.join(MODEL_DIR, "pytorch.pth")
+    os.makedirs(MODEL_DIR, exist_ok=True)
     
     print("\n" + "=" * 50)
     print("phase 1: pytorch saving")

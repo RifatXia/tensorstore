@@ -18,9 +18,11 @@ DEVICE = "cpu"
 # extract model identifier for filenames (e.g., "open_llama_3b" from "openlm-research/open_llama_3b")
 MODEL_ID = MODEL_NAME.split('/')[-1] if '/' in MODEL_NAME else MODEL_NAME
 
-# paths
+# paths - organized by model name
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SAVED_MODELS_DIR = os.path.join(BASE_DIR, "saved_models")
+MODEL_DIR = os.path.join(SAVED_MODELS_DIR, MODEL_ID)  # saved_models/<model_name>/
+PLOTS_DIR = os.path.join(MODEL_DIR, "plots")           # saved_models/<model_name>/plots/
 
 # cache configuration (for cluster)
 HF_CACHE = os.environ.get('HF_HOME', '/mnt/common/$USER/huggingface_cache')

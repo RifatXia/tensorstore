@@ -89,13 +89,15 @@ MODEL_NAME = os.environ.get('MODEL_NAME', "meta-llama/Llama-2-7b-hf")
 
 ### 4. download model (first time only)
 
-compute nodes don't have internet access. download on login node:
+**⚠️ IMPORTANT**: Compute nodes don't have internet access. You **must** download on login node first:
 
 ```bash
 bash download.sh
 ```
 
 model will be cached at `/mnt/common/$USER/huggingface_cache`
+
+**Why this matters**: The code uses `local_files_only=True` to prevent internet access on compute nodes. If the model isn't cached, the job will fail with "Model not found" error.
 
 ### 5. run checkpointing
 

@@ -56,10 +56,14 @@ print(f"plots directory: {PLOTS_DIR}")
 
 # load model
 print(f"\nloading model...")
+print(f"using cache: {os.environ.get('HF_HOME', 'default')}")
+
+# force offline mode to avoid internet access on compute nodes
 model = LlamaForCausalLM.from_pretrained(
     MODEL_NAME,
     dtype=torch.float16,
-    low_cpu_mem_usage=True
+    low_cpu_mem_usage=True,
+    local_files_only=True  # critical: prevents internet access
 )
 model = model.to(DEVICE)
 print(f"✓ model loaded: {sum(p.numel() for p in model.parameters()) / 1e6:.1f}m parameters")

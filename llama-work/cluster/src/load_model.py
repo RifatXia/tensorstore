@@ -20,10 +20,12 @@ def load_model():
     try:
         with Timer("model loading"):
             # load model with optimizations
+            # use local_files_only to prevent internet access on compute nodes
             model = LlamaForCausalLM.from_pretrained(
                 MODEL_NAME,
                 dtype=torch.float16,
-                low_cpu_mem_usage=True
+                low_cpu_mem_usage=True,
+                local_files_only=True
             )
             
             # move to device

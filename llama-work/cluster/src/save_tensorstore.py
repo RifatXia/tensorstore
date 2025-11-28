@@ -3,6 +3,7 @@
 import sys
 import os
 import json
+import torch
 import tensorstore as ts
 import numpy as np
 from tqdm import tqdm
@@ -10,14 +11,14 @@ from load_model import load_model
 from config import SAVED_MODELS_DIR, MODEL_ID, CHUNK_SIZE_MB
 from utils import Timer, format_size, get_directory_size, calculate_chunk_shape
 
-def save_tensorstore(model, use_compression=False, use_concurrency=False):
+def save_tensorstore(model, use_compression=False, use_concurrency=False, dtype='float16'):
     """save model using tensorstore with zarr format"""
     save_dir = os.path.join(SAVED_MODELS_DIR, f"{MODEL_ID}_tensorstore")
     os.makedirs(save_dir, exist_ok=True)
     
     print("\n" + "=" * 50)
     print("phase 2: tensorstore saving")
-    print(f"compression: {use_compression}, concurrency: {use_concurrency}")
+    print(f"compression: {use_compression}, concurrency: {use_concurrency}, dtype: {dtype}")
     print("=" * 50)
     
     model_state = model.state_dict()
@@ -29,13 +30,21 @@ def save_tensorstore(model, use_compression=False, use_concurrency=False):
     # calculate chunk size
     chunk_size_bytes = CHUNK_SIZE_MB * 1024 * 1024
     
+    # dtype conversion
+    dtype_conversion = {
+        'float16': lambda x: x.detach().cpu().half().numpy(),
+        'float32': lambda x: x.detach().cpu().float().numpy(),
+        'bfloat16': lambda x: x.detach().cpu().to(torch.bfloat16).numpy()
+    }
+    convert_fn = dtype_conversion.get(dtype, dtype_conversion['float16'])
+    
     try:
         with Timer("tensorstore save"):
             saved_count = 0
             
             for param_name, param_tensor in tqdm(model_state.items(), desc="saving parameters"):
                 # convert to numpy
-                param_np = param_tensor.detach().cpu().half().numpy()
+                param_np = convert_fn(param_tensor)
                 
                 # create safe filename
                 safe_name = param_name.replace('.', '_').replace('/', '_')

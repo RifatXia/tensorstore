@@ -26,6 +26,7 @@ parser.add_argument('--model', type=str, default=None, help='huggingface model n
 parser.add_argument('--phases', type=str, default='1,2,3,4a,4b,4c', help='comma-separated phases to run (e.g., 1,2,3 or 1,4a,4c)')
 parser.add_argument('--chunk-size', type=int, default=64, help='chunk size in megabytes (default: 64)')
 parser.add_argument('--device', type=str, default='cpu', help='device to use (default: cpu)')
+parser.add_argument('--dtype', type=str, default='float16', choices=['float16', 'float32', 'bfloat16'], help='data type for model and storage (default: float16)')
 parser.add_argument('--skip-plots', action='store_true', help='skip plot generation')
 args = parser.parse_args()
 
@@ -37,6 +38,11 @@ if args.chunk_size:
 if args.device:
     os.environ['DEVICE'] = args.device
 
+# set dtype
+DTYPE = args.dtype
+dtype_map = {'float16': torch.float16, 'float32': torch.float32, 'bfloat16': torch.bfloat16}
+torch_dtype = dtype_map[DTYPE]
+
 # now import config (after setting env vars)
 from config import MODEL_NAME, MODEL_ID, MODEL_TYPE, DEVICE, MODEL_DIR, PLOTS_DIR
 
@@ -47,6 +53,7 @@ print(f"phases to run: {sorted(phases_to_run)}")
 print("="*70)
 print(f"6-WAY CHECKPOINTING COMPARISON: {MODEL_NAME}")
 print(f"model type: {MODEL_TYPE}")
+print(f"dtype: {DTYPE}")
 print("="*70)
 
 # create directories
@@ -63,7 +70,7 @@ print(f"using cache: {os.environ.get('HF_HOME', 'default')}")
 # use AutoModelForCausalLM for universal support (llama, qwen, mistral, etc.)
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_NAME,
-    dtype=torch.float16,
+    dtype=torch_dtype,
     low_cpu_mem_usage=True,
     local_files_only=True,  # critical: prevents internet access
     trust_remote_code=True  # required for qwen and some other models
@@ -77,6 +84,7 @@ results = {
     'model_id': MODEL_ID,
     'model_type': MODEL_TYPE,
     'device': DEVICE,
+    'dtype': DTYPE,
     'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
     'phases': {}
 }
@@ -96,9 +104,17 @@ def save_tensorstore_variant(model_state, save_dir, phase_name, use_compression=
     start_time = time.time()
     saved_count = 0
     
+    # dtype conversion based on global DTYPE setting
+    dtype_conversion = {
+        'float16': (lambda x: x.detach().cpu().half().numpy(), '<f2'),
+        'float32': (lambda x: x.detach().cpu().float().numpy(), '<f4'),
+        'bfloat16': (lambda x: x.detach().cpu().to(torch.bfloat16).numpy(), '<f2')
+    }
+    convert_fn, zarr_dtype = dtype_conversion[DTYPE]
+    
     for param_name, param_tensor in tqdm(model_state.items(), desc="saving"):
         try:
-            param_np = param_tensor.detach().cpu().half().numpy()
+            param_np = convert_fn(param_tensor)
             safe_name = param_name.replace('.', '_').replace('/', '_')
             param_path = os.path.join(save_dir, f"{safe_name}.zarr")
             
@@ -110,7 +126,7 @@ def save_tensorstore_variant(model_state, save_dir, phase_name, use_compression=
                 'kvstore': {'driver': 'file', 'path': param_path},
                 'metadata': {
                     'shape': list(param_np.shape),
-                    'dtype': '<f2',
+                    'dtype': zarr_dtype,
                     'chunks': chunk_shape
                 }
             }
@@ -140,7 +156,7 @@ def save_tensorstore_variant(model_state, save_dir, phase_name, use_compression=
         'chunk_size_mb': chunk_size_mb,
         'compression': 'gzip-1' if use_compression else 'none',
         'concurrency': 128 if use_concurrency else 1,
-        'dtype': 'float16',
+        'dtype': DTYPE,
         'parameters_saved': saved_count
     }
     
@@ -195,7 +211,7 @@ if '1' in phases_to_run:
         'file_size_gb': pytorch_size / (1024**3),
         'configuration': {
             'method': 'torch.save',
-            'dtype': 'float16',
+            'dtype': DTYPE,
             'compression': 'none',
             'format': 'pytorch'
         }

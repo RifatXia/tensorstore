@@ -72,6 +72,7 @@ ls saved_models/<model_id>/plots/
 - `MODEL_NAME` - model to use (default: openlm-research/open_llama_3b)
 - `PHASES` - which phases to run (default: 1,2,3,4a,4b,4c)
 - `CHUNK_SIZE_MB` - chunk size (default: 64)
+- `DTYPE` - data type: float16, float32, bfloat16 (default: float16)
 - `DEVICE` - cpu or cuda (default: cpu)
 - `SKIP_PLOTS` - set to 1 to skip plots (default: 0)
 
@@ -79,7 +80,7 @@ ls saved_models/<model_id>/plots/
 
 ### Run specific model with custom settings
 ```bash
-MODEL_NAME="Qwen/Qwen2.5-7B" CHUNK_SIZE_MB=32 PHASES="2,3" sbatch run_all.sh
+MODEL_NAME="Qwen/Qwen2.5-7B" CHUNK_SIZE_MB=32 DTYPE=float32 PHASES="2,3" sbatch run_all.sh
 ```
 
 ### Test multiple chunk sizes
@@ -87,6 +88,13 @@ MODEL_NAME="Qwen/Qwen2.5-7B" CHUNK_SIZE_MB=32 PHASES="2,3" sbatch run_all.sh
 for chunk in 1 4 16 64; do
     CHUNK_SIZE_MB=$chunk PHASES="2" sbatch run_all.sh
 done
+```
+
+### Test different data types
+```bash
+DTYPE=float16 PHASES="2" sbatch run_all.sh
+DTYPE=float32 PHASES="2" sbatch run_all.sh
+DTYPE=bfloat16 PHASES="2" sbatch run_all.sh
 ```
 
 ### Compare two models
@@ -116,5 +124,5 @@ saved_models/<model_id>/
 ## JSON Output Includes
 - Save/load times
 - File sizes
-- Configuration: chunk_size_mb, compression, concurrency, dtype
-- Model metadata: model_name, model_type, device, timestamp
+- Configuration: chunk_size_mb, compression, concurrency, dtype, parameters_saved
+- Model metadata: model_name, model_type, device, dtype, timestamp

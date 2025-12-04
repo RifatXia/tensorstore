@@ -1,0 +1,88 @@
+{
+  "model_name": "mistralai/Mistral-7B-v0.1",
+  "model_id": "Mistral-7B-v0.1",
+  "run_id": "20251204_082113_Mistral-7B-v0.1",
+  "model_type": "mistral",
+  "device": "cpu",
+  "dtype": "bfloat16",
+  "timestamp": "2025-12-04 08:22:58",
+  "phases": {
+    "pytorch": {
+      "save_time_ms": 377514.5351886749,
+      "load_time_ms": 233471.96555137634,
+      "file_size_bytes": 14483581033,
+      "file_size_gb": 13.488885977305472,
+      "configuration": {
+        "method": "torch.save",
+        "dtype": "bfloat16",
+        "compression": "none",
+        "format": "pytorch"
+      }
+    },
+    "tensorstore": {
+      "save_time_ms": 191745.2712059021,
+      "load_time_ms": 101515.28549194336,
+      "file_size_bytes": 12731484597,
+      "file_size_gb": 11.857119013555348,
+      "configuration": {
+        "chunk_size_mb": 64,
+        "compression": "none",
+        "concurrency": 1,
+        "dtype": "bfloat16",
+        "parameters_saved": 291
+      }
+    },
+    "t5x": {
+      "save_time_ms": 711036.994934082,
+      "load_time_ms": 228779.28614616394,
+      "file_size_bytes": 13769855383,
+      "file_size_gb": 12.824177167378366,
+      "configuration": {
+        "chunk_size_mb": 64,
+        "compression": "gzip-1",
+        "concurrency": "default",
+        "dtype": "bfloat16",
+        "parameters_saved": 291
+      }
+    },
+    "phase4a_concurrency": {
+      "save_time_ms": 152857.7480316162,
+      "load_time_ms": 97801.35679244995,
+      "file_size_bytes": 12731484597,
+      "file_size_gb": 11.857119013555348,
+      "configuration": {
+        "chunk_size_mb": 64,
+        "compression": "none",
+        "concurrency": "default",
+        "dtype": "bfloat16",
+        "parameters_saved": 291
+      }
+    },
+    "phase4b_chunks": {
+      "save_time_ms": 95938.33827972412,
+      "load_time_ms": 28273.736000061035,
+      "file_size_bytes": 12790530117,
+      "file_size_gb": 11.912109439261258,
+      "configuration": {
+        "chunk_size_mb": 1,
+        "compression": "none",
+        "concurrency": 1,
+        "dtype": "bfloat16",
+        "parameters_saved": 291
+      }
+    },
+    "phase4c_compression": {
+      "save_time_ms": 707321.222782135,
+      "load_time_ms": 233439.09692764282,
+      "file_size_bytes": 13769855383,
+      "file_size_gb": 12.824177167378366,
+      "configuration": {
+        "chunk_size_mb": 64,
+        "compression": "gzip-1",
+        "concurrency": 1,
+        "dtype": "bfloat16",
+        "parameters_saved": 291
+      }
+    }
+  }
+}

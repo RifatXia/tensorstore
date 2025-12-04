@@ -7,6 +7,9 @@ modular checkpointing framework comparing pytorch, tensorstore, and t5x-optimize
 - **private model support** - use gated models with `HF_TOKEN` (llama 3.2, llama 3, etc.)
 - **auto dtype detection** - automatically uses model's default precision from config.json
 - **timestamped runs** - each run creates unique directory, enabling multiple experiments
+- **gpu support** - local gpu execution with nvidia cuda
+- **parameter sweeps** - compare different chunk sizes or dtypes automatically
+- **cache clearing** - accurate timing with system cache clearing
 - **no hardcoded model names** - all code uses `MODEL_NAME` from config
 - **works with any llama model** - public or private, just set `MODEL_NAME` and go
 
@@ -204,8 +207,9 @@ ls results/*/plots/*.png
 | `DTYPE` | auto | data type (auto/float16/float32/bfloat16) |
 | `PHASES` | 1,2,3,4a,4b,4c | phases to run |
 | `CHUNK_SIZE_MB` | 64 | chunk size in mb |
-| `DEVICE` | cpu | device (cpu/cuda) |
+| `DEVICE` | cpu (cluster) / cuda (local) | device (cpu/cuda) |
 | `SKIP_PLOTS` | 0 | skip plots (0/1) |
+| `CLEAR_CACHE` | 1 (local) / 0 (cluster) | clear cache before operations (0/1) |
 | `RUN_TIMESTAMP` | auto | custom timestamp for run |
 
 ### common commands
@@ -242,6 +246,55 @@ SKIP_PLOTS=1 sbatch run_all.sh
 RUN_TIMESTAMP="experiment1" sbatch run_all.sh
 ```
 
+### local gpu execution
+
+**run on local machine with nvidia gpu:**
+```bash
+# basic run
+bash run_local_gpu.sh
+
+# specific model
+MODEL_NAME="Qwen/Qwen2.5-7B" bash run_local_gpu.sh
+
+# with cache clearing (default: enabled)
+CLEAR_CACHE=1 bash run_local_gpu.sh
+
+# without cache clearing (faster but less accurate)
+CLEAR_CACHE=0 bash run_local_gpu.sh
+```
+
+**requirements:**
+- nvidia gpu with cuda support
+- nvidia drivers installed
+- pytorch with cuda enabled
+- `nvidia-smi` command available
+
+### parameter sweeps
+
+**compare different chunk sizes:**
+```bash
+# sweep chunk sizes: 1, 4, 16, 64 mb
+bash run_sweep.sh chunk 1,4,16,64
+
+# with specific model
+MODEL_NAME="Qwen/Qwen2.5-7B" bash run_sweep.sh chunk 1,4,16,64
+```
+
+**compare different dtypes:**
+```bash
+# sweep dtypes
+bash run_sweep.sh dtype float16,bfloat16,float32
+
+# with specific model
+MODEL_NAME="openlm-research/open_llama_3b" bash run_sweep.sh dtype float16,bfloat16
+```
+
+**output:**
+- creates timestamped sweep directory: `results/{timestamp}_chunk_sweep/`
+- generates comparison plots: `sweep_comparison.png`
+- saves summary json: `sweep_summary.json`
+- individual run results in: `results/{timestamp}_chunk_sweep_{value}/`
+
 ### troubleshooting
 
 **"model not found" error:**
@@ -261,6 +314,71 @@ export HF_TOKEN="hf_your_token_here"
 ```bash
 # manually specify dtype
 DTYPE="float16" sbatch run_all.sh
+```
+
+**gpu not detected:**
+```bash
+# check nvidia drivers
+nvidia-smi
+
+# check pytorch cuda
+python -c "import torch; print(torch.cuda.is_available())"
+```
+
+**cache clearing requires sudo:**
+```bash
+# on linux, for full cache clear, run with sudo or add to sudoers
+# alternatively, disable cache clearing
+CLEAR_CACHE=0 bash run_local_gpu.sh
+```
+
+---
+
+## usage examples
+
+### example 1: local gpu run with cache clearing
+```bash
+# download model first
+MODEL_NAME="openlm-research/open_llama_3b" bash download.sh
+
+# run on gpu with cache clearing (accurate timing)
+bash run_local_gpu.sh
+
+# results in: results/20251204_032734_open_llama_3b/
+```
+
+### example 2: chunk size sweep
+```bash
+# compare chunk sizes: 1, 4, 16, 64 mb
+bash run_sweep.sh chunk 1,4,16,64
+
+# creates:
+# - results/20251204_032734_chunk_sweep/sweep_comparison.png
+# - results/20251204_032734_chunk_sweep_1/
+# - results/20251204_032734_chunk_sweep_4/
+# - results/20251204_032734_chunk_sweep_16/
+# - results/20251204_032734_chunk_sweep_64/
+```
+
+### example 3: dtype sweep
+```bash
+# compare dtypes for specific model
+MODEL_NAME="Qwen/Qwen2.5-7B" bash run_sweep.sh dtype float16,bfloat16,float32
+
+# generates comparison plots showing:
+# - save time for each dtype
+# - load time for each dtype
+# - file size for each dtype
+# - speedup relative to first dtype
+```
+
+### example 4: cluster run without cache clearing
+```bash
+# on cluster, cache clearing is disabled by default
+MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_all.sh
+
+# or explicitly disable
+CLEAR_CACHE=0 bash run_local_gpu.sh
 ```
 
 ---

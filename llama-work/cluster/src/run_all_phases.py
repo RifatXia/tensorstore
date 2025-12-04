@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 from transformers import AutoModelForCausalLM
 from tqdm import tqdm
 
-from utils import calculate_chunk_shape, format_size, get_directory_size, get_model_default_dtype
+from utils import calculate_chunk_shape, format_size, get_directory_size, get_model_default_dtype, clear_system_cache, clear_gpu_cache
 
 sys.stdout.reconfigure(line_buffering=True)
 
@@ -28,6 +28,7 @@ parser.add_argument('--chunk-size', type=int, default=64, help='chunk size in me
 parser.add_argument('--device', type=str, default='cpu', help='device to use (default: cpu)')
 parser.add_argument('--dtype', type=str, default='auto', choices=['auto', 'float16', 'float32', 'bfloat16'], help='data type for model and storage (default: auto - uses model default)')
 parser.add_argument('--skip-plots', action='store_true', help='skip plot generation')
+parser.add_argument('--clear-cache', action='store_true', help='clear system cache before each operation for accurate timing')
 args = parser.parse_args()
 
 # update config with command line args
@@ -61,7 +62,16 @@ print(f"6-WAY CHECKPOINTING COMPARISON: {MODEL_NAME}")
 print(f"model type: {MODEL_TYPE}")
 print(f"run id: {RUN_ID}")
 print(f"dtype: {DTYPE}")
+print(f"clear cache: {args.clear_cache}")
 print("="*70)
+
+# helper function for cache clearing
+def clear_caches_if_enabled():
+    """clear system and gpu caches if enabled"""
+    if args.clear_cache:
+        clear_system_cache()
+        if DEVICE == 'cuda':
+            clear_gpu_cache()
 
 # create directories
 os.makedirs(MODEL_DIR, exist_ok=True)
@@ -112,6 +122,8 @@ def save_tensorstore_variant(model_state, save_dir, phase_name, use_compression=
     context = ts.Context({'file_io_concurrency': {'limit': 128}}) if use_concurrency else None
     chunk_size_bytes = chunk_size_mb * 1024 * 1024
     
+    # clear cache before save
+    clear_caches_if_enabled()
     start_time = time.time()
     saved_count = 0
     
@@ -177,6 +189,8 @@ def load_tensorstore_variant(save_dir, phase_name):
     """load model from tensorstore variant"""
     print(f"\n{phase_name}: loading")
     
+    # clear cache before load
+    clear_caches_if_enabled()
     start_time = time.time()
     loaded_count = 0
     
@@ -202,6 +216,9 @@ if '1' in phases_to_run:
     print(f"{'='*70}")
 
     pytorch_path = os.path.join(MODEL_DIR, "pytorch.pth")
+    
+    # clear cache before save
+    clear_caches_if_enabled()
     start_time = time.time()
     torch.save(model.state_dict(), pytorch_path)
     pytorch_save_time = (time.time() - start_time) * 1000
@@ -210,6 +227,8 @@ if '1' in phases_to_run:
     print(f"✓ saved in {pytorch_save_time:.1f} ms")
     print(f"✓ size: {format_size(pytorch_size)}")
 
+    # clear cache before load
+    clear_caches_if_enabled()
     start_time = time.time()
     state_dict = torch.load(pytorch_path, map_location='cpu', weights_only=True)
     pytorch_load_time = (time.time() - start_time) * 1000

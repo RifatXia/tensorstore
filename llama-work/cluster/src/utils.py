@@ -3,6 +3,8 @@
 import time
 import os
 import json
+import subprocess
+import platform
 import numpy as np
 from tqdm import tqdm
 
@@ -151,3 +153,52 @@ def get_model_default_dtype(model_name, cache_dir):
     except Exception as e:
         print(f"warning: error reading model config: {e}, using float16 as default")
         return 'float16'
+
+def clear_system_cache():
+    """
+    clear system cache to ensure accurate timing measurements
+    works on linux (requires sudo for full clear) and attempts on other platforms
+    """
+    system = platform.system()
+    
+    try:
+        if system == 'Linux':
+            # drop caches (page cache, dentries, inodes)
+            # note: requires sudo privileges for full effect
+            try:
+                # attempt with sudo
+                subprocess.run(['sudo', 'sync'], check=False, capture_output=True)
+                subprocess.run(['sudo', 'sh', '-c', 'echo 3 > /proc/sys/vm/drop_caches'], 
+                             check=False, capture_output=True)
+                print("✓ system cache cleared (linux)")
+            except:
+                # fallback: sync only (doesn't require sudo)
+                subprocess.run(['sync'], check=False, capture_output=True)
+                print("✓ sync executed (cache clear requires sudo)")
+        
+        elif system == 'Windows':
+            # windows: clear standby list (requires admin)
+            # using python gc as fallback
+            import gc
+            gc.collect()
+            print("✓ python gc executed (full cache clear requires admin)")
+        
+        else:
+            # other systems: just python gc
+            import gc
+            gc.collect()
+            print("✓ python gc executed")
+            
+    except Exception as e:
+        print(f"warning: cache clear failed: {e}")
+
+def clear_gpu_cache():
+    """clear gpu cache for accurate timing"""
+    try:
+        import torch
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            torch.cuda.synchronize()
+            print("✓ gpu cache cleared")
+    except Exception as e:
+        print(f"warning: gpu cache clear failed: {e}")

@@ -1,0 +1,9 @@
+# sweep usage
+
+# chunk size sweep
+bash run_sweep.sh chunk 1,4,16,64
+MODEL_NAME="Qwen/Qwen2.5-7B" bash run_sweep.sh chunk 1,4,16,64
+
+# dtype sweep
+bash run_sweep.sh dtype float16,bfloat16,float32
+MODEL_NAME="openlm-research/open_llama_3b" bash run_sweep.sh dtype float16,bfloat16

@@ -275,28 +275,28 @@ CLEAR_CACHE=0 bash run_local_gpu.sh
 **compare different chunk sizes:**
 ```bash
 # sweep chunk sizes: 1, 4, 16, 64 mb
-bash run_sweep.sh chunk 1,4,16,64
+sbatch run_sweep.sh chunk 1,4,16,64
 
 # with specific model
-MODEL_NAME="Qwen/Qwen2.5-7B" bash run_sweep.sh chunk 1,4,16,64
+MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh chunk 1,4,16,64
 ```
 
 **compare different dtypes:**
 ```bash
 # sweep dtypes
-bash run_sweep.sh dtype float16,bfloat16,float32
+sbatch run_sweep.sh dtype float16,bfloat16,float32
 
 # with specific model
-MODEL_NAME="openlm-research/open_llama_3b" bash run_sweep.sh dtype float16,bfloat16
+MODEL_NAME="openlm-research/open_llama_3b" sbatch run_sweep.sh dtype float16,bfloat16
 ```
 
 **compare different concurrency levels:**
 ```bash
 # sweep concurrency
-bash run_sweep.sh concurrency 1,4,16,64,128
+sbatch run_sweep.sh concurrency 1,4,16,64,128
 
 # with specific model
-MODEL_NAME="Qwen/Qwen2.5-7B" bash run_sweep.sh concurrency 1,4,16,64,128
+MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh concurrency 1,4,16,64,128
 ```
 
 **output:**

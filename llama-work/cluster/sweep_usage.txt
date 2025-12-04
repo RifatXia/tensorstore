@@ -13,8 +13,3 @@ MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_sweep.sh dtype float16,
 # file_io concurrency sweep - find optimal concurrency
 sbatch run_sweep.sh concurrency 1,4,16,64,128
 MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_sweep.sh concurrency 1,4,16,64,128
-
-# after sweep completes, generate comparison plots:
-# python src/compare_sweep.py --sweep-id <sweep_id> --sweep-param <param> --sweep-values <values>
-# example:
-# python src/compare_sweep.py --sweep-id 20251204_065055_sweep_chunk_open_llama_3b --sweep-param chunk --sweep-values 1,4,16,64,128,256

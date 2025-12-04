@@ -44,7 +44,7 @@ dtype_map = {'float16': torch.float16, 'float32': torch.float32, 'bfloat16': tor
 torch_dtype = dtype_map[DTYPE]
 
 # now import config (after setting env vars)
-from config import MODEL_NAME, MODEL_ID, MODEL_TYPE, DEVICE, MODEL_DIR, PLOTS_DIR
+from config import MODEL_NAME, MODEL_ID, MODEL_TYPE, DEVICE, MODEL_DIR, RESULTS_DIR, PLOTS_DIR
 
 # parse which phases to run
 phases_to_run = set(args.phases.split(','))
@@ -58,8 +58,10 @@ print("="*70)
 
 # create directories
 os.makedirs(MODEL_DIR, exist_ok=True)
+os.makedirs(RESULTS_DIR, exist_ok=True)
 os.makedirs(PLOTS_DIR, exist_ok=True)
-print(f"\nmodel directory: {MODEL_DIR}")
+print(f"\nmodel checkpoints directory: {MODEL_DIR}")
+print(f"results directory: {RESULTS_DIR}")
 print(f"plots directory: {PLOTS_DIR}")
 
 # load model
@@ -350,7 +352,7 @@ del model_state
 gc.collect()
 
 # save results
-results_path = os.path.join(MODEL_DIR, "all_phases_results.json")
+results_path = os.path.join(RESULTS_DIR, "all_phases_results.json")
 with open(results_path, 'w') as f:
     json.dump(results, f, indent=2)
 

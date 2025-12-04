@@ -30,8 +30,9 @@ MODEL_ID = MODEL_NAME.split('/')[-1] if '/' in MODEL_NAME else MODEL_NAME
 # paths - organized by model name
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SAVED_MODELS_DIR = os.path.join(BASE_DIR, "saved_models")
-MODEL_DIR = os.path.join(SAVED_MODELS_DIR, MODEL_ID)  # saved_models/<model_name>/
-PLOTS_DIR = os.path.join(MODEL_DIR, "plots")           # saved_models/<model_name>/plots/
+MODEL_DIR = os.path.join(SAVED_MODELS_DIR, MODEL_ID)  # saved_models/<model_name>/ (checkpoints only)
+RESULTS_DIR = os.path.join(BASE_DIR, "results", MODEL_ID)  # results/<model_name>/ (plots, json, etc.)
+PLOTS_DIR = os.path.join(RESULTS_DIR, "plots")           # results/<model_name>/plots/
 
 # cache configuration (for cluster)
 HF_CACHE = os.environ.get('HF_HOME', '/mnt/common/$USER/huggingface_cache')

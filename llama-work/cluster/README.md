@@ -29,7 +29,8 @@ cluster/
 ├── run_tensorstore.sh       # run tensorstore only (slurm)
 ├── run_t5x.sh               # run t5x only (slurm)
 ├── logs/                    # job output logs
-└── saved_models/            # checkpoints saved here
+├── saved_models/            # model checkpoints (gitignored)
+└── results/                 # plots, json results (tracked in git)
 ```
 
 ## quick start
@@ -181,7 +182,7 @@ tail -f logs/t5x-JOBID.out
 after running, you'll find:
 
 ```
-saved_models/
+saved_models/                                  # model checkpoints (gitignored)
 └── {model_name}/                              # e.g., open_llama_3b/
     ├── pytorch.pth                            # phase 1: pytorch checkpoint
     ├── tensorstore/                           # phase 2: basic tensorstore
@@ -196,9 +197,12 @@ saved_models/
     ├── phase4b_chunks/                        # phase 4b: 1 mib chunks
     │   ├── *.zarr
     │   └── metadata.json
-    ├── phase4c_compression/                   # phase 4c: compression only
-    │   ├── *.zarr
-    │   └── metadata.json
+    └── phase4c_compression/                   # phase 4c: compression only
+        ├── *.zarr
+        └── metadata.json
+
+results/                                       # results (tracked in git)
+└── {model_name}/                              # e.g., open_llama_3b/
     ├── plots/                                 # visualization charts
     │   ├── 6way_comparison.png               # comprehensive 6-way comparison
     │   └── tensorstore_variants.png          # tensorstore variants analysis
@@ -209,11 +213,13 @@ saved_models/
 **automatic organization:**
 
 `{model_name}` is extracted from `MODEL_NAME`:
-- `openlm-research/open_llama_3b` → `saved_models/open_llama_3b/`
-- `meta-llama/Llama-2-7b-hf` → `saved_models/Llama-2-7b-hf/`
-- `mistralai/Mistral-7B-v0.1` → `saved_models/Mistral-7B-v0.1/`
+- `openlm-research/open_llama_3b` → checkpoints in `saved_models/open_llama_3b/`, results in `results/open_llama_3b/`
+- `meta-llama/Llama-2-7b-hf` → checkpoints in `saved_models/Llama-2-7b-hf/`, results in `results/Llama-2-7b-hf/`
+- `mistralai/Mistral-7B-v0.1` → checkpoints in `saved_models/Mistral-7B-v0.1/`, results in `results/Mistral-7B-v0.1/`
 
-each model gets its own directory with all checkpoints and plots
+each model gets its own directories:
+- **saved_models/** - large checkpoint files (gitignored, not pushed to github)
+- **results/** - plots and json files (tracked in git, pushed to github)
 
 ## configuration
 
@@ -231,7 +237,8 @@ CONCURRENCY_LIMIT = 128          # concurrent file operations
 COMPRESSION_LEVEL = 1            # gzip compression level (1-9)
 
 # paths (automatic)
-SAVED_MODELS_DIR = "saved_models/"
+SAVED_MODELS_DIR = "saved_models/"           # checkpoints (gitignored)
+RESULTS_DIR = "results/{MODEL_ID}/"          # plots, json (tracked)
 HF_CACHE = "/mnt/common/$USER/huggingface_cache"
 MODEL_ID = MODEL_NAME.split('/')[-1]  # extracted for filenames
 ```
@@ -260,12 +267,12 @@ example:
 # run 1
 export MODEL_NAME="openlm-research/open_llama_3b"
 sbatch run_all.sh
-# creates: saved_models/open_llama_3b/ with all 6 phases + plots
+# creates: saved_models/open_llama_3b/ (checkpoints) + results/open_llama_3b/ (plots, json)
 
 # run 2
 export MODEL_NAME="meta-llama/Llama-2-7b-hf"
 sbatch run_all.sh
-# creates: saved_models/Llama-2-7b-hf/ with all 6 phases + plots
+# creates: saved_models/Llama-2-7b-hf/ (checkpoints) + results/Llama-2-7b-hf/ (plots, json)
 ```
 
 ### visualization charts
@@ -292,11 +299,12 @@ all python files import from `config.py`:
 # src/config.py
 MODEL_NAME = os.environ.get('MODEL_NAME', "openlm-research/open_llama_3b")
 MODEL_ID = MODEL_NAME.split('/')[-1]
-MODEL_DIR = f"saved_models/{MODEL_ID}/"
-PLOTS_DIR = f"saved_models/{MODEL_ID}/plots/"
+MODEL_DIR = f"saved_models/{MODEL_ID}/"      # checkpoints
+RESULTS_DIR = f"results/{MODEL_ID}/"         # plots, json
+PLOTS_DIR = f"results/{MODEL_ID}/plots/"     # visualization charts
 
 # all files use these dynamic paths
-from config import MODEL_NAME, MODEL_ID, MODEL_DIR, PLOTS_DIR
+from config import MODEL_NAME, MODEL_ID, MODEL_DIR, RESULTS_DIR, PLOTS_DIR
 ```
 
 **no hardcoded model names or paths anywhere in the code.**

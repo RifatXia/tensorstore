@@ -3,7 +3,7 @@
 import sys
 import os
 import json
-from config import MODEL_DIR, MODEL_ID
+from config import MODEL_DIR, RESULTS_DIR, MODEL_ID
 from utils import format_size, format_time, get_directory_size
 
 def compare_results():
@@ -51,7 +51,8 @@ def compare_results():
         print(f"{result['method']:<20} {result['size_str']:<15}")
     
     # save results to json
-    results_path = os.path.join(MODEL_DIR, "comparison_results.json")
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+    results_path = os.path.join(RESULTS_DIR, "comparison_results.json")
     with open(results_path, 'w') as f:
         json.dump(results, f, indent=2)
     

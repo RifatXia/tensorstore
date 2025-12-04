@@ -1,1 +1,5 @@
+# model checkpoints (too large for git)
 saved_models/
+
+# slurm output files
+slurm-*.out

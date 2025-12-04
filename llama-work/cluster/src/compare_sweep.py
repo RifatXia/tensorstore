@@ -90,15 +90,19 @@ for result in sweep_results:
 
 # x-axis setup
 x = np.arange(len(param_values))
-width = 0.35  # single color for tensorstore
+width = 0.6  # bar width
+
+# generate dynamic colors using a colormap
+n_bars = len(param_values)
+cmap = plt.cm.get_cmap('tab10')  # use tab10 colormap for distinct colors
+colors = [cmap(i % 10) for i in range(n_bars)]  # cycle through 10 colors if needed
 
 # create 3-panel comparison plot for tensorstore
 fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(18, 5))
-color = '#2E86AB'  # single color for tensorstore
 
 # plot 1: save time
 if any(save_times['tensorstore']):
-    ax1.bar(x, save_times['tensorstore'], width, color=color, alpha=0.7, edgecolor='black')
+    bars1 = ax1.bar(x, save_times['tensorstore'], width, color=colors, alpha=0.8, edgecolor='black', linewidth=1.5)
     ax1.set_xlabel(f'{args.sweep_param.capitalize()} Value', fontweight='bold', fontsize=12)
     ax1.set_ylabel('Save Time (ms)', fontweight='bold', fontsize=12)
     ax1.set_title('TensorStore Save Time', fontweight='bold', fontsize=14)
@@ -107,11 +111,11 @@ if any(save_times['tensorstore']):
     ax1.grid(alpha=0.3, axis='y')
     # add value labels on bars
     for i, v in enumerate(save_times['tensorstore']):
-        ax1.text(i, v, f'{v:.0f}', ha='center', va='bottom', fontweight='bold')
+        ax1.text(i, v, f'{v:.0f}', ha='center', va='bottom', fontweight='bold', fontsize=9)
 
 # plot 2: load time
 if any(load_times['tensorstore']):
-    ax2.bar(x, load_times['tensorstore'], width, color=color, alpha=0.7, edgecolor='black')
+    bars2 = ax2.bar(x, load_times['tensorstore'], width, color=colors, alpha=0.8, edgecolor='black', linewidth=1.5)
     ax2.set_xlabel(f'{args.sweep_param.capitalize()} Value', fontweight='bold', fontsize=12)
     ax2.set_ylabel('Load Time (ms)', fontweight='bold', fontsize=12)
     ax2.set_title('TensorStore Load Time', fontweight='bold', fontsize=14)
@@ -120,11 +124,11 @@ if any(load_times['tensorstore']):
     ax2.grid(alpha=0.3, axis='y')
     # add value labels on bars
     for i, v in enumerate(load_times['tensorstore']):
-        ax2.text(i, v, f'{v:.0f}', ha='center', va='bottom', fontweight='bold')
+        ax2.text(i, v, f'{v:.0f}', ha='center', va='bottom', fontweight='bold', fontsize=9)
 
 # plot 3: file size
 if any(file_sizes['tensorstore']):
-    ax3.bar(x, file_sizes['tensorstore'], width, color=color, alpha=0.7, edgecolor='black')
+    bars3 = ax3.bar(x, file_sizes['tensorstore'], width, color=colors, alpha=0.8, edgecolor='black', linewidth=1.5)
     ax3.set_xlabel(f'{args.sweep_param.capitalize()} Value', fontweight='bold', fontsize=12)
     ax3.set_ylabel('File Size (GB)', fontweight='bold', fontsize=12)
     ax3.set_title('TensorStore File Size', fontweight='bold', fontsize=14)

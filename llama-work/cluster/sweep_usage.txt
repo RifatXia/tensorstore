@@ -1,13 +1,14 @@
-# sweep usage (cluster)
+# tensorstore sweep usage (cluster)
+# sweeps only run phase 2 (basic tensorstore) to optimize configuration
 
-# chunk size sweep
+# chunk size sweep - find optimal chunk size
 sbatch run_sweep.sh chunk 1,4,16,64
 MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_sweep.sh chunk 1,4,16,64
 
-# dtype sweep
+# dtype sweep - compare different data types
 sbatch run_sweep.sh dtype float16,bfloat16,float32
 MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_sweep.sh dtype float16,bfloat16
 
-# concurrency sweep
+# file_io concurrency sweep - find optimal concurrency
 sbatch run_sweep.sh concurrency 1,4,16,64,128
 MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_sweep.sh concurrency 1,4,16,64,128

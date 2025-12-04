@@ -51,9 +51,9 @@ if not sweep_results:
     print("error: no results found")
     sys.exit(1)
 
-# extract metrics for each phase
-phases = ['pytorch', 'tensorstore', 't5x', 'phase4a', 'phase4b', 'phase4c']
-phase_labels = ['PyTorch', 'TensorStore', 'T5X', 'Concurrency', 'Chunks', 'Compression']
+# extract metrics for tensorstore phase only
+phases = ['tensorstore']
+phase_labels = ['TensorStore']
 
 # prepare data for plotting
 param_values = [r['value'] for r in sweep_results]
@@ -73,72 +73,62 @@ for result in sweep_results:
             file_sizes[phase].append(0)
 
 # create comparison plots
-fig, axes = plt.subplots(2, 2, figsize=(16, 12))
-fig.suptitle(f'Parameter Sweep: {args.sweep_param.upper()} Comparison\nModel: {sweep_results[0]["data"]["model_name"]}', 
-             fontsize=16, fontweight='bold')
 
 # x-axis setup
 x = np.arange(len(param_values))
-width = 0.12
-colors = ['#2ecc71', '#e74c3c', '#3498db', '#f39c12', '#9b59b6', '#1abc9c']
+width = 0.35  # single color for tensorstore
 
-# plot 1: save time comparison
-ax1 = axes[0, 0]
-for i, (phase, label) in enumerate(zip(phases, phase_labels)):
-    if any(save_times[phase]):
-        ax1.bar(x + i*width, save_times[phase], width, label=label, color=colors[i])
-ax1.set_xlabel(f'{args.sweep_param.capitalize()} Value', fontweight='bold')
-ax1.set_ylabel('Save Time (ms)', fontweight='bold')
-ax1.set_title('Save Time Comparison', fontweight='bold')
-ax1.set_xticks(x + width * 2.5)
-ax1.set_xticklabels(param_values)
-ax1.legend()
-ax1.grid(axis='y', alpha=0.3)
+# create 3-panel comparison plot for tensorstore
+fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(18, 5))
+color = '#2E86AB'  # single color for tensorstore
 
-# plot 2: load time comparison
-ax2 = axes[0, 1]
-for i, (phase, label) in enumerate(zip(phases, phase_labels)):
-    if any(load_times[phase]):
-        ax2.bar(x + i*width, load_times[phase], width, label=label, color=colors[i])
-ax2.set_xlabel(f'{args.sweep_param.capitalize()} Value', fontweight='bold')
-ax2.set_ylabel('Load Time (ms)', fontweight='bold')
-ax2.set_title('Load Time Comparison', fontweight='bold')
-ax2.set_xticks(x + width * 2.5)
-ax2.set_xticklabels(param_values)
-ax2.legend()
-ax2.grid(axis='y', alpha=0.3)
+# plot 1: save time
+if any(save_times['tensorstore']):
+    ax1.bar(x, save_times['tensorstore'], width, color=color, alpha=0.7, edgecolor='black')
+    ax1.set_xlabel(f'{args.sweep_param.capitalize()} Value', fontweight='bold', fontsize=12)
+    ax1.set_ylabel('Save Time (ms)', fontweight='bold', fontsize=12)
+    ax1.set_title('TensorStore Save Time', fontweight='bold', fontsize=14)
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(param_values)
+    ax1.grid(alpha=0.3, axis='y')
+    # add value labels on bars
+    for i, v in enumerate(save_times['tensorstore']):
+        ax1.text(i, v, f'{v:.0f}', ha='center', va='bottom', fontweight='bold')
 
-# plot 3: file size comparison
-ax3 = axes[1, 0]
-for i, (phase, label) in enumerate(zip(phases, phase_labels)):
-    if any(file_sizes[phase]):
-        ax3.bar(x + i*width, file_sizes[phase], width, label=label, color=colors[i])
-ax3.set_xlabel(f'{args.sweep_param.capitalize()} Value', fontweight='bold')
-ax3.set_ylabel('File Size (GB)', fontweight='bold')
-ax3.set_title('File Size Comparison', fontweight='bold')
-ax3.set_xticks(x + width * 2.5)
-ax3.set_xticklabels(param_values)
-ax3.legend()
-ax3.grid(axis='y', alpha=0.3)
+# plot 2: load time
+if any(load_times['tensorstore']):
+    ax2.bar(x, load_times['tensorstore'], width, color=color, alpha=0.7, edgecolor='black')
+    ax2.set_xlabel(f'{args.sweep_param.capitalize()} Value', fontweight='bold', fontsize=12)
+    ax2.set_ylabel('Load Time (ms)', fontweight='bold', fontsize=12)
+    ax2.set_title('TensorStore Load Time', fontweight='bold', fontsize=14)
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(param_values)
+    ax2.grid(alpha=0.3, axis='y')
+    # add value labels on bars
+    for i, v in enumerate(load_times['tensorstore']):
+        ax2.text(i, v, f'{v:.0f}', ha='center', va='bottom', fontweight='bold')
 
-# plot 4: speedup comparison (relative to first value)
-ax4 = axes[1, 1]
-for i, (phase, label) in enumerate(zip(phases, phase_labels)):
-    if any(save_times[phase]) and save_times[phase][0] > 0:
-        speedups = [save_times[phase][0] / t if t > 0 else 0 for t in save_times[phase]]
-        ax4.plot(param_values, speedups, marker='o', label=label, color=colors[i], linewidth=2)
-ax4.set_xlabel(f'{args.sweep_param.capitalize()} Value', fontweight='bold')
-ax4.set_ylabel('Speedup (relative to first)', fontweight='bold')
-ax4.set_title('Save Time Speedup', fontweight='bold')
-ax4.axhline(y=1.0, color='gray', linestyle='--', alpha=0.5)
-ax4.legend()
-ax4.grid(alpha=0.3)
+# plot 3: file size
+if any(file_sizes['tensorstore']):
+    ax3.bar(x, file_sizes['tensorstore'], width, color=color, alpha=0.7, edgecolor='black')
+    ax3.set_xlabel(f'{args.sweep_param.capitalize()} Value', fontweight='bold', fontsize=12)
+    ax3.set_ylabel('File Size (GB)', fontweight='bold', fontsize=12)
+    ax3.set_title('TensorStore File Size', fontweight='bold', fontsize=14)
+    ax3.set_xticks(x)
+    ax3.set_xticklabels(param_values)
+    ax3.grid(alpha=0.3, axis='y')
+    # add value labels on bars
+    for i, v in enumerate(file_sizes['tensorstore']):
+        ax3.text(i, v, f'{v:.2f}', ha='center', va='bottom', fontweight='bold')
+
+# add overall title
+fig.suptitle(f'TensorStore {args.sweep_param.capitalize()} Sweep Comparison', 
+             fontsize=16, fontweight='bold', y=1.02)
 
 plt.tight_layout()
 
 # save plot
 sweep_dir = os.path.join(results_base, args.sweep_id)
-os.makedirs(sweep_dir, exist_ok=True)
 plot_path = os.path.join(sweep_dir, "sweep_comparison.png")
 plt.savefig(plot_path, dpi=300, bbox_inches='tight')
 print(f"\n✓ comparison plot saved: {plot_path}")

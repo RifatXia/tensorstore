@@ -5,12 +5,15 @@
 #SBATCH --output=logs/sweep-%j.out
 #SBATCH --exclusive
 
-# parameter sweep script - compare different chunk sizes, dtypes, or concurrency
+# tensorstore parameter sweep - optimize tensorstore configuration
+#
+# sweeps only phase 2 (basic tensorstore) to find optimal settings
+# compares: chunk size, dtype, and file_io concurrency
 #
 # usage:
 #   sbatch run_sweep.sh chunk 1,4,16,64                       # sweep chunk sizes
 #   sbatch run_sweep.sh dtype float16,bfloat16,float32        # sweep dtypes
-#   sbatch run_sweep.sh concurrency 1,4,16,64,128             # sweep concurrency
+#   sbatch run_sweep.sh concurrency 1,4,16,64,128             # sweep file_io concurrency
 #   MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh chunk 1,4,16,64
 #
 # arguments:
@@ -19,7 +22,7 @@
 #
 # environment variables:
 #   MODEL_NAME      - huggingface model name (default: openlm-research/open_llama_3b)
-#   PHASES          - comma-separated phase numbers to run (default: 1,2,3,4a,4b,4c)
+#   PHASES          - phases to run (default: 2 - tensorstore only)
 #   DEVICE          - device to use (default: cpu)
 #   HF_TOKEN        - huggingface token for private/gated models (optional)
 
@@ -57,7 +60,7 @@ echo "=========================================="
 
 # set defaults
 export MODEL_NAME="${MODEL_NAME:-openlm-research/open_llama_3b}"
-export PHASES="${PHASES:-1,2,3,4a,4b,4c}"
+export PHASES="${PHASES:-2}"  # sweep only runs phase 2 (tensorstore) by default
 export DEVICE="${DEVICE:-cpu}"
 
 # use shared storage cache
@@ -79,7 +82,9 @@ echo ""
 # create logs directory
 mkdir -p logs
 SWEEP_TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-export SWEEP_ID="${SWEEP_TIMESTAMP}_${SWEEP_PARAM}_sweep"
+# extract model id for directory name
+MODEL_ID=$(echo "$MODEL_NAME" | sed 's/.*\///')
+export SWEEP_ID="${SWEEP_TIMESTAMP}_sweep_${SWEEP_PARAM}_${MODEL_ID}"
 
 echo ""
 echo "configuration:"
@@ -100,8 +105,8 @@ for VALUE in "${VALUES[@]}"; do
     echo "running with $SWEEP_PARAM = $VALUE"
     echo "=========================================="
     
-    # set run timestamp for this specific run
-    export RUN_TIMESTAMP="${SWEEP_ID}_${VALUE}"
+    # set run timestamp for this specific run - nested under sweep directory
+    export RUN_TIMESTAMP="${SWEEP_ID}/${SWEEP_PARAM}${VALUE}"
     
     if [ "$SWEEP_PARAM" = "chunk" ]; then
         export CHUNK_SIZE_MB=$VALUE

@@ -270,7 +270,14 @@ CLEAR_CACHE=0 bash run_local_gpu.sh
 - pytorch with cuda enabled
 - `nvidia-smi` command available
 
-### parameter sweeps
+### tensorstore parameter sweeps
+
+**optimize tensorstore configuration (phase 2 only)**
+
+sweeps run **only phase 2 (basic tensorstore)** to find optimal settings for:
+- chunk size
+- dtype  
+- file_io concurrency
 
 **compare different chunk sizes:**
 ```bash
@@ -278,32 +285,45 @@ CLEAR_CACHE=0 bash run_local_gpu.sh
 sbatch run_sweep.sh chunk 1,4,16,64
 
 # with specific model
-MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh chunk 1,4,16,64
+MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_sweep.sh chunk 1,4,16,64
 ```
 
 **compare different dtypes:**
 ```bash
-# sweep dtypes
+# sweep dtypes (auto-detects model default if not specified)
 sbatch run_sweep.sh dtype float16,bfloat16,float32
 
 # with specific model
-MODEL_NAME="openlm-research/open_llama_3b" sbatch run_sweep.sh dtype float16,bfloat16
+MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_sweep.sh dtype float16,bfloat16
 ```
 
-**compare different concurrency levels:**
+**compare different file_io concurrency levels:**
 ```bash
-# sweep concurrency
+# sweep concurrency (default is tensorstore's internal default)
 sbatch run_sweep.sh concurrency 1,4,16,64,128
 
 # with specific model
-MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh concurrency 1,4,16,64,128
+MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_sweep.sh concurrency 1,4,16,64,128
 ```
 
-**output:**
-- creates timestamped sweep directory: `results/{timestamp}_chunk_sweep/`
-- generates comparison plots: `sweep_comparison.png`
-- saves summary json: `sweep_summary.json`
-- individual run results in: `results/{timestamp}_chunk_sweep_{value}/`
+**output structure:**
+```
+results/{timestamp}_sweep_chunk_{model}/
+├── chunk1/
+│   ├── all_phases_results.json    # only tensorstore metrics
+│   └── plots/comparison.png
+├── chunk4/
+├── chunk16/
+├── chunk64/
+├── sweep_comparison.png           # 3-panel: save/load/size
+└── sweep_summary.json             # aggregated tensorstore metrics
+
+saved_models/{timestamp}_sweep_chunk_{model}/
+├── chunk1/tensorstore/            # only tensorstore checkpoints
+├── chunk4/tensorstore/
+├── chunk16/tensorstore/
+└── chunk64/tensorstore/
+```
 
 ### troubleshooting
 

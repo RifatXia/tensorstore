@@ -2,12 +2,12 @@
 
 # chunk size sweep
 sbatch run_sweep.sh chunk 1,4,16,64
-MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh chunk 1,4,16,64
+MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_sweep.sh chunk 1,4,16,64
 
 # dtype sweep
 sbatch run_sweep.sh dtype float16,bfloat16,float32
-MODEL_NAME="openlm-research/open_llama_3b" sbatch run_sweep.sh dtype float16,bfloat16
+MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_sweep.sh dtype float16,bfloat16
 
 # concurrency sweep
 sbatch run_sweep.sh concurrency 1,4,16,64,128
-MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh concurrency 1,4,16,64,128
+MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_sweep.sh concurrency 1,4,16,64,128

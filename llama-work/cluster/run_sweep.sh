@@ -84,11 +84,11 @@ for VALUE in "${VALUES[@]}"; do
     if [ "$SWEEP_PARAM" = "chunk" ]; then
         export CHUNK_SIZE_MB=$VALUE
         export DTYPE="${DTYPE:-auto}"
-        export CONCURRENCY="${CONCURRENCY:-128}"
+        export CONCURRENCY="${CONCURRENCY:-}"
     elif [ "$SWEEP_PARAM" = "dtype" ]; then
         export DTYPE=$VALUE
         export CHUNK_SIZE_MB="${CHUNK_SIZE_MB:-64}"
-        export CONCURRENCY="${CONCURRENCY:-128}"
+        export CONCURRENCY="${CONCURRENCY:-}"
     else
         export CONCURRENCY=$VALUE
         export CHUNK_SIZE_MB="${CHUNK_SIZE_MB:-64}"
@@ -105,7 +105,7 @@ for VALUE in "${VALUES[@]}"; do
             --model "$MODEL_NAME" \
             --phases "$PHASES" \
             --chunk-size "$CHUNK_SIZE_MB" \
-            --concurrency "$CONCURRENCY" \
+            $([ -n "$CONCURRENCY" ] && echo "--concurrency $CONCURRENCY") \
             --dtype "$DTYPE" \
             --device "$DEVICE" \
             --clear-cache

@@ -207,7 +207,7 @@ ls results/*/plots/*.png
 | `DTYPE` | auto | data type (auto/float16/float32/bfloat16) |
 | `PHASES` | 1,2,3,4a,4b,4c | phases to run |
 | `CHUNK_SIZE_MB` | 64 | chunk size in mb |
-| `CONCURRENCY` | 128 | tensorstore concurrency limit |
+| `CONCURRENCY` | default (tensorstore) | tensorstore concurrency limit (empty=default) |
 | `DEVICE` | cpu (cluster) / cuda (local) | device (cpu/cuda) |
 | `SKIP_PLOTS` | 0 | skip plots (0/1) |
 | `CLEAR_CACHE` | 1 (local) / 0 (cluster) | clear cache before operations (0/1) |

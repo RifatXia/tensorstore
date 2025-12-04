@@ -25,7 +25,7 @@ parser = argparse.ArgumentParser(description='run checkpointing phases with conf
 parser.add_argument('--model', type=str, default=None, help='huggingface model name')
 parser.add_argument('--phases', type=str, default='1,2,3,4a,4b,4c', help='comma-separated phases to run (e.g., 1,2,3 or 1,4a,4c)')
 parser.add_argument('--chunk-size', type=int, default=64, help='chunk size in megabytes (default: 64)')
-parser.add_argument('--concurrency', type=int, default=128, help='tensorstore concurrency limit (default: 128)')
+parser.add_argument('--concurrency', type=int, default=None, help='tensorstore concurrency limit (default: tensorstore default, unlimited)')
 parser.add_argument('--device', type=str, default='cpu', help='device to use (default: cpu)')
 parser.add_argument('--dtype', type=str, default='auto', choices=['auto', 'float16', 'float32', 'bfloat16'], help='data type for model and storage (default: auto - uses model default)')
 parser.add_argument('--skip-plots', action='store_true', help='skip plot generation')
@@ -113,14 +113,20 @@ results = {
 
 # helper function for tensorstore variants
 def save_tensorstore_variant(model_state, save_dir, phase_name, use_compression=False, 
-                             use_concurrency=False, chunk_size_mb=64, concurrency_limit=128):
+                             use_concurrency=False, chunk_size_mb=64, concurrency_limit=None):
     """save model using tensorstore with specific configuration"""
     os.makedirs(save_dir, exist_ok=True)
     print(f"\n{'='*70}")
     print(f"{phase_name}: saving")
     print(f"{'='*70}")
     
-    context = ts.Context({'file_io_concurrency': {'limit': concurrency_limit}}) if use_concurrency else None
+    # only set context if concurrency is enabled AND a limit is specified
+    if use_concurrency and concurrency_limit is not None:
+        context = ts.Context({'file_io_concurrency': {'limit': concurrency_limit}})
+    elif use_concurrency:
+        context = ts.Context()  # use tensorstore default
+    else:
+        context = None
     chunk_size_bytes = chunk_size_mb * 1024 * 1024
     
     # clear cache before save
@@ -179,7 +185,7 @@ def save_tensorstore_variant(model_state, save_dir, phase_name, use_compression=
     config = {
         'chunk_size_mb': chunk_size_mb,
         'compression': 'gzip-1' if use_compression else 'none',
-        'concurrency': concurrency_limit if use_concurrency else 1,
+        'concurrency': concurrency_limit if (use_concurrency and concurrency_limit) else ('default' if use_concurrency else 1),
         'dtype': DTYPE,
         'parameters_saved': saved_count
     }

@@ -122,11 +122,10 @@ for VALUE in "${VALUES[@]}"; do
         export DTYPE="${DTYPE:-auto}"
     fi
     
-    # run experiment on cluster
+    # run experiment on cluster using tensorstore-only sweep runner
     cd src
-    python -u run_all_phases.py \
+    python -u run_tensorstore_sweep.py \
         --model "$MODEL_NAME" \
-        --phases "$PHASES" \
         --chunk-size "$CHUNK_SIZE_MB" \
         $([ -n "$CONCURRENCY" ] && echo "--concurrency $CONCURRENCY") \
         --dtype "$DTYPE" \

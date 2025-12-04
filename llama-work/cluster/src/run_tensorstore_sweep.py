@@ -101,7 +101,7 @@ results = {
     'phases': {}
 }
 
-# tensorstore save function
+# tensorstore save function - exact copy from run_all_phases.py
 def save_tensorstore(model_state, save_dir, chunk_size_mb=64, concurrency_limit=None):
     """save model using tensorstore with dynamic chunking"""
     os.makedirs(save_dir, exist_ok=True)
@@ -109,11 +109,11 @@ def save_tensorstore(model_state, save_dir, chunk_size_mb=64, concurrency_limit=
     print(f"TENSORSTORE: saving")
     print(f"{'='*70}")
     
-    # set context if concurrency is specified
+    # only set context if concurrency is enabled AND a limit is specified
     if concurrency_limit is not None:
         context = ts.Context({'file_io_concurrency': {'limit': concurrency_limit}})
     else:
-        context = ts.Context()
+        context = None
     
     chunk_size_bytes = chunk_size_mb * 1024 * 1024
     
@@ -137,7 +137,6 @@ def save_tensorstore(model_state, save_dir, chunk_size_mb=64, concurrency_limit=
             safe_name = param_name.replace('.', '_').replace('/', '_')
             param_path = os.path.join(save_dir, f"{safe_name}.zarr")
             
-            # dynamic chunking based on parameter shape
             target_elements = chunk_size_bytes // param_np.dtype.itemsize
             chunk_shape = calculate_chunk_shape(list(param_np.shape), target_elements)
             
@@ -148,16 +147,19 @@ def save_tensorstore(model_state, save_dir, chunk_size_mb=64, concurrency_limit=
                     'shape': list(param_np.shape),
                     'dtype': zarr_dtype,
                     'chunks': chunk_shape
-                },
-                'context': context
+                }
             }
             
-            dataset = ts.open(spec, create=True, delete_existing=True).result()
-            dataset[:] = param_np
-            saved_count += 1
+            if context:
+                store = ts.open(spec, create=True, delete_existing=True, context=context).result()
+            else:
+                store = ts.open(spec, create=True, delete_existing=True).result()
             
+            store.write(param_np).result()
+            saved_count += 1
         except Exception as e:
             print(f"error saving {param_name}: {e}")
+            continue
     
     save_time = (time.time() - start_time) * 1000
     dir_size = get_directory_size(save_dir)

@@ -4,6 +4,3 @@ saved_models/
 
 # slurm output files
 slurm-*.out
-
-# log files
-logs/*.out

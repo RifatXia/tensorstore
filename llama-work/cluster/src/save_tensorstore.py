@@ -30,13 +30,19 @@ def save_tensorstore(model, use_compression=False, use_concurrency=False, dtype=
     # calculate chunk size
     chunk_size_bytes = CHUNK_SIZE_MB * 1024 * 1024
     
-    # dtype conversion - tensorstore supports bfloat16 via ts.bfloat16
-    dtype_conversion = {
-        'float16': (lambda x: x.detach().cpu().half().numpy(), ts.float16),
-        'float32': (lambda x: x.detach().cpu().float().numpy(), ts.float32),
-        'bfloat16': (lambda x: x.detach().cpu().to(torch.bfloat16).numpy().view(np.uint16), ts.bfloat16)
-    }
-    convert_fn, ts_dtype = dtype_conversion.get(dtype, dtype_conversion['float16'])
+    # dtype conversion - convert bfloat16 to float32 for storage
+    if dtype == 'float16':
+        convert_fn = lambda x: x.detach().cpu().half().numpy()
+        ts_dtype = ts.float16
+    elif dtype == 'float32':
+        convert_fn = lambda x: x.detach().cpu().float().numpy()
+        ts_dtype = ts.float32
+    elif dtype == 'bfloat16':
+        convert_fn = lambda x: x.detach().cpu().float().numpy()
+        ts_dtype = ts.float32
+    else:
+        convert_fn = lambda x: x.detach().cpu().half().numpy()
+        ts_dtype = ts.float16
     
     try:
         with Timer("tensorstore save"):

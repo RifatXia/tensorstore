@@ -1,0 +1,24 @@
+{
+  "sweep_param": "concurrency",
+  "sweep_values": [
+    "16",
+    "64"
+  ],
+  "model_name": "openlm-research/open_llama_3b",
+  "results": {
+    "tensorstore": {
+      "save_times_ms": [
+        83666.46766662598,
+        67948.79078865051
+      ],
+      "load_times_ms": [
+        52904.92486953735,
+        52986.34457588196
+      ],
+      "file_sizes_gb": [
+        6.3822163650766015,
+        6.3822163650766015
+      ]
+    }
+  }
+}

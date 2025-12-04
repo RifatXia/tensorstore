@@ -33,8 +33,9 @@ results_base = os.path.join(base_dir, "results")
 
 sweep_results = []
 for value in sweep_values:
-    run_id = f"{args.sweep_id}_{value}"
-    results_file = os.path.join(results_base, run_id, "all_phases_results.json")
+    # results are nested: sweep_id/param_value/all_phases_results.json
+    run_subdir = f"{args.sweep_param}{value}"
+    results_file = os.path.join(results_base, args.sweep_id, run_subdir, "all_phases_results.json")
     
     if os.path.exists(results_file):
         with open(results_file, 'r') as f:
@@ -46,6 +47,7 @@ for value in sweep_values:
         print(f"✓ loaded results for {args.sweep_param}={value}")
     else:
         print(f"✗ missing results for {args.sweep_param}={value}")
+        print(f"  expected: {results_file}")
 
 if not sweep_results:
     print("error: no results found")

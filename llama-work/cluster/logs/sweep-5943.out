@@ -1,0 +1,1637 @@
+slurmstepd-ares-comp-10: error: Could not run slurm task_prolog [/etc/slurm/task.prolog]: Permission denied
+==========================================
+parameter sweep - cluster run
+==========================================
+job started: Thu Dec  4 06:20:01 AM CST 2025
+node: ares-comp-10
+job id: 5943
+==========================================
+==========================================
+parameter sweep: chunk
+==========================================
+loading modules...
+activating venv...
+python version: Python 3.11.9
+
+
+configuration:
+  sweep id: 20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct
+  phases: 2
+  device: cpu
+
+running 5 experiments...
+
+==========================================
+running with chunk = 1
+==========================================
+✓ detected model default dtype: bfloat16 (torch_dtype='bfloat16' from config.json)
+
+auto-detected dtype: bfloat16
+phases to run: ['2']
+======================================================================
+6-WAY CHECKPOINTING COMPARISON: meta-llama/Llama-3.2-3B-Instruct
+model type: llama
+run id: 20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk1_Llama-3.2-3B-Instruct
+dtype: bfloat16
+clear cache: False
+======================================================================
+
+model checkpoints directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk1_Llama-3.2-3B-Instruct
+results directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk1_Llama-3.2-3B-Instruct
+plots directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk1_Llama-3.2-3B-Instruct/plots
+
+loading model...
+using cache: /mnt/common/zchowdhury1/huggingface_cache
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.16s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.05s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.22s/it]
+✓ model loaded: 3212.7m parameters
+
+======================================================================
+PHASE 1: PYTORCH (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 2: TENSORSTORE (BASIC): saving
+======================================================================
+saving:   0%|          | 0/255 [00:00<?, ?it/s]error saving model.embed_tokens.weight: Got unsupported ScalarType BFloat16
+saving:   0%|          | 1/255 [00:00<00:55,  4.61it/s]error saving model.layers.0.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.norm.weight: Got unsupported ScalarType BFloat16
+error saving lm_head.weight: Got unsupported ScalarType BFloat16
+saving: 100%|██████████| 255/255 [00:00<00:00, 897.98it/s]
+✓ saved 0 parameters in 286.5 ms
+✓ total size: 0.00 b
+
+PHASE 2: loading
+loading: 0it [00:00, ?it/s]loading: 0it [00:00, ?it/s]
+✓ loaded 0 parameters in 1.6 ms
+
+======================================================================
+PHASE 3: T5X-OPTIMIZED (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4A: CONCURRENCY ONLY (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4B: 1 MIB CHUNKS (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4C: COMPRESSION ONLY (SKIPPED)
+======================================================================
+
+======================================================================
+RESULTS SUMMARY
+======================================================================
+Traceback (most recent call last):
+  File "/mnt/common/zchowdhury1/tensorstore/llama-work/cluster/src/run_all_phases.py", line 401, in <module>
+    results['phases']['pytorch']['save_time_ms'],
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'pytorch'
+
+==========================================
+running with chunk = 4
+==========================================
+✓ detected model default dtype: bfloat16 (torch_dtype='bfloat16' from config.json)
+
+auto-detected dtype: bfloat16
+phases to run: ['2']
+======================================================================
+6-WAY CHECKPOINTING COMPARISON: meta-llama/Llama-3.2-3B-Instruct
+model type: llama
+run id: 20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk4_Llama-3.2-3B-Instruct
+dtype: bfloat16
+clear cache: False
+======================================================================
+
+model checkpoints directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk4_Llama-3.2-3B-Instruct
+results directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk4_Llama-3.2-3B-Instruct
+plots directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk4_Llama-3.2-3B-Instruct/plots
+
+loading model...
+using cache: /mnt/common/zchowdhury1/huggingface_cache
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  4.82it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  7.04it/s]
+✓ model loaded: 3212.7m parameters
+
+======================================================================
+PHASE 1: PYTORCH (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 2: TENSORSTORE (BASIC): saving
+======================================================================
+saving:   0%|          | 0/255 [00:00<?, ?it/s]error saving model.embed_tokens.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.norm.weight: Got unsupported ScalarType BFloat16
+error saving lm_head.weight: Got unsupported ScalarType BFloat16
+saving: 100%|██████████| 255/255 [00:00<00:00, 3738.17it/s]
+✓ saved 0 parameters in 70.6 ms
+✓ total size: 0.00 b
+
+PHASE 2: loading
+loading: 0it [00:00, ?it/s]loading: 0it [00:00, ?it/s]
+✓ loaded 0 parameters in 1.6 ms
+
+======================================================================
+PHASE 3: T5X-OPTIMIZED (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4A: CONCURRENCY ONLY (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4B: 1 MIB CHUNKS (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4C: COMPRESSION ONLY (SKIPPED)
+======================================================================
+
+======================================================================
+RESULTS SUMMARY
+======================================================================
+Traceback (most recent call last):
+  File "/mnt/common/zchowdhury1/tensorstore/llama-work/cluster/src/run_all_phases.py", line 401, in <module>
+    results['phases']['pytorch']['save_time_ms'],
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'pytorch'
+
+==========================================
+running with chunk = 16
+==========================================
+✓ detected model default dtype: bfloat16 (torch_dtype='bfloat16' from config.json)
+
+auto-detected dtype: bfloat16
+phases to run: ['2']
+======================================================================
+6-WAY CHECKPOINTING COMPARISON: meta-llama/Llama-3.2-3B-Instruct
+model type: llama
+run id: 20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk16_Llama-3.2-3B-Instruct
+dtype: bfloat16
+clear cache: False
+======================================================================
+
+model checkpoints directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk16_Llama-3.2-3B-Instruct
+results directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk16_Llama-3.2-3B-Instruct
+plots directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk16_Llama-3.2-3B-Instruct/plots
+
+loading model...
+using cache: /mnt/common/zchowdhury1/huggingface_cache
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  4.76it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  6.97it/s]
+✓ model loaded: 3212.7m parameters
+
+======================================================================
+PHASE 1: PYTORCH (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 2: TENSORSTORE (BASIC): saving
+======================================================================
+saving:   0%|          | 0/255 [00:00<?, ?it/s]error saving model.embed_tokens.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.norm.weight: Got unsupported ScalarType BFloat16
+error saving lm_head.weight: Got unsupported ScalarType BFloat16
+saving: 100%|██████████| 255/255 [00:00<00:00, 3587.83it/s]
+✓ saved 0 parameters in 73.4 ms
+✓ total size: 0.00 b
+
+PHASE 2: loading
+loading: 0it [00:00, ?it/s]loading: 0it [00:00, ?it/s]
+✓ loaded 0 parameters in 1.6 ms
+
+======================================================================
+PHASE 3: T5X-OPTIMIZED (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4A: CONCURRENCY ONLY (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4B: 1 MIB CHUNKS (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4C: COMPRESSION ONLY (SKIPPED)
+======================================================================
+
+======================================================================
+RESULTS SUMMARY
+======================================================================
+Traceback (most recent call last):
+  File "/mnt/common/zchowdhury1/tensorstore/llama-work/cluster/src/run_all_phases.py", line 401, in <module>
+    results['phases']['pytorch']['save_time_ms'],
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'pytorch'
+
+==========================================
+running with chunk = 64
+==========================================
+✓ detected model default dtype: bfloat16 (torch_dtype='bfloat16' from config.json)
+
+auto-detected dtype: bfloat16
+phases to run: ['2']
+======================================================================
+6-WAY CHECKPOINTING COMPARISON: meta-llama/Llama-3.2-3B-Instruct
+model type: llama
+run id: 20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk64_Llama-3.2-3B-Instruct
+dtype: bfloat16
+clear cache: False
+======================================================================
+
+model checkpoints directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk64_Llama-3.2-3B-Instruct
+results directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk64_Llama-3.2-3B-Instruct
+plots directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk64_Llama-3.2-3B-Instruct/plots
+
+loading model...
+using cache: /mnt/common/zchowdhury1/huggingface_cache
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  5.06it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  7.40it/s]
+✓ model loaded: 3212.7m parameters
+
+======================================================================
+PHASE 1: PYTORCH (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 2: TENSORSTORE (BASIC): saving
+======================================================================
+saving:   0%|          | 0/255 [00:00<?, ?it/s]error saving model.embed_tokens.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.norm.weight: Got unsupported ScalarType BFloat16
+error saving lm_head.weight: Got unsupported ScalarType BFloat16
+saving: 100%|██████████| 255/255 [00:00<00:00, 3796.98it/s]
+✓ saved 0 parameters in 69.4 ms
+✓ total size: 0.00 b
+
+PHASE 2: loading
+loading: 0it [00:00, ?it/s]loading: 0it [00:00, ?it/s]
+✓ loaded 0 parameters in 1.4 ms
+
+======================================================================
+PHASE 3: T5X-OPTIMIZED (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4A: CONCURRENCY ONLY (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4B: 1 MIB CHUNKS (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4C: COMPRESSION ONLY (SKIPPED)
+======================================================================
+
+======================================================================
+RESULTS SUMMARY
+======================================================================
+Traceback (most recent call last):
+  File "/mnt/common/zchowdhury1/tensorstore/llama-work/cluster/src/run_all_phases.py", line 401, in <module>
+    results['phases']['pytorch']['save_time_ms'],
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'pytorch'
+
+==========================================
+running with chunk = 256
+==========================================
+✓ detected model default dtype: bfloat16 (torch_dtype='bfloat16' from config.json)
+
+auto-detected dtype: bfloat16
+phases to run: ['2']
+======================================================================
+6-WAY CHECKPOINTING COMPARISON: meta-llama/Llama-3.2-3B-Instruct
+model type: llama
+run id: 20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk256_Llama-3.2-3B-Instruct
+dtype: bfloat16
+clear cache: False
+======================================================================
+
+model checkpoints directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk256_Llama-3.2-3B-Instruct
+results directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk256_Llama-3.2-3B-Instruct
+plots directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/chunk256_Llama-3.2-3B-Instruct/plots
+
+loading model...
+using cache: /mnt/common/zchowdhury1/huggingface_cache
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  4.73it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  6.93it/s]
+✓ model loaded: 3212.7m parameters
+
+======================================================================
+PHASE 1: PYTORCH (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 2: TENSORSTORE (BASIC): saving
+======================================================================
+saving:   0%|          | 0/255 [00:00<?, ?it/s]error saving model.embed_tokens.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.0.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.1.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.2.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.3.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.4.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.5.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.6.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.7.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.8.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.9.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.10.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.11.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.12.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.13.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.14.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.15.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.16.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.17.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.18.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.19.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.20.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.21.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.22.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.23.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.24.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.25.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.26.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.q_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.k_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.v_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.self_attn.o_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.gate_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.up_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.mlp.down_proj.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.input_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.layers.27.post_attention_layernorm.weight: Got unsupported ScalarType BFloat16
+error saving model.norm.weight: Got unsupported ScalarType BFloat16
+error saving lm_head.weight: Got unsupported ScalarType BFloat16
+saving: 100%|██████████| 255/255 [00:00<00:00, 3585.31it/s]
+✓ saved 0 parameters in 73.5 ms
+✓ total size: 0.00 b
+
+PHASE 2: loading
+loading: 0it [00:00, ?it/s]loading: 0it [00:00, ?it/s]
+✓ loaded 0 parameters in 1.5 ms
+
+======================================================================
+PHASE 3: T5X-OPTIMIZED (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4A: CONCURRENCY ONLY (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4B: 1 MIB CHUNKS (SKIPPED)
+======================================================================
+
+======================================================================
+PHASE 4C: COMPRESSION ONLY (SKIPPED)
+======================================================================
+
+======================================================================
+RESULTS SUMMARY
+======================================================================
+Traceback (most recent call last):
+  File "/mnt/common/zchowdhury1/tensorstore/llama-work/cluster/src/run_all_phases.py", line 401, in <module>
+    results['phases']['pytorch']['save_time_ms'],
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'pytorch'
+
+==========================================
+sweep complete!
+==========================================
+
+generating comparison plots...
+======================================================================
+parameter sweep comparison: chunk
+sweep id: 20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct
+values: ['1', '4', '16', '64', '256']
+======================================================================
+✗ missing results for chunk=1
+✗ missing results for chunk=4
+✗ missing results for chunk=16
+✗ missing results for chunk=64
+✗ missing results for chunk=256
+error: no results found
+
+results saved in: results/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/
+comparison plots: results/20251204_062006_sweep_chunk_Llama-3.2-3B-Instruct/sweep_comparison.png

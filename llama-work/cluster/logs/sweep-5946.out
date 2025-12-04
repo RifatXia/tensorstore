@@ -1,0 +1,1830 @@
+==========================================
+parameter sweep - cluster run
+==========================================
+job started: Thu Dec  4 06:42:24 AM CST 2025
+node: ares-comp-11
+job id: 5946
+==========================================
+==========================================
+parameter sweep: chunk
+==========================================
+loading modules...
+activating venv...
+python version: Python 3.11.9
+
+
+configuration:
+  sweep id: 20251204_064229_sweep_chunk_open_llama_3b
+  phases: 2
+  device: cpu
+
+running 6 experiments...
+
+==========================================
+running with chunk = 1
+==========================================
+✓ detected model default dtype: float16 (torch_dtype='float16' from config.json)
+
+auto-detected dtype: float16
+======================================================================
+TENSORSTORE SWEEP: openlm-research/open_llama_3b
+model type: llama
+run id: 20251204_064229_sweep_chunk_open_llama_3b/chunk1_open_llama_3b
+dtype: float16
+chunk size: 1 MB
+concurrency: default (tensorstore)
+clear cache: False
+======================================================================
+
+model checkpoints directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_064229_sweep_chunk_open_llama_3b/chunk1_open_llama_3b
+results directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk1_open_llama_3b
+
+loading model: openlm-research/open_llama_3b
+device: cpu
+✓ model loaded: 3426.5m parameters
+
+======================================================================
+PHASE 2: TENSORSTORE (BASIC)
+======================================================================
+
+======================================================================
+TENSORSTORE: saving
+======================================================================
+saving:   0%|          | 0/237 [00:00<?, ?it/s]error saving model.embed_tokens.weight: object of type 'tensorstore.Context' has no len()
+saving:   0%|          | 1/237 [00:00<00:38,  6.13it/s]error saving model.layers.0.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+saving:  64%|██████▍   | 152/237 [00:00<00:00, 706.50it/s]error saving model.layers.16.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.norm.weight: object of type 'tensorstore.Context' has no len()
+error saving lm_head.weight: object of type 'tensorstore.Context' has no len()
+saving: 100%|██████████| 237/237 [00:00<00:00, 740.93it/s]
+✓ saved 0 parameters in 330.8 ms
+✓ total size: 0.00 b
+
+TENSORSTORE: loading
+loading: 0it [00:00, ?it/s]loading: 0it [00:00, ?it/s]
+✓ loaded 0 parameters in 1.5 ms
+
+======================================================================
+TENSORSTORE RESULTS
+======================================================================
+save time: 330.8 ms
+load time: 1.5 ms
+file size: 0.00 b
+parameters: 0
+
+======================================================================
+GENERATING PLOTS
+======================================================================
+✓ plot saved: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk1_open_llama_3b/plots/comparison.png
+
+======================================================================
+SWEEP RUN COMPLETE
+======================================================================
+
+results: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk1_open_llama_3b/all_phases_results.json
+plots: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk1_open_llama_3b/plots
+checkpoints: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_064229_sweep_chunk_open_llama_3b/chunk1_open_llama_3b
+
+======================================================================
+
+==========================================
+running with chunk = 4
+==========================================
+✓ detected model default dtype: float16 (torch_dtype='float16' from config.json)
+
+auto-detected dtype: float16
+======================================================================
+TENSORSTORE SWEEP: openlm-research/open_llama_3b
+model type: llama
+run id: 20251204_064229_sweep_chunk_open_llama_3b/chunk4_open_llama_3b
+dtype: float16
+chunk size: 4 MB
+concurrency: default (tensorstore)
+clear cache: False
+======================================================================
+
+model checkpoints directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_064229_sweep_chunk_open_llama_3b/chunk4_open_llama_3b
+results directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk4_open_llama_3b
+
+loading model: openlm-research/open_llama_3b
+device: cpu
+✓ model loaded: 3426.5m parameters
+
+======================================================================
+PHASE 2: TENSORSTORE (BASIC)
+======================================================================
+
+======================================================================
+TENSORSTORE: saving
+======================================================================
+saving:   0%|          | 0/237 [00:00<?, ?it/s]error saving model.embed_tokens.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+saving:  76%|███████▌  | 179/237 [00:00<00:00, 1782.85it/s]error saving model.layers.19.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.norm.weight: object of type 'tensorstore.Context' has no len()
+error saving lm_head.weight: object of type 'tensorstore.Context' has no len()
+saving: 100%|██████████| 237/237 [00:00<00:00, 1785.43it/s]
+✓ saved 0 parameters in 141.2 ms
+✓ total size: 0.00 b
+
+TENSORSTORE: loading
+loading: 0it [00:00, ?it/s]loading: 0it [00:00, ?it/s]
+✓ loaded 0 parameters in 1.5 ms
+
+======================================================================
+TENSORSTORE RESULTS
+======================================================================
+save time: 141.2 ms
+load time: 1.5 ms
+file size: 0.00 b
+parameters: 0
+
+======================================================================
+GENERATING PLOTS
+======================================================================
+✓ plot saved: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk4_open_llama_3b/plots/comparison.png
+
+======================================================================
+SWEEP RUN COMPLETE
+======================================================================
+
+results: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk4_open_llama_3b/all_phases_results.json
+plots: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk4_open_llama_3b/plots
+checkpoints: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_064229_sweep_chunk_open_llama_3b/chunk4_open_llama_3b
+
+======================================================================
+
+==========================================
+running with chunk = 16
+==========================================
+✓ detected model default dtype: float16 (torch_dtype='float16' from config.json)
+
+auto-detected dtype: float16
+======================================================================
+TENSORSTORE SWEEP: openlm-research/open_llama_3b
+model type: llama
+run id: 20251204_064229_sweep_chunk_open_llama_3b/chunk16_open_llama_3b
+dtype: float16
+chunk size: 16 MB
+concurrency: default (tensorstore)
+clear cache: False
+======================================================================
+
+model checkpoints directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_064229_sweep_chunk_open_llama_3b/chunk16_open_llama_3b
+results directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk16_open_llama_3b
+
+loading model: openlm-research/open_llama_3b
+device: cpu
+✓ model loaded: 3426.5m parameters
+
+======================================================================
+PHASE 2: TENSORSTORE (BASIC)
+======================================================================
+
+======================================================================
+TENSORSTORE: saving
+======================================================================
+saving:   0%|          | 0/237 [00:00<?, ?it/s]error saving model.embed_tokens.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.norm.weight: object of type 'tensorstore.Context' has no len()
+error saving lm_head.weight: object of type 'tensorstore.Context' has no len()
+saving: 100%|██████████| 237/237 [00:00<00:00, 2355.55it/s]saving: 100%|██████████| 237/237 [00:00<00:00, 2335.79it/s]
+✓ saved 0 parameters in 109.6 ms
+✓ total size: 0.00 b
+
+TENSORSTORE: loading
+loading: 0it [00:00, ?it/s]loading: 0it [00:00, ?it/s]
+✓ loaded 0 parameters in 1.5 ms
+
+======================================================================
+TENSORSTORE RESULTS
+======================================================================
+save time: 109.6 ms
+load time: 1.5 ms
+file size: 0.00 b
+parameters: 0
+
+======================================================================
+GENERATING PLOTS
+======================================================================
+✓ plot saved: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk16_open_llama_3b/plots/comparison.png
+
+======================================================================
+SWEEP RUN COMPLETE
+======================================================================
+
+results: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk16_open_llama_3b/all_phases_results.json
+plots: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk16_open_llama_3b/plots
+checkpoints: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_064229_sweep_chunk_open_llama_3b/chunk16_open_llama_3b
+
+======================================================================
+
+==========================================
+running with chunk = 64
+==========================================
+✓ detected model default dtype: float16 (torch_dtype='float16' from config.json)
+
+auto-detected dtype: float16
+======================================================================
+TENSORSTORE SWEEP: openlm-research/open_llama_3b
+model type: llama
+run id: 20251204_064229_sweep_chunk_open_llama_3b/chunk64_open_llama_3b
+dtype: float16
+chunk size: 64 MB
+concurrency: default (tensorstore)
+clear cache: False
+======================================================================
+
+model checkpoints directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_064229_sweep_chunk_open_llama_3b/chunk64_open_llama_3b
+results directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk64_open_llama_3b
+
+loading model: openlm-research/open_llama_3b
+device: cpu
+✓ model loaded: 3426.5m parameters
+
+======================================================================
+PHASE 2: TENSORSTORE (BASIC)
+======================================================================
+
+======================================================================
+TENSORSTORE: saving
+======================================================================
+saving:   0%|          | 0/237 [00:00<?, ?it/s]error saving model.embed_tokens.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.norm.weight: object of type 'tensorstore.Context' has no len()
+error saving lm_head.weight: object of type 'tensorstore.Context' has no len()
+saving: 100%|██████████| 237/237 [00:00<00:00, 2782.83it/s]
+✓ saved 0 parameters in 93.6 ms
+✓ total size: 0.00 b
+
+TENSORSTORE: loading
+loading: 0it [00:00, ?it/s]loading: 0it [00:00, ?it/s]
+✓ loaded 0 parameters in 1.4 ms
+
+======================================================================
+TENSORSTORE RESULTS
+======================================================================
+save time: 93.6 ms
+load time: 1.4 ms
+file size: 0.00 b
+parameters: 0
+
+======================================================================
+GENERATING PLOTS
+======================================================================
+✓ plot saved: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk64_open_llama_3b/plots/comparison.png
+
+======================================================================
+SWEEP RUN COMPLETE
+======================================================================
+
+results: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk64_open_llama_3b/all_phases_results.json
+plots: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk64_open_llama_3b/plots
+checkpoints: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_064229_sweep_chunk_open_llama_3b/chunk64_open_llama_3b
+
+======================================================================
+
+==========================================
+running with chunk = 128
+==========================================
+✓ detected model default dtype: float16 (torch_dtype='float16' from config.json)
+
+auto-detected dtype: float16
+======================================================================
+TENSORSTORE SWEEP: openlm-research/open_llama_3b
+model type: llama
+run id: 20251204_064229_sweep_chunk_open_llama_3b/chunk128_open_llama_3b
+dtype: float16
+chunk size: 128 MB
+concurrency: default (tensorstore)
+clear cache: False
+======================================================================
+
+model checkpoints directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_064229_sweep_chunk_open_llama_3b/chunk128_open_llama_3b
+results directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk128_open_llama_3b
+
+loading model: openlm-research/open_llama_3b
+device: cpu
+✓ model loaded: 3426.5m parameters
+
+======================================================================
+PHASE 2: TENSORSTORE (BASIC)
+======================================================================
+
+======================================================================
+TENSORSTORE: saving
+======================================================================
+saving:   0%|          | 0/237 [00:00<?, ?it/s]error saving model.embed_tokens.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.norm.weight: object of type 'tensorstore.Context' has no len()
+error saving lm_head.weight: object of type 'tensorstore.Context' has no len()
+saving: 100%|██████████| 237/237 [00:00<00:00, 2838.87it/s]
+✓ saved 0 parameters in 91.8 ms
+✓ total size: 0.00 b
+
+TENSORSTORE: loading
+loading: 0it [00:00, ?it/s]loading: 0it [00:00, ?it/s]
+✓ loaded 0 parameters in 1.5 ms
+
+======================================================================
+TENSORSTORE RESULTS
+======================================================================
+save time: 91.8 ms
+load time: 1.5 ms
+file size: 0.00 b
+parameters: 0
+
+======================================================================
+GENERATING PLOTS
+======================================================================
+✓ plot saved: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk128_open_llama_3b/plots/comparison.png
+
+======================================================================
+SWEEP RUN COMPLETE
+======================================================================
+
+results: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk128_open_llama_3b/all_phases_results.json
+plots: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk128_open_llama_3b/plots
+checkpoints: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_064229_sweep_chunk_open_llama_3b/chunk128_open_llama_3b
+
+======================================================================
+
+==========================================
+running with chunk = 256
+==========================================
+✓ detected model default dtype: float16 (torch_dtype='float16' from config.json)
+
+auto-detected dtype: float16
+======================================================================
+TENSORSTORE SWEEP: openlm-research/open_llama_3b
+model type: llama
+run id: 20251204_064229_sweep_chunk_open_llama_3b/chunk256_open_llama_3b
+dtype: float16
+chunk size: 256 MB
+concurrency: default (tensorstore)
+clear cache: False
+======================================================================
+
+model checkpoints directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_064229_sweep_chunk_open_llama_3b/chunk256_open_llama_3b
+results directory: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk256_open_llama_3b
+
+loading model: openlm-research/open_llama_3b
+device: cpu
+✓ model loaded: 3426.5m parameters
+
+======================================================================
+PHASE 2: TENSORSTORE (BASIC)
+======================================================================
+
+======================================================================
+TENSORSTORE: saving
+======================================================================
+saving:   0%|          | 0/237 [00:00<?, ?it/s]error saving model.embed_tokens.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.0.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.1.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.2.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.3.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.4.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.5.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.6.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.7.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.8.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.9.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.10.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.11.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.12.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.13.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.14.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.15.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.16.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.17.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.18.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.19.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.20.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.21.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.22.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.23.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.24.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.q_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.k_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.v_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.self_attn.o_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.gate_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.up_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.mlp.down_proj.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.input_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.layers.25.post_attention_layernorm.weight: object of type 'tensorstore.Context' has no len()
+error saving model.norm.weight: object of type 'tensorstore.Context' has no len()
+error saving lm_head.weight: object of type 'tensorstore.Context' has no len()
+saving: 100%|██████████| 237/237 [00:00<00:00, 2694.68it/s]
+✓ saved 0 parameters in 96.2 ms
+✓ total size: 0.00 b
+
+TENSORSTORE: loading
+loading: 0it [00:00, ?it/s]loading: 0it [00:00, ?it/s]
+✓ loaded 0 parameters in 1.5 ms
+
+======================================================================
+TENSORSTORE RESULTS
+======================================================================
+save time: 96.2 ms
+load time: 1.5 ms
+file size: 0.00 b
+parameters: 0
+
+======================================================================
+GENERATING PLOTS
+======================================================================
+✓ plot saved: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk256_open_llama_3b/plots/comparison.png
+
+======================================================================
+SWEEP RUN COMPLETE
+======================================================================
+
+results: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk256_open_llama_3b/all_phases_results.json
+plots: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/results/20251204_064229_sweep_chunk_open_llama_3b/chunk256_open_llama_3b/plots
+checkpoints: /mnt/common/zchowdhury1/tensorstore/llama-work/cluster/saved_models/20251204_064229_sweep_chunk_open_llama_3b/chunk256_open_llama_3b
+
+======================================================================
+
+==========================================
+sweep complete!
+==========================================
+
+generating comparison plots...
+======================================================================
+parameter sweep comparison: chunk
+sweep id: 20251204_064229_sweep_chunk_open_llama_3b
+values: ['1', '4', '16', '64', '128', '256']
+======================================================================
+✗ missing results for chunk=1
+✗ missing results for chunk=4
+✗ missing results for chunk=16
+✗ missing results for chunk=64
+✗ missing results for chunk=128
+✗ missing results for chunk=256
+error: no results found
+
+results saved in: results/20251204_064229_sweep_chunk_open_llama_3b/
+comparison plots: results/20251204_064229_sweep_chunk_open_llama_3b/sweep_comparison.png

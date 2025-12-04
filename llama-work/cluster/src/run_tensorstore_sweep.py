@@ -26,7 +26,6 @@ parser.add_argument('--concurrency', type=int, default=None, help='tensorstore c
 parser.add_argument('--device', type=str, default='cpu', help='device to use (default: cpu)')
 parser.add_argument('--dtype', type=str, default='auto', choices=['auto', 'float16', 'float32', 'bfloat16'], help='data type for model and storage (default: auto - uses model default)')
 parser.add_argument('--no-clear-cache', action='store_true', help='disable cache clearing (enabled by default)')
-parser.add_argument('--skip-plots', action='store_true', help='skip plot generation')
 args = parser.parse_args()
 
 # set environment variables before importing config
@@ -71,6 +70,7 @@ os.makedirs(MODEL_DIR, exist_ok=True)
 os.makedirs(RESULTS_DIR, exist_ok=True)
 print(f"\nmodel checkpoints directory: {MODEL_DIR}")
 print(f"results directory: {RESULTS_DIR}")
+print(f"note: individual plots skipped, use compare_sweep.py for final comparison")
 
 # load model
 print(f"\nloading model: {MODEL_NAME}")
@@ -248,63 +248,9 @@ results_path = os.path.join(RESULTS_DIR, "all_phases_results.json")
 with open(results_path, 'w') as f:
     json.dump(results, f, indent=2)
 
-# generate plots if not skipped
-if not args.skip_plots:
-    print(f"\n{'='*70}")
-    print("GENERATING PLOTS")
-    print(f"{'='*70}")
-    
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        
-        os.makedirs(PLOTS_DIR, exist_ok=True)
-        
-        # create simple bar chart for tensorstore metrics
-        fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 4))
-        color = '#2E86AB'
-        
-        # save time
-        ax1.bar(['TensorStore'], [ts_save_time], color=color, alpha=0.7, edgecolor='black')
-        ax1.set_ylabel('Time (ms)', fontweight='bold')
-        ax1.set_title('Save Time', fontweight='bold')
-        ax1.text(0, ts_save_time, f'{ts_save_time:.0f}ms', ha='center', va='bottom', fontweight='bold')
-        ax1.grid(alpha=0.3, axis='y')
-        
-        # load time
-        ax2.bar(['TensorStore'], [ts_load_time], color=color, alpha=0.7, edgecolor='black')
-        ax2.set_ylabel('Time (ms)', fontweight='bold')
-        ax2.set_title('Load Time', fontweight='bold')
-        ax2.text(0, ts_load_time, f'{ts_load_time:.0f}ms', ha='center', va='bottom', fontweight='bold')
-        ax2.grid(alpha=0.3, axis='y')
-        
-        # file size
-        size_gb = ts_size / (1024**3)
-        ax3.bar(['TensorStore'], [size_gb], color=color, alpha=0.7, edgecolor='black')
-        ax3.set_ylabel('Size (GB)', fontweight='bold')
-        ax3.set_title('File Size', fontweight='bold')
-        ax3.text(0, size_gb, f'{size_gb:.2f}GB', ha='center', va='bottom', fontweight='bold')
-        ax3.grid(alpha=0.3, axis='y')
-        
-        # add overall title
-        config_str = f"Chunk: {args.chunk_size}MB, Dtype: {DTYPE}, Concurrency: {args.concurrency if args.concurrency else 'default'}"
-        fig.suptitle(f'TensorStore Performance - {config_str}', fontsize=14, fontweight='bold')
-        
-        plt.tight_layout()
-        
-        plot_path = os.path.join(PLOTS_DIR, "comparison.png")
-        plt.savefig(plot_path, dpi=300, bbox_inches='tight')
-        print(f"✓ plot saved: {plot_path}")
-        
-    except Exception as e:
-        print(f"warning: could not generate plots: {e}")
-
 print(f"\n{'='*70}")
 print("SWEEP RUN COMPLETE")
 print(f"{'='*70}")
 print(f"\nresults: {results_path}")
-if not args.skip_plots:
-    print(f"plots: {PLOTS_DIR}")
 print(f"checkpoints: {MODEL_DIR}")
 print(f"\n{'='*70}")

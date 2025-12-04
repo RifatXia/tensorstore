@@ -2,7 +2,11 @@
 # format: saved_models/<timestamp>_<model_name>/
 saved_models/
 
-# slurm output files
+# results and plots (generated data)
+results/
+
+# log files
+logs/
 slurm-*.out
 
 .env

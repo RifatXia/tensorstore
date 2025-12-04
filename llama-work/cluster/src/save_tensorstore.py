@@ -8,8 +8,8 @@ import tensorstore as ts
 import numpy as np
 from tqdm import tqdm
 from load_model import load_model
-from config import SAVED_MODELS_DIR, MODEL_ID, CHUNK_SIZE_MB
-from utils import Timer, format_size, get_directory_size, calculate_chunk_shape
+from config import SAVED_MODELS_DIR, MODEL_ID, CHUNK_SIZE_MB, DEVICE
+from utils import Timer, format_size, get_directory_size, calculate_chunk_shape, clear_system_cache, clear_gpu_cache
 
 def save_tensorstore(model, use_compression=False, use_concurrency=False, dtype='float16'):
     """save model using tensorstore with zarr format"""
@@ -37,6 +37,11 @@ def save_tensorstore(model, use_compression=False, use_concurrency=False, dtype=
         'bfloat16': (lambda x: x.detach().cpu().float().numpy(), '<f4')  # convert bfloat16 to float32
     }
     convert_fn, ts_dtype = dtype_conversion.get(dtype, dtype_conversion['float16'])
+    
+    # clear cache before save
+    clear_system_cache()
+    if DEVICE == 'cuda':
+        clear_gpu_cache()
     
     try:
         with Timer("tensorstore save"):

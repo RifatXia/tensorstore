@@ -123,20 +123,12 @@ def save_tensorstore(model_state, save_dir, chunk_size_mb=64, concurrency_limit=
     saved_count = 0
     
     # dtype conversion based on global DTYPE setting
-    # note: convert bfloat16 to float32 since zarr doesn't support bfloat16 natively
-    if DTYPE == 'float16':
-        convert_fn = lambda x: x.detach().cpu().half().numpy()
-        zarr_dtype = ts.float16
-    elif DTYPE == 'float32':
-        convert_fn = lambda x: x.detach().cpu().float().numpy()
-        zarr_dtype = ts.float32
-    elif DTYPE == 'bfloat16':
-        # convert bfloat16 to float32 for storage
-        convert_fn = lambda x: x.detach().cpu().float().numpy()
-        zarr_dtype = ts.float32
-    else:
-        convert_fn = lambda x: x.detach().cpu().half().numpy()
-        zarr_dtype = ts.float16
+    dtype_conversion = {
+        'float16': (lambda x: x.detach().cpu().half().numpy(), '<f2'),
+        'float32': (lambda x: x.detach().cpu().float().numpy(), '<f4'),
+        'bfloat16': (lambda x: x.detach().cpu().float().numpy(), '<f4')  # convert bfloat16 to float32
+    }
+    convert_fn, zarr_dtype = dtype_conversion[DTYPE]
     
     for param_name, param_tensor in tqdm(model_state.items(), desc="saving"):
         try:

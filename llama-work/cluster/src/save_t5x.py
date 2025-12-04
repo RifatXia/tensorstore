@@ -30,19 +30,13 @@ def save_t5x_tensorstore(model, dtype='float16'):
     # high concurrency context
     context = ts.Context({'file_io_concurrency': {'limit': CONCURRENCY_LIMIT}})
     
-    # dtype conversion - convert bfloat16 to float32 for storage
-    if dtype == 'float16':
-        convert_fn = lambda x: x.detach().cpu().half().numpy()
-        ts_dtype = ts.float16
-    elif dtype == 'float32':
-        convert_fn = lambda x: x.detach().cpu().float().numpy()
-        ts_dtype = ts.float32
-    elif dtype == 'bfloat16':
-        convert_fn = lambda x: x.detach().cpu().float().numpy()
-        ts_dtype = ts.float32
-    else:
-        convert_fn = lambda x: x.detach().cpu().half().numpy()
-        ts_dtype = ts.float16
+    # dtype conversion
+    dtype_conversion = {
+        'float16': (lambda x: x.detach().cpu().half().numpy(), '<f2'),
+        'float32': (lambda x: x.detach().cpu().float().numpy(), '<f4'),
+        'bfloat16': (lambda x: x.detach().cpu().float().numpy(), '<f4')  # convert bfloat16 to float32
+    }
+    convert_fn, ts_dtype = dtype_conversion.get(dtype, dtype_conversion['float16'])
     
     try:
         with Timer("t5x-tensorstore save"):

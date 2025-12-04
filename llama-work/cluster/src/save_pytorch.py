@@ -4,8 +4,8 @@ import sys
 import torch
 import os
 from load_model import load_model
-from config import MODEL_DIR, MODEL_ID
-from utils import Timer, format_size, get_directory_size
+from config import MODEL_DIR, MODEL_ID, DEVICE
+from utils import Timer, format_size, get_directory_size, clear_system_cache, clear_gpu_cache
 
 def save_pytorch(model):
     """save model using pytorch's native serialization"""
@@ -15,6 +15,11 @@ def save_pytorch(model):
     print("\n" + "=" * 50)
     print("phase 1: pytorch saving")
     print("=" * 50)
+    
+    # clear cache before save
+    clear_system_cache()
+    if DEVICE == 'cuda':
+        clear_gpu_cache()
     
     try:
         with Timer("pytorch save"):
@@ -34,6 +39,11 @@ def load_pytorch(save_path, model):
     print("\n" + "=" * 50)
     print("phase 1: pytorch loading")
     print("=" * 50)
+    
+    # clear cache before load
+    clear_system_cache()
+    if DEVICE == 'cuda':
+        clear_gpu_cache()
     
     try:
         with Timer("pytorch load"):

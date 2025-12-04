@@ -25,7 +25,7 @@ parser.add_argument('--chunk-size', type=int, default=64, help='chunk size in me
 parser.add_argument('--concurrency', type=int, default=None, help='tensorstore concurrency limit (default: tensorstore default, unlimited)')
 parser.add_argument('--device', type=str, default='cpu', help='device to use (default: cpu)')
 parser.add_argument('--dtype', type=str, default='auto', choices=['auto', 'float16', 'float32', 'bfloat16'], help='data type for model and storage (default: auto - uses model default)')
-parser.add_argument('--clear-cache', action='store_true', help='clear system cache before each operation for accurate timing')
+parser.add_argument('--no-clear-cache', action='store_true', help='disable cache clearing (enabled by default)')
 parser.add_argument('--skip-plots', action='store_true', help='skip plot generation')
 args = parser.parse_args()
 
@@ -56,12 +56,12 @@ print(f"run id: {RUN_ID}")
 print(f"dtype: {DTYPE}")
 print(f"chunk size: {args.chunk_size} MB")
 print(f"concurrency: {args.concurrency if args.concurrency else 'default (tensorstore)'}")
-print(f"clear cache: {args.clear_cache}")
+print(f"clear cache: {not args.no_clear_cache}")
 print("="*70)
 
-# cache clearing helper
+# cache clearing helper - enabled by default
 def clear_caches_if_enabled():
-    if args.clear_cache:
+    if not args.no_clear_cache:
         clear_system_cache()
         if DEVICE == 'cuda':
             clear_gpu_cache()

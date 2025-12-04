@@ -2,20 +2,18 @@
 
 import sys
 import os
-import json
 import torch
 import tensorstore as ts
 import numpy as np
 from tqdm import tqdm
 from load_model import load_model
-from config import MODEL_DIR, MODEL_ID, T5X_CHUNK_SIZE_MB, CONCURRENCY_LIMIT
-from utils import Timer, format_size, get_directory_size, calculate_chunk_shape
+from config import SAVED_MODELS_DIR, MODEL_ID, T5X_CHUNK_SIZE_MB, CONCURRENCY_LIMIT, DEVICE
+from utils import Timer, format_size, get_directory_size, calculate_chunk_shape, clear_system_cache, clear_gpu_cache
 
 def save_t5x_tensorstore(model, dtype='float16'):
     """save model using t5x-optimized tensorstore approach"""
-    save_dir = os.path.join(MODEL_DIR, "t5x_tensorstore")
+    save_dir = os.path.join(SAVED_MODELS_DIR, MODEL_ID, "t5x_tensorstore")
     os.makedirs(save_dir, exist_ok=True)
-    
     print("\n" + "=" * 50)
     print("phase 3: t5x-optimized tensorstore saving")
     print(f"dtype: {dtype}")
@@ -37,6 +35,11 @@ def save_t5x_tensorstore(model, dtype='float16'):
         'bfloat16': (lambda x: x.detach().cpu().float().numpy(), '<f4')  # convert bfloat16 to float32
     }
     convert_fn, ts_dtype = dtype_conversion.get(dtype, dtype_conversion['float16'])
+    
+    # clear cache before save
+    clear_system_cache()
+    if DEVICE == 'cuda':
+        clear_gpu_cache()
     
     try:
         with Timer("t5x-tensorstore save"):

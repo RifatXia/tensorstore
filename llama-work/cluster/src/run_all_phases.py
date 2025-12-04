@@ -29,7 +29,7 @@ parser.add_argument('--concurrency', type=int, default=None, help='tensorstore c
 parser.add_argument('--device', type=str, default='cpu', help='device to use (default: cpu)')
 parser.add_argument('--dtype', type=str, default='auto', choices=['auto', 'float16', 'float32', 'bfloat16'], help='data type for model and storage (default: auto - uses model default)')
 parser.add_argument('--skip-plots', action='store_true', help='skip plot generation')
-parser.add_argument('--clear-cache', action='store_true', help='clear system cache before each operation for accurate timing')
+parser.add_argument('--no-clear-cache', action='store_true', help='disable cache clearing (enabled by default)')
 args = parser.parse_args()
 
 # update config with command line args
@@ -63,13 +63,13 @@ print(f"6-WAY CHECKPOINTING COMPARISON: {MODEL_NAME}")
 print(f"model type: {MODEL_TYPE}")
 print(f"run id: {RUN_ID}")
 print(f"dtype: {DTYPE}")
-print(f"clear cache: {args.clear_cache}")
+print(f"clear cache: {not args.no_clear_cache}")
 print("="*70)
 
-# helper function for cache clearing
+# helper function for cache clearing - enabled by default
 def clear_caches_if_enabled():
     """clear system and gpu caches if enabled"""
-    if args.clear_cache:
+    if not args.no_clear_cache:
         clear_system_cache()
         if DEVICE == 'cuda':
             clear_gpu_cache()

@@ -1,14 +1,15 @@
 #!/bin/bash
 
-# parameter sweep script - compare different chunk sizes or dtypes
+# parameter sweep script - compare different chunk sizes, dtypes, or concurrency
 #
 # usage:
 #   bash run_sweep.sh chunk 1,4,16,64                       # sweep chunk sizes
 #   bash run_sweep.sh dtype float16,bfloat16,float32        # sweep dtypes
+#   bash run_sweep.sh concurrency 1,4,16,64,128             # sweep concurrency
 #   MODEL_NAME="Qwen/Qwen2.5-7B" bash run_sweep.sh chunk 1,4,16,64
 #
 # arguments:
-#   $1 - parameter to sweep: 'chunk' or 'dtype'
+#   $1 - parameter to sweep: 'chunk', 'dtype', or 'concurrency'
 #   $2 - comma-separated values to test
 #
 # environment variables:
@@ -18,11 +19,12 @@
 #   HF_TOKEN        - huggingface token for private/gated models (optional)
 
 if [ $# -lt 2 ]; then
-    echo "usage: bash run_sweep.sh <chunk|dtype> <comma-separated-values>"
+    echo "usage: bash run_sweep.sh <chunk|dtype|concurrency> <comma-separated-values>"
     echo ""
     echo "examples:"
     echo "  bash run_sweep.sh chunk 1,4,16,64"
     echo "  bash run_sweep.sh dtype float16,bfloat16,float32"
+    echo "  bash run_sweep.sh concurrency 1,4,16,64,128"
     echo "  MODEL_NAME=\"Qwen/Qwen2.5-7B\" bash run_sweep.sh chunk 1,4,16,64"
     exit 1
 fi
@@ -31,8 +33,8 @@ SWEEP_PARAM=$1
 SWEEP_VALUES=$2
 
 # validate sweep parameter
-if [ "$SWEEP_PARAM" != "chunk" ] && [ "$SWEEP_PARAM" != "dtype" ]; then
-    echo "error: sweep parameter must be 'chunk' or 'dtype'"
+if [ "$SWEEP_PARAM" != "chunk" ] && [ "$SWEEP_PARAM" != "dtype" ] && [ "$SWEEP_PARAM" != "concurrency" ]; then
+    echo "error: sweep parameter must be 'chunk', 'dtype', or 'concurrency'"
     exit 1
 fi
 
@@ -82,9 +84,15 @@ for VALUE in "${VALUES[@]}"; do
     if [ "$SWEEP_PARAM" = "chunk" ]; then
         export CHUNK_SIZE_MB=$VALUE
         export DTYPE="${DTYPE:-auto}"
-    else
+        export CONCURRENCY="${CONCURRENCY:-128}"
+    elif [ "$SWEEP_PARAM" = "dtype" ]; then
         export DTYPE=$VALUE
         export CHUNK_SIZE_MB="${CHUNK_SIZE_MB:-64}"
+        export CONCURRENCY="${CONCURRENCY:-128}"
+    else
+        export CONCURRENCY=$VALUE
+        export CHUNK_SIZE_MB="${CHUNK_SIZE_MB:-64}"
+        export DTYPE="${DTYPE:-auto}"
     fi
     
     # run experiment
@@ -97,6 +105,7 @@ for VALUE in "${VALUES[@]}"; do
             --model "$MODEL_NAME" \
             --phases "$PHASES" \
             --chunk-size "$CHUNK_SIZE_MB" \
+            --concurrency "$CONCURRENCY" \
             --dtype "$DTYPE" \
             --device "$DEVICE" \
             --clear-cache

@@ -11,6 +11,7 @@
 #   MODEL_NAME      - huggingface model name (default: openlm-research/open_llama_3b)
 #   PHASES          - comma-separated phase numbers to run (default: 1,2,3,4a,4b,4c)
 #   CHUNK_SIZE_MB   - chunk size in megabytes (default: 64)
+#   CONCURRENCY     - tensorstore concurrency limit (default: 128)
 #   DTYPE           - data type: auto, float16, float32, bfloat16 (default: auto)
 #   SKIP_PLOTS      - set to 1 to skip plot generation (default: 0)
 #   HF_TOKEN        - huggingface token for private/gated models (optional)
@@ -33,6 +34,7 @@ fi
 export MODEL_NAME="${MODEL_NAME:-openlm-research/open_llama_3b}"
 export PHASES="${PHASES:-1,2,3,4a,4b,4c}"
 export CHUNK_SIZE_MB="${CHUNK_SIZE_MB:-64}"
+export CONCURRENCY="${CONCURRENCY:-128}"
 export DTYPE="${DTYPE:-auto}"
 export DEVICE="cuda"  # force cuda for local gpu
 export SKIP_PLOTS="${SKIP_PLOTS:-0}"
@@ -53,6 +55,7 @@ echo "  model: $MODEL_NAME"
 echo "  run timestamp: $RUN_TIMESTAMP"
 echo "  phases: $PHASES"
 echo "  chunk size: ${CHUNK_SIZE_MB} mb"
+echo "  concurrency: $CONCURRENCY"
 echo "  dtype: $DTYPE"
 echo "  device: $DEVICE (gpu)"
 echo "  skip plots: $SKIP_PLOTS"
@@ -89,6 +92,7 @@ python -u run_all_phases.py \
     --model "$MODEL_NAME" \
     --phases "$PHASES" \
     --chunk-size "$CHUNK_SIZE_MB" \
+    --concurrency "$CONCURRENCY" \
     --dtype "$DTYPE" \
     --device "$DEVICE" \
     $([ "$SKIP_PLOTS" = "1" ] && echo "--skip-plots") \

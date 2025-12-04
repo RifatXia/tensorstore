@@ -14,7 +14,7 @@ sys.stdout.reconfigure(line_buffering=True)
 
 parser = argparse.ArgumentParser(description='compare sweep results')
 parser.add_argument('--sweep-id', type=str, required=True, help='sweep identifier')
-parser.add_argument('--sweep-param', type=str, required=True, choices=['chunk', 'dtype'], help='parameter that was swept')
+parser.add_argument('--sweep-param', type=str, required=True, choices=['chunk', 'dtype', 'concurrency'], help='parameter that was swept')
 parser.add_argument('--sweep-values', type=str, required=True, help='comma-separated values')
 args = parser.parse_args()
 

@@ -207,6 +207,7 @@ ls results/*/plots/*.png
 | `DTYPE` | auto | data type (auto/float16/float32/bfloat16) |
 | `PHASES` | 1,2,3,4a,4b,4c | phases to run |
 | `CHUNK_SIZE_MB` | 64 | chunk size in mb |
+| `CONCURRENCY` | 128 | tensorstore concurrency limit |
 | `DEVICE` | cpu (cluster) / cuda (local) | device (cpu/cuda) |
 | `SKIP_PLOTS` | 0 | skip plots (0/1) |
 | `CLEAR_CACHE` | 1 (local) / 0 (cluster) | clear cache before operations (0/1) |
@@ -287,6 +288,15 @@ bash run_sweep.sh dtype float16,bfloat16,float32
 
 # with specific model
 MODEL_NAME="openlm-research/open_llama_3b" bash run_sweep.sh dtype float16,bfloat16
+```
+
+**compare different concurrency levels:**
+```bash
+# sweep concurrency
+bash run_sweep.sh concurrency 1,4,16,64,128
+
+# with specific model
+MODEL_NAME="Qwen/Qwen2.5-7B" bash run_sweep.sh concurrency 1,4,16,64,128
 ```
 
 **output:**

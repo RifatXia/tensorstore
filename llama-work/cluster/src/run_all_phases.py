@@ -25,6 +25,7 @@ parser = argparse.ArgumentParser(description='run checkpointing phases with conf
 parser.add_argument('--model', type=str, default=None, help='huggingface model name')
 parser.add_argument('--phases', type=str, default='1,2,3,4a,4b,4c', help='comma-separated phases to run (e.g., 1,2,3 or 1,4a,4c)')
 parser.add_argument('--chunk-size', type=int, default=64, help='chunk size in megabytes (default: 64)')
+parser.add_argument('--concurrency', type=int, default=128, help='tensorstore concurrency limit (default: 128)')
 parser.add_argument('--device', type=str, default='cpu', help='device to use (default: cpu)')
 parser.add_argument('--dtype', type=str, default='auto', choices=['auto', 'float16', 'float32', 'bfloat16'], help='data type for model and storage (default: auto - uses model default)')
 parser.add_argument('--skip-plots', action='store_true', help='skip plot generation')
@@ -112,14 +113,14 @@ results = {
 
 # helper function for tensorstore variants
 def save_tensorstore_variant(model_state, save_dir, phase_name, use_compression=False, 
-                             use_concurrency=False, chunk_size_mb=64):
+                             use_concurrency=False, chunk_size_mb=64, concurrency_limit=128):
     """save model using tensorstore with specific configuration"""
     os.makedirs(save_dir, exist_ok=True)
     print(f"\n{'='*70}")
     print(f"{phase_name}: saving")
     print(f"{'='*70}")
     
-    context = ts.Context({'file_io_concurrency': {'limit': 128}}) if use_concurrency else None
+    context = ts.Context({'file_io_concurrency': {'limit': concurrency_limit}}) if use_concurrency else None
     chunk_size_bytes = chunk_size_mb * 1024 * 1024
     
     # clear cache before save
@@ -178,7 +179,7 @@ def save_tensorstore_variant(model_state, save_dir, phase_name, use_compression=
     config = {
         'chunk_size_mb': chunk_size_mb,
         'compression': 'gzip-1' if use_compression else 'none',
-        'concurrency': 128 if use_concurrency else 1,
+        'concurrency': concurrency_limit if use_concurrency else 1,
         'dtype': DTYPE,
         'parameters_saved': saved_count
     }
@@ -263,7 +264,7 @@ if '2' in phases_to_run:
     ts_dir = os.path.join(MODEL_DIR, "tensorstore")
     ts_save_time, ts_size, ts_config = save_tensorstore_variant(
         model_state, ts_dir, "PHASE 2: TENSORSTORE (BASIC)",
-        use_compression=False, use_concurrency=False, chunk_size_mb=args.chunk_size
+        use_compression=False, use_concurrency=False, chunk_size_mb=args.chunk_size, concurrency_limit=args.concurrency
     )
     ts_load_time = load_tensorstore_variant(ts_dir, "PHASE 2")
 
@@ -287,7 +288,7 @@ if '3' in phases_to_run:
     t5x_dir = os.path.join(MODEL_DIR, "t5x_tensorstore")
     t5x_save_time, t5x_size, t5x_config = save_tensorstore_variant(
         model_state, t5x_dir, "PHASE 3: T5X-OPTIMIZED",
-        use_compression=True, use_concurrency=True, chunk_size_mb=args.chunk_size
+        use_compression=True, use_concurrency=True, chunk_size_mb=args.chunk_size, concurrency_limit=args.concurrency
     )
     t5x_load_time = load_tensorstore_variant(t5x_dir, "PHASE 3")
 
@@ -311,7 +312,7 @@ if '4a' in phases_to_run:
     p4a_dir = os.path.join(MODEL_DIR, "phase4a_concurrency")
     p4a_save_time, p4a_size, p4a_config = save_tensorstore_variant(
         model_state, p4a_dir, "PHASE 4A: CONCURRENCY ONLY",
-        use_compression=False, use_concurrency=True, chunk_size_mb=args.chunk_size
+        use_compression=False, use_concurrency=True, chunk_size_mb=args.chunk_size, concurrency_limit=args.concurrency
     )
     p4a_load_time = load_tensorstore_variant(p4a_dir, "PHASE 4A")
 
@@ -335,7 +336,7 @@ if '4b' in phases_to_run:
     p4b_dir = os.path.join(MODEL_DIR, "phase4b_chunks")
     p4b_save_time, p4b_size, p4b_config = save_tensorstore_variant(
         model_state, p4b_dir, "PHASE 4B: 1 MIB CHUNKS",
-        use_compression=False, use_concurrency=False, chunk_size_mb=1
+        use_compression=False, use_concurrency=False, chunk_size_mb=1, concurrency_limit=args.concurrency
     )
     p4b_load_time = load_tensorstore_variant(p4b_dir, "PHASE 4B")
 
@@ -359,7 +360,7 @@ if '4c' in phases_to_run:
     p4c_dir = os.path.join(MODEL_DIR, "phase4c_compression")
     p4c_save_time, p4c_size, p4c_config = save_tensorstore_variant(
         model_state, p4c_dir, "PHASE 4C: COMPRESSION ONLY",
-        use_compression=True, use_concurrency=False, chunk_size_mb=args.chunk_size
+        use_compression=True, use_concurrency=False, chunk_size_mb=args.chunk_size, concurrency_limit=args.concurrency
     )
     p4c_load_time = load_tensorstore_variant(p4c_dir, "PHASE 4C")
 

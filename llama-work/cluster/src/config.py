@@ -1,6 +1,7 @@
 # configuration for model checkpointing project
 
 import os
+from datetime import datetime
 
 # ============================================================================
 # model configuration
@@ -27,15 +28,22 @@ else:
 # extract model identifier for filenames (e.g., "open_llama_3b" from "openlm-research/open_llama_3b")
 MODEL_ID = MODEL_NAME.split('/')[-1] if '/' in MODEL_NAME else MODEL_NAME
 
-# paths - organized by model name
+# timestamp for unique run identification
+RUN_TIMESTAMP = os.environ.get('RUN_TIMESTAMP', datetime.now().strftime('%Y%m%d_%H%M%S'))
+RUN_ID = f"{RUN_TIMESTAMP}_{MODEL_ID}"  # e.g., "20251204_020230_Qwen2.5-7B"
+
+# paths - organized by timestamp and model name
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SAVED_MODELS_DIR = os.path.join(BASE_DIR, "saved_models")
-MODEL_DIR = os.path.join(SAVED_MODELS_DIR, MODEL_ID)  # saved_models/<model_name>/ (checkpoints only)
-RESULTS_DIR = os.path.join(BASE_DIR, "results", MODEL_ID)  # results/<model_name>/ (plots, json, etc.)
-PLOTS_DIR = os.path.join(RESULTS_DIR, "plots")           # results/<model_name>/plots/
+MODEL_DIR = os.path.join(SAVED_MODELS_DIR, RUN_ID)  # saved_models/<timestamp>_<model_name>/ (checkpoints only)
+RESULTS_DIR = os.path.join(BASE_DIR, "results", RUN_ID)  # results/<timestamp>_<model_name>/ (plots, json, etc.)
+PLOTS_DIR = os.path.join(RESULTS_DIR, "plots")           # results/<timestamp>_<model_name>/plots/
 
 # cache configuration (for cluster)
 HF_CACHE = os.environ.get('HF_HOME', '/mnt/common/$USER/huggingface_cache')
+
+# huggingface authentication (for private/gated models)
+HF_TOKEN = os.environ.get('HF_TOKEN', None)  # set via environment variable
 
 # tensorstore configuration
 CHUNK_SIZE_MB = 64

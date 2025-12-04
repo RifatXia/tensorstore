@@ -3,7 +3,7 @@
 import sys
 import os
 import json
-from config import MODEL_DIR, RESULTS_DIR, MODEL_ID
+from config import MODEL_DIR, RESULTS_DIR, MODEL_ID, RUN_ID
 from utils import format_size, format_time, get_directory_size
 
 def compare_results():

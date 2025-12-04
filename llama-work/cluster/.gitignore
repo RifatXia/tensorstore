@@ -1,5 +1,9 @@
 # model checkpoints (too large for git)
+# format: saved_models/<timestamp>_<model_name>/
 saved_models/
 
 # slurm output files
 slurm-*.out
+
+# log files
+logs/*.out

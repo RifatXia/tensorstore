@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 from transformers import AutoModelForCausalLM
 from tqdm import tqdm
 
-from utils import calculate_chunk_shape, format_size, get_directory_size
+from utils import calculate_chunk_shape, format_size, get_directory_size, get_model_default_dtype
 
 sys.stdout.reconfigure(line_buffering=True)
 
@@ -26,7 +26,7 @@ parser.add_argument('--model', type=str, default=None, help='huggingface model n
 parser.add_argument('--phases', type=str, default='1,2,3,4a,4b,4c', help='comma-separated phases to run (e.g., 1,2,3 or 1,4a,4c)')
 parser.add_argument('--chunk-size', type=int, default=64, help='chunk size in megabytes (default: 64)')
 parser.add_argument('--device', type=str, default='cpu', help='device to use (default: cpu)')
-parser.add_argument('--dtype', type=str, default='float16', choices=['float16', 'float32', 'bfloat16'], help='data type for model and storage (default: float16)')
+parser.add_argument('--dtype', type=str, default='auto', choices=['auto', 'float16', 'float32', 'bfloat16'], help='data type for model and storage (default: auto - uses model default)')
 parser.add_argument('--skip-plots', action='store_true', help='skip plot generation')
 args = parser.parse_args()
 
@@ -38,13 +38,19 @@ if args.chunk_size:
 if args.device:
     os.environ['DEVICE'] = args.device
 
-# set dtype
-DTYPE = args.dtype
+# now import config (after setting env vars)
+from config import MODEL_NAME, MODEL_ID, MODEL_TYPE, DEVICE, MODEL_DIR, RESULTS_DIR, PLOTS_DIR, HF_CACHE, HF_TOKEN, RUN_ID
+
+# determine dtype - use model default if 'auto'
+if args.dtype == 'auto':
+    DTYPE = get_model_default_dtype(MODEL_NAME, HF_CACHE)
+    print(f"\nauto-detected dtype: {DTYPE}")
+else:
+    DTYPE = args.dtype
+    print(f"\nusing specified dtype: {DTYPE}")
+
 dtype_map = {'float16': torch.float16, 'float32': torch.float32, 'bfloat16': torch.bfloat16}
 torch_dtype = dtype_map[DTYPE]
-
-# now import config (after setting env vars)
-from config import MODEL_NAME, MODEL_ID, MODEL_TYPE, DEVICE, MODEL_DIR, RESULTS_DIR, PLOTS_DIR
 
 # parse which phases to run
 phases_to_run = set(args.phases.split(','))
@@ -53,6 +59,7 @@ print(f"phases to run: {sorted(phases_to_run)}")
 print("="*70)
 print(f"6-WAY CHECKPOINTING COMPARISON: {MODEL_NAME}")
 print(f"model type: {MODEL_TYPE}")
+print(f"run id: {RUN_ID}")
 print(f"dtype: {DTYPE}")
 print("="*70)
 
@@ -75,7 +82,8 @@ model = AutoModelForCausalLM.from_pretrained(
     dtype=torch_dtype,
     low_cpu_mem_usage=True,
     local_files_only=True,  # critical: prevents internet access
-    trust_remote_code=True  # required for qwen and some other models
+    trust_remote_code=True,  # required for qwen and some other models
+    token=HF_TOKEN  # for private/gated models
 )
 model = model.to(DEVICE)
 print(f"✓ model loaded: {sum(p.numel() for p in model.parameters()) / 1e6:.1f}m parameters")
@@ -84,6 +92,7 @@ print(f"✓ model loaded: {sum(p.numel() for p in model.parameters()) / 1e6:.1f}
 results = {
     'model_name': MODEL_NAME,
     'model_id': MODEL_ID,
+    'run_id': RUN_ID,
     'model_type': MODEL_TYPE,
     'device': DEVICE,
     'dtype': DTYPE,

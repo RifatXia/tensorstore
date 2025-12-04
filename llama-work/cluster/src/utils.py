@@ -2,6 +2,7 @@
 
 import time
 import os
+import json
 import numpy as np
 from tqdm import tqdm
 
@@ -81,3 +82,72 @@ class Timer:
     def get_last_time():
         """get the last recorded time"""
         return Timer._last_time
+
+def get_model_default_dtype(model_name, cache_dir):
+    """
+    get the default dtype for a model from its config.json
+    
+    args:
+        model_name: huggingface model name (e.g., "openlm-research/open_llama_3b")
+        cache_dir: huggingface cache directory
+    
+    returns:
+        dtype string: 'float16', 'float32', 'bfloat16', or 'float16' as fallback
+    """
+    try:
+        # construct path to config.json in cache
+        # huggingface cache structure: models--org--model/snapshots/hash/config.json
+        model_cache_name = model_name.replace('/', '--')
+        model_cache_path = os.path.join(cache_dir, f"models--{model_cache_name}")
+        
+        # find the latest snapshot directory
+        if not os.path.exists(model_cache_path):
+            print(f"warning: model cache not found at {model_cache_path}, using default dtype")
+            return 'float16'
+        
+        snapshots_dir = os.path.join(model_cache_path, "snapshots")
+        if not os.path.exists(snapshots_dir):
+            print(f"warning: snapshots directory not found, using default dtype")
+            return 'float16'
+        
+        # get the most recent snapshot
+        snapshots = [d for d in os.listdir(snapshots_dir) if os.path.isdir(os.path.join(snapshots_dir, d))]
+        if not snapshots:
+            print(f"warning: no snapshots found, using default dtype")
+            return 'float16'
+        
+        # use the first snapshot (usually there's only one)
+        snapshot_dir = os.path.join(snapshots_dir, snapshots[0])
+        config_path = os.path.join(snapshot_dir, "config.json")
+        
+        if not os.path.exists(config_path):
+            print(f"warning: config.json not found at {config_path}, using default dtype")
+            return 'float16'
+        
+        # read config.json
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+        
+        # check for torch_dtype field
+        torch_dtype = config.get('torch_dtype', None)
+        
+        if torch_dtype:
+            # map torch dtype names to our format
+            dtype_mapping = {
+                'float16': 'float16',
+                'float32': 'float32',
+                'bfloat16': 'bfloat16',
+                'torch.float16': 'float16',
+                'torch.float32': 'float32',
+                'torch.bfloat16': 'bfloat16',
+            }
+            dtype = dtype_mapping.get(torch_dtype, 'float16')
+            print(f"✓ detected model default dtype: {dtype} (from config.json)")
+            return dtype
+        else:
+            print(f"warning: torch_dtype not found in config.json, using float16 as default")
+            return 'float16'
+            
+    except Exception as e:
+        print(f"warning: error reading model config: {e}, using float16 as default")
+        return 'float16'

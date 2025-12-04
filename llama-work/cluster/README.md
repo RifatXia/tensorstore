@@ -2,12 +2,13 @@
 
 modular checkpointing framework comparing pytorch, tensorstore, and t5x-optimized approaches for any llama-compatible model.
 
-## ⚡ fully dynamic
+## ⚡ key features
 
+- **private model support** - use gated models with `HF_TOKEN` (llama 3.2, llama 3, etc.)
+- **auto dtype detection** - automatically uses model's default precision from config.json
+- **timestamped runs** - each run creates unique directory, enabling multiple experiments
 - **no hardcoded model names** - all code uses `MODEL_NAME` from config
-- **automatic file naming** - output files use `MODEL_ID` extracted from model name
-- **works with any llama model** - just set `MODEL_NAME` and go
-- **all paths dynamic** - no manual filename changes needed
+- **works with any llama model** - public or private, just set `MODEL_NAME` and go
 
 ## project structure
 
@@ -82,18 +83,45 @@ MODEL_NAME = os.environ.get('MODEL_NAME', "meta-llama/Llama-2-7b-hf")
 ```
 
 **supported models:**
+
+**public models:**
 - `openlm-research/open_llama_3b` (default, 3.4b params, ~6.4gb)
 - `meta-llama/Llama-2-7b-hf` (7b params, ~13gb)
 - `meta-llama/Llama-2-13b-hf` (13b params, ~25gb)
 - `mistralai/Mistral-7B-v0.1` (7b params, ~14gb)
-- any huggingface llama-compatible model
+- `Qwen/Qwen2.5-7B` (7b params, ~14gb)
+
+**private/gated models (requires HF token):**
+- `meta-llama/Llama-3.2-3B-Instruct` (3b params, ~6gb)
+- `meta-llama/Meta-Llama-3-8B` (8b params, ~16gb)
+- any huggingface llama-compatible model (public or private)
 
 ### 4. download model (first time only)
 
-**⚠️ IMPORTANT**: Compute nodes don't have internet access. You **must** download on login node first:
+**⚠️ IMPORTANT**: Compute nodes don't have internet access. You **must** download on login node first.
 
+**for public models:**
 ```bash
 bash download.sh
+# or specify model
+MODEL_NAME="Qwen/Qwen2.5-7B" bash download.sh
+```
+
+**for private/gated models:**
+
+first, get your huggingface token:
+1. go to https://huggingface.co/settings/tokens
+2. create a new token (read access is sufficient)
+3. copy the token (starts with `hf_`)
+
+then download:
+```bash
+# set token and download
+export HF_TOKEN="hf_your_token_here"
+MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" bash download.sh
+
+# or inline
+HF_TOKEN="hf_xxx" MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" bash download.sh
 ```
 
 model will be cached at `/mnt/common/$USER/huggingface_cache`
@@ -102,23 +130,51 @@ model will be cached at `/mnt/common/$USER/huggingface_cache`
 
 ### 5. run checkpointing
 
-**option a: run all phases**
+**option a: run all phases (public models)**
 ```bash
 sbatch run_all.sh
 ```
 
-runs all three checkpointing methods sequentially and compares results.
-
-**option b: run individual phases**
+**option b: run with private models**
 ```bash
-# pytorch only
-sbatch run_pytorch.sh
+# set token first
+export HF_TOKEN="hf_your_token_here"
+MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_all.sh
 
-# tensorstore only
-sbatch run_tensorstore.sh
+# or inline
+HF_TOKEN="hf_xxx" MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_all.sh
+```
 
-# t5x-optimized only
-sbatch run_t5x.sh
+**option c: specify dtype**
+```bash
+# use model's default dtype (recommended)
+DTYPE="auto" sbatch run_all.sh
+
+# or force specific dtype
+DTYPE="float16" sbatch run_all.sh
+DTYPE="bfloat16" sbatch run_all.sh
+```
+
+runs all six checkpointing methods sequentially and compares results.
+
+**multiple runs with timestamps:**
+
+each run creates timestamped directories, allowing multiple experiments:
+```bash
+# run 1
+sbatch run_all.sh
+# creates: saved_models/20251204_020230_open_llama_3b/
+#          results/20251204_020230_open_llama_3b/
+
+# run 2 (different model)
+MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_all.sh
+# creates: saved_models/20251204_030145_Qwen2.5-7B/
+#          results/20251204_030145_Qwen2.5-7B/
+
+# run 3 (same model, different settings)
+DTYPE="bfloat16" sbatch run_all.sh
+# creates: saved_models/20251204_040512_open_llama_3b/
+#          results/20251204_040512_open_llama_3b/
 ```
 
 ### 6. monitor progress
@@ -130,11 +186,84 @@ squeue -u $USER
 # view live output (replace JOBID with your job number)
 tail -f logs/checkpoint-JOBID.out
 
-# or for individual phases
-tail -f logs/pytorch-JOBID.out
-tail -f logs/tensorstore-JOBID.out
-tail -f logs/t5x-JOBID.out
+# check results
+ls results/*/all_phases_results.json
+ls results/*/plots/*.png
 ```
+
+---
+
+## quick reference
+
+### environment variables
+
+| variable | default | description |
+|----------|---------|-------------|
+| `MODEL_NAME` | openlm-research/open_llama_3b | huggingface model name |
+| `HF_TOKEN` | none | token for private/gated models |
+| `DTYPE` | auto | data type (auto/float16/float32/bfloat16) |
+| `PHASES` | 1,2,3,4a,4b,4c | phases to run |
+| `CHUNK_SIZE_MB` | 64 | chunk size in mb |
+| `DEVICE` | cpu | device (cpu/cuda) |
+| `SKIP_PLOTS` | 0 | skip plots (0/1) |
+| `RUN_TIMESTAMP` | auto | custom timestamp for run |
+
+### common commands
+
+```bash
+# download public model
+MODEL_NAME="Qwen/Qwen2.5-7B" bash download.sh
+
+# download private model (get token from https://huggingface.co/settings/tokens)
+HF_TOKEN="hf_xxx" MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" bash download.sh
+
+# run with defaults (auto dtype, all phases)
+sbatch run_all.sh
+
+# run specific model
+MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_all.sh
+
+# run private model
+HF_TOKEN="hf_xxx" MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_all.sh
+
+# custom dtype (override auto-detection)
+DTYPE="bfloat16" sbatch run_all.sh
+
+# specific phases only
+PHASES="1,2,3" sbatch run_all.sh
+
+# larger chunks
+CHUNK_SIZE_MB=128 sbatch run_all.sh
+
+# skip plots (faster)
+SKIP_PLOTS=1 sbatch run_all.sh
+
+# custom timestamp for organized experiments
+RUN_TIMESTAMP="experiment1" sbatch run_all.sh
+```
+
+### troubleshooting
+
+**"model not found" error:**
+```bash
+# download first on login node
+MODEL_NAME="your-model" bash download.sh
+```
+
+**"unauthorized" or "access denied":**
+```bash
+# set token (get from https://huggingface.co/settings/tokens)
+export HF_TOKEN="hf_your_token_here"
+# verify you have access on huggingface.co and accepted model terms
+```
+
+**dtype not detected:**
+```bash
+# manually specify dtype
+DTYPE="float16" sbatch run_all.sh
+```
+
+---
 
 ## checkpointing phases (6 total)
 
@@ -183,7 +312,7 @@ after running, you'll find:
 
 ```
 saved_models/                                  # model checkpoints (gitignored)
-└── {model_name}/                              # e.g., open_llama_3b/
+└── {timestamp}_{model_name}/                  # e.g., 20251204_020230_open_llama_3b/
     ├── pytorch.pth                            # phase 1: pytorch checkpoint
     ├── tensorstore/                           # phase 2: basic tensorstore
     │   ├── *.zarr                            # 237 parameter files
@@ -202,7 +331,7 @@ saved_models/                                  # model checkpoints (gitignored)
         └── metadata.json
 
 results/                                       # results (tracked in git)
-└── {model_name}/                              # e.g., open_llama_3b/
+└── {timestamp}_{model_name}/                  # e.g., 20251204_020230_open_llama_3b/
     ├── plots/                                 # visualization charts
     │   ├── 6way_comparison.png               # comprehensive 6-way comparison
     │   └── tensorstore_variants.png          # tensorstore variants analysis
@@ -210,16 +339,18 @@ results/                                       # results (tracked in git)
     └── comparison_results.json               # file size comparison
 ```
 
-**automatic organization:**
+**automatic organization with timestamps:**
 
-`{model_name}` is extracted from `MODEL_NAME`:
-- `openlm-research/open_llama_3b` → checkpoints in `saved_models/open_llama_3b/`, results in `results/open_llama_3b/`
-- `meta-llama/Llama-2-7b-hf` → checkpoints in `saved_models/Llama-2-7b-hf/`, results in `results/Llama-2-7b-hf/`
-- `mistralai/Mistral-7B-v0.1` → checkpoints in `saved_models/Mistral-7B-v0.1/`, results in `results/Mistral-7B-v0.1/`
+each run gets a unique timestamped directory:
+- `openlm-research/open_llama_3b` → `saved_models/20251204_020230_open_llama_3b/` + `results/20251204_020230_open_llama_3b/`
+- `meta-llama/Llama-2-7b-hf` → `saved_models/20251204_030145_Llama-2-7b-hf/` + `results/20251204_030145_Llama-2-7b-hf/`
+- `Qwen/Qwen2.5-7B` → `saved_models/20251204_040512_Qwen2.5-7B/` + `results/20251204_040512_Qwen2.5-7B/`
 
-each model gets its own directories:
+**benefits:**
+- **multiple runs** - run same model multiple times without conflicts
 - **saved_models/** - large checkpoint files (gitignored, not pushed to github)
 - **results/** - plots and json files (tracked in git, pushed to github)
+- **easy comparison** - compare different runs by timestamp
 
 ## configuration
 
@@ -236,11 +367,16 @@ T5X_CHUNK_SIZE_MB = 64           # chunk size for t5x phase
 CONCURRENCY_LIMIT = 128          # concurrent file operations
 COMPRESSION_LEVEL = 1            # gzip compression level (1-9)
 
-# paths (automatic)
-SAVED_MODELS_DIR = "saved_models/"           # checkpoints (gitignored)
-RESULTS_DIR = "results/{MODEL_ID}/"          # plots, json (tracked)
+# huggingface authentication
+HF_TOKEN = os.environ.get('HF_TOKEN', None)  # for private/gated models
 HF_CACHE = "/mnt/common/$USER/huggingface_cache"
+
+# paths (automatic with timestamps)
+RUN_TIMESTAMP = datetime.now().strftime('%Y%m%d_%H%M%S')
 MODEL_ID = MODEL_NAME.split('/')[-1]  # extracted for filenames
+RUN_ID = f"{RUN_TIMESTAMP}_{MODEL_ID}"  # e.g., "20251204_020230_Qwen2.5-7B"
+SAVED_MODELS_DIR = f"saved_models/{RUN_ID}/"  # checkpoints (gitignored)
+RESULTS_DIR = f"results/{RUN_ID}/"           # plots, json (tracked)
 ```
 
 **to change model:** see step 3 in quick start above
@@ -267,12 +403,17 @@ example:
 # run 1
 export MODEL_NAME="openlm-research/open_llama_3b"
 sbatch run_all.sh
-# creates: saved_models/open_llama_3b/ (checkpoints) + results/open_llama_3b/ (plots, json)
+# creates: saved_models/20251204_020230_open_llama_3b/ + results/20251204_020230_open_llama_3b/
 
-# run 2
+# run 2 (different model)
 export MODEL_NAME="meta-llama/Llama-2-7b-hf"
 sbatch run_all.sh
-# creates: saved_models/Llama-2-7b-hf/ (checkpoints) + results/Llama-2-7b-hf/ (plots, json)
+# creates: saved_models/20251204_030145_Llama-2-7b-hf/ + results/20251204_030145_Llama-2-7b-hf/
+
+# run 3 (same model, different dtype)
+export DTYPE="bfloat16"
+sbatch run_all.sh
+# creates: saved_models/20251204_040512_open_llama_3b/ + results/20251204_040512_open_llama_3b/
 ```
 
 ### visualization charts
@@ -298,13 +439,15 @@ all python files import from `config.py`:
 ```python
 # src/config.py
 MODEL_NAME = os.environ.get('MODEL_NAME', "openlm-research/open_llama_3b")
+RUN_TIMESTAMP = datetime.now().strftime('%Y%m%d_%H%M%S')
 MODEL_ID = MODEL_NAME.split('/')[-1]
-MODEL_DIR = f"saved_models/{MODEL_ID}/"      # checkpoints
-RESULTS_DIR = f"results/{MODEL_ID}/"         # plots, json
-PLOTS_DIR = f"results/{MODEL_ID}/plots/"     # visualization charts
+RUN_ID = f"{RUN_TIMESTAMP}_{MODEL_ID}"       # e.g., "20251204_020230_Qwen2.5-7B"
+MODEL_DIR = f"saved_models/{RUN_ID}/"        # checkpoints
+RESULTS_DIR = f"results/{RUN_ID}/"           # plots, json
+PLOTS_DIR = f"results/{RUN_ID}/plots/"       # visualization charts
 
 # all files use these dynamic paths
-from config import MODEL_NAME, MODEL_ID, MODEL_DIR, RESULTS_DIR, PLOTS_DIR
+from config import MODEL_NAME, MODEL_ID, RUN_ID, MODEL_DIR, RESULTS_DIR, PLOTS_DIR
 ```
 
 **no hardcoded model names or paths anywhere in the code.**

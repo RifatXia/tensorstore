@@ -4,11 +4,16 @@ import sys
 import torch
 import os
 from transformers import AutoModelForCausalLM
-from config import MODEL_NAME, MODEL_TYPE, DEVICE
-from utils import Timer
+from config import MODEL_NAME, MODEL_TYPE, DEVICE, HF_CACHE, HF_TOKEN
+from utils import Timer, get_model_default_dtype
 
-def load_model(dtype='float16'):
+def load_model(dtype='auto'):
     """load model from huggingface (supports llama, qwen, mistral, etc.)"""
+    # determine dtype - use model default if 'auto'
+    if dtype == 'auto':
+        dtype = get_model_default_dtype(MODEL_NAME, HF_CACHE)
+        print(f"auto-detected dtype: {dtype}")
+    
     # convert dtype string to torch dtype
     dtype_map = {'float16': torch.float16, 'float32': torch.float32, 'bfloat16': torch.bfloat16}
     torch_dtype = dtype_map.get(dtype, torch.float16)
@@ -33,7 +38,8 @@ def load_model(dtype='float16'):
                 dtype=torch_dtype,
                 low_cpu_mem_usage=True,
                 local_files_only=True,
-                trust_remote_code=True  # required for qwen and some other models
+                trust_remote_code=True,  # required for qwen and some other models
+                token=HF_TOKEN  # for private/gated models
             )
             
             # move to device

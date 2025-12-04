@@ -16,9 +16,11 @@
 #   MODEL_NAME      - huggingface model name (default: openlm-research/open_llama_3b)
 #   PHASES          - comma-separated phase numbers to run (default: 1,2,3,4a,4b,4c)
 #   CHUNK_SIZE_MB   - chunk size in megabytes (default: 64)
-#   DTYPE           - data type: float16, float32, bfloat16 (default: float16)
+#   DTYPE           - data type: auto, float16, float32, bfloat16 (default: auto)
 #   DEVICE          - device to use (default: cpu)
 #   SKIP_PLOTS      - set to 1 to skip plot generation (default: 0)
+#   HF_TOKEN        - huggingface token for private/gated models (optional)
+#   RUN_TIMESTAMP   - timestamp for this run (default: auto-generated)
 
 echo "=========================================="
 echo "model checkpointing - configurable run"
@@ -37,9 +39,14 @@ fi
 export MODEL_NAME="${MODEL_NAME:-openlm-research/open_llama_3b}"
 export PHASES="${PHASES:-1,2,3,4a,4b,4c}"
 export CHUNK_SIZE_MB="${CHUNK_SIZE_MB:-64}"
-export DTYPE="${DTYPE:-float16}"
+export DTYPE="${DTYPE:-auto}"
 export DEVICE="${DEVICE:-cpu}"
 export SKIP_PLOTS="${SKIP_PLOTS:-0}"
+
+# generate timestamp for this run if not provided
+if [ -z "$RUN_TIMESTAMP" ]; then
+    export RUN_TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+fi
 
 # use shared storage cache
 export HF_HOME=/mnt/common/$USER/huggingface_cache
@@ -48,12 +55,14 @@ export PYTHONPATH=$PYTHONPATH:$(pwd)/src
 echo ""
 echo "configuration:"
 echo "  model: $MODEL_NAME"
+echo "  run timestamp: $RUN_TIMESTAMP"
 echo "  phases: $PHASES"
 echo "  chunk size: ${CHUNK_SIZE_MB} mb"
 echo "  dtype: $DTYPE"
 echo "  device: $DEVICE"
 echo "  skip plots: $SKIP_PLOTS"
 echo "  cache: $HF_HOME"
+echo "  hf token: ${HF_TOKEN:+set (private models enabled)}${HF_TOKEN:-not set (public models only)}"
 echo ""
 
 # load modules

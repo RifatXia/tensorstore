@@ -143,7 +143,7 @@ echo "generating comparison plots..."
 
 # generate comparison plots
 cd src
-python -u compare_sweep.py \
+python3 -u compare_sweep.py \
     --sweep-id "$SWEEP_ID" \
     --sweep-param "$SWEEP_PARAM" \
     --sweep-values "$SWEEP_VALUES"

@@ -32,22 +32,34 @@ base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 results_base = os.path.join(base_dir, "results")
 
 sweep_results = []
+sweep_dir = os.path.join(results_base, args.sweep_id)
+
 for value in sweep_values:
-    # results are nested: sweep_id/param_value/all_phases_results.json
-    run_subdir = f"{args.sweep_param}{value}"
-    results_file = os.path.join(results_base, args.sweep_id, run_subdir, "all_phases_results.json")
+    # results are nested: sweep_id/param_value_modelname/all_phases_results.json
+    # find subdirectory that starts with param_value
+    run_subdir = None
+    if os.path.exists(sweep_dir):
+        for subdir in os.listdir(sweep_dir):
+            if subdir.startswith(f"{args.sweep_param}{value}"):
+                run_subdir = subdir
+                break
     
-    if os.path.exists(results_file):
-        with open(results_file, 'r') as f:
-            data = json.load(f)
-            sweep_results.append({
-                'value': value,
-                'data': data
-            })
-        print(f"✓ loaded results for {args.sweep_param}={value}")
+    if run_subdir:
+        results_file = os.path.join(sweep_dir, run_subdir, "all_phases_results.json")
+        if os.path.exists(results_file):
+            with open(results_file, 'r') as f:
+                data = json.load(f)
+                sweep_results.append({
+                    'value': value,
+                    'data': data
+                })
+            print(f"✓ loaded results for {args.sweep_param}={value}")
+        else:
+            print(f"✗ missing results file for {args.sweep_param}={value}")
+            print(f"  expected: {results_file}")
     else:
-        print(f"✗ missing results for {args.sweep_param}={value}")
-        print(f"  expected: {results_file}")
+        print(f"✗ missing directory for {args.sweep_param}={value}")
+        print(f"  looking in: {sweep_dir}")
 
 if not sweep_results:
     print("error: no results found")

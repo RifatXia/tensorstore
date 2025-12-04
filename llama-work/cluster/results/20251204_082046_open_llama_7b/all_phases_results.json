@@ -1,0 +1,88 @@
+{
+  "model_name": "openlm-research/open_llama_7b",
+  "model_id": "open_llama_7b",
+  "run_id": "20251204_082046_open_llama_7b",
+  "model_type": "llama",
+  "device": "cpu",
+  "dtype": "float16",
+  "timestamp": "2025-12-04 08:22:54",
+  "phases": {
+    "pytorch": {
+      "save_time_ms": 345690.37795066833,
+      "load_time_ms": 176954.79202270508,
+      "file_size_bytes": 13476948049,
+      "file_size_gb": 12.55138595495373,
+      "configuration": {
+        "method": "torch.save",
+        "dtype": "float16",
+        "compression": "none",
+        "format": "pytorch"
+      }
+    },
+    "tensorstore": {
+      "save_time_ms": 190206.0968875885,
+      "load_time_ms": 102231.46438598633,
+      "file_size_bytes": 13476704037,
+      "file_size_gb": 12.551158701069653,
+      "configuration": {
+        "chunk_size_mb": 64,
+        "compression": "none",
+        "concurrency": 1,
+        "dtype": "float16",
+        "parameters_saved": 291
+      }
+    },
+    "t5x": {
+      "save_time_ms": 1073403.3703804016,
+      "load_time_ms": 262459.4728946686,
+      "file_size_bytes": 10391936737,
+      "file_size_gb": 9.678245277144015,
+      "configuration": {
+        "chunk_size_mb": 64,
+        "compression": "gzip-1",
+        "concurrency": "default",
+        "dtype": "float16",
+        "parameters_saved": 291
+      }
+    },
+    "phase4a_concurrency": {
+      "save_time_ms": 122546.87309265137,
+      "load_time_ms": 101992.6290512085,
+      "file_size_bytes": 13476704037,
+      "file_size_gb": 12.551158701069653,
+      "configuration": {
+        "chunk_size_mb": 64,
+        "compression": "none",
+        "concurrency": "default",
+        "dtype": "float16",
+        "parameters_saved": 291
+      }
+    },
+    "phase4b_chunks": {
+      "save_time_ms": 97109.12489891052,
+      "load_time_ms": 55270.27487754822,
+      "file_size_bytes": 13476888866,
+      "file_size_gb": 12.551330836489797,
+      "configuration": {
+        "chunk_size_mb": 1,
+        "compression": "none",
+        "concurrency": 1,
+        "dtype": "float16",
+        "parameters_saved": 291
+      }
+    },
+    "phase4c_compression": {
+      "save_time_ms": 1152335.9162807465,
+      "load_time_ms": 213944.8492527008,
+      "file_size_bytes": 10391936737,
+      "file_size_gb": 9.678245277144015,
+      "configuration": {
+        "chunk_size_mb": 64,
+        "compression": "gzip-1",
+        "concurrency": 1,
+        "dtype": "float16",
+        "parameters_saved": 291
+      }
+    }
+  }
+}

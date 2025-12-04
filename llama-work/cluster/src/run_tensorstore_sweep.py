@@ -123,11 +123,11 @@ def save_tensorstore(model_state, save_dir, chunk_size_mb=64, concurrency_limit=
     saved_count = 0
     
     # dtype conversion based on global DTYPE setting
-    # note: tensorstore/zarr doesn't support bfloat16, so we convert to float32
+    # tensorstore supports bfloat16 via ts.bfloat16
     dtype_conversion = {
-        'float16': (lambda x: x.detach().cpu().half().numpy(), '<f2'),
-        'float32': (lambda x: x.detach().cpu().float().numpy(), '<f4'),
-        'bfloat16': (lambda x: x.detach().cpu().float().numpy(), '<f4')  # convert bfloat16 to float32
+        'float16': (lambda x: x.detach().cpu().half().numpy(), ts.float16),
+        'float32': (lambda x: x.detach().cpu().float().numpy(), ts.float32),
+        'bfloat16': (lambda x: x.detach().cpu().to(torch.bfloat16).numpy().view(np.uint16), ts.bfloat16)
     }
     convert_fn, zarr_dtype = dtype_conversion[DTYPE]
     

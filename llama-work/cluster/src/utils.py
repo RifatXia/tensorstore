@@ -85,41 +85,37 @@ class Timer:
         """get the last recorded time"""
         return Timer._last_time
 
-def get_model_default_dtype(model_name, cache_dir):
+def get_model_default_dtype(model_name, hf_cache):
     """
-    get the default dtype for a model from its config.json
-    
-    args:
-        model_name: huggingface model name (e.g., "openlm-research/open_llama_3b")
-        cache_dir: huggingface cache directory
-    
-    returns:
-        dtype string: 'float16', 'float32', 'bfloat16', or 'float16' as fallback
+    detect model's default dtype from config.json in huggingface cache
+    returns 'float16', 'float32', or 'bfloat16'
     """
     try:
-        # construct path to config.json in cache
-        # huggingface cache structure: models--org--model/snapshots/hash/config.json
-        model_cache_name = model_name.replace('/', '--')
-        model_cache_path = os.path.join(cache_dir, f"models--{model_cache_name}")
+        # construct path to model in cache
+        model_path = model_name.replace('/', '--')
+        model_cache_dir = os.path.join(hf_cache, 'hub', f'models--{model_path}')
         
-        # find the latest snapshot directory
-        if not os.path.exists(model_cache_path):
-            print(f"warning: model cache not found at {model_cache_path}, using default dtype")
+        if not os.path.exists(model_cache_dir):
+            print(f"warning: model cache not found at {model_cache_dir}, using default dtype")
             return 'float16'
         
-        snapshots_dir = os.path.join(model_cache_path, "snapshots")
+        # look for snapshots directory
+        snapshots_dir = os.path.join(model_cache_dir, 'snapshots')
         if not os.path.exists(snapshots_dir):
             print(f"warning: snapshots directory not found, using default dtype")
             return 'float16'
         
-        # get the most recent snapshot
+        # get all snapshots (typically just one since downloads overwrite)
         snapshots = [d for d in os.listdir(snapshots_dir) if os.path.isdir(os.path.join(snapshots_dir, d))]
         if not snapshots:
             print(f"warning: no snapshots found, using default dtype")
             return 'float16'
         
-        # use the first snapshot (usually there's only one)
-        snapshot_dir = os.path.join(snapshots_dir, snapshots[0])
+        # use the first (and typically only) snapshot
+        snapshot_hash = snapshots[0]
+        
+        # construct path to config.json
+        snapshot_dir = os.path.join(snapshots_dir, snapshot_hash)
         config_path = os.path.join(snapshot_dir, "config.json")
         
         if not os.path.exists(config_path):
@@ -144,10 +140,11 @@ def get_model_default_dtype(model_name, cache_dir):
                 'torch.bfloat16': 'bfloat16',
             }
             dtype = dtype_mapping.get(torch_dtype, 'float16')
-            print(f"✓ detected model default dtype: {dtype} (from config.json)")
+            print(f"✓ detected model default dtype: {dtype} (torch_dtype='{torch_dtype}' from config.json)")
             return dtype
         else:
             print(f"warning: torch_dtype not found in config.json, using float16 as default")
+            print(f"  config.json location: {config_path}")
             return 'float16'
             
     except Exception as e:

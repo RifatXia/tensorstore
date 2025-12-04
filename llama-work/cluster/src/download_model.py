@@ -21,7 +21,9 @@ def download_model():
         config = AutoConfig.from_pretrained(
             MODEL_NAME,
             trust_remote_code=True,
-            token=HF_TOKEN  # use token for private/gated models
+            token=HF_TOKEN,  # use token for private/gated models
+            force_download=False,  # use cached if available
+            resume_download=True  # resume if interrupted
         )
         print(f"✓ config downloaded")
         if hasattr(config, 'torch_dtype'):
@@ -34,7 +36,10 @@ def download_model():
             model = AutoModelForCausalLM.from_pretrained(
                 MODEL_NAME,
                 trust_remote_code=True,  # required for qwen and some other models
-                token=HF_TOKEN  # use token for private/gated models
+                token=HF_TOKEN,  # use token for private/gated models
+                force_download=False,  # use cached if available
+                resume_download=True,  # resume if interrupted
+                local_files_only=False  # allow downloading from hub
             )
         
         print(f"\nmodel downloaded successfully!")

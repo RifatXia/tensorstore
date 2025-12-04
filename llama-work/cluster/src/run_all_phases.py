@@ -135,10 +135,11 @@ def save_tensorstore_variant(model_state, save_dir, phase_name, use_compression=
     saved_count = 0
     
     # dtype conversion based on global DTYPE setting
+    # tensorstore supports bfloat16 via ts.bfloat16
     dtype_conversion = {
-        'float16': (lambda x: x.detach().cpu().half().numpy(), '<f2'),
-        'float32': (lambda x: x.detach().cpu().float().numpy(), '<f4'),
-        'bfloat16': (lambda x: x.detach().cpu().to(torch.bfloat16).numpy(), '<f2')
+        'float16': (lambda x: x.detach().cpu().half().numpy(), ts.float16),
+        'float32': (lambda x: x.detach().cpu().float().numpy(), ts.float32),
+        'bfloat16': (lambda x: x.detach().cpu().to(torch.bfloat16).numpy().view(np.uint16), ts.bfloat16)
     }
     convert_fn, zarr_dtype = dtype_conversion[DTYPE]
     

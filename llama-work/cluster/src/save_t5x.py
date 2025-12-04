@@ -30,13 +30,13 @@ def save_t5x_tensorstore(model, dtype='float16'):
     # high concurrency context
     context = ts.Context({'file_io_concurrency': {'limit': CONCURRENCY_LIMIT}})
     
-    # dtype conversion
+    # dtype conversion - tensorstore supports bfloat16 via ts.bfloat16
     dtype_conversion = {
-        'float16': lambda x: x.detach().cpu().half().numpy(),
-        'float32': lambda x: x.detach().cpu().float().numpy(),
-        'bfloat16': lambda x: x.detach().cpu().to(torch.bfloat16).numpy()
+        'float16': (lambda x: x.detach().cpu().half().numpy(), ts.float16),
+        'float32': (lambda x: x.detach().cpu().float().numpy(), ts.float32),
+        'bfloat16': (lambda x: x.detach().cpu().to(torch.bfloat16).numpy().view(np.uint16), ts.bfloat16)
     }
-    convert_fn = dtype_conversion.get(dtype, dtype_conversion['float16'])
+    convert_fn, ts_dtype = dtype_conversion.get(dtype, dtype_conversion['float16'])
     
     try:
         with Timer("t5x-tensorstore save"):
@@ -64,7 +64,7 @@ def save_t5x_tensorstore(model, dtype='float16'):
                     },
                     'metadata': {
                         'shape': list(param_np.shape),
-                        'dtype': '<f2',  # float16 in zarr format
+                        'dtype': ts_dtype,
                         'chunks': chunk_shape,
                         'compressor': {
                             'id': 'gzip',

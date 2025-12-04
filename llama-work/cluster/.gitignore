@@ -4,3 +4,5 @@ saved_models/
 
 # slurm output files
 slurm-*.out
+
+.env

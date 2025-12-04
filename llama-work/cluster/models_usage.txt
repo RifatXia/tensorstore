@@ -16,6 +16,6 @@ MODEL_NAME="meta-llama/Meta-Llama-3-8B" sbatch run_all.sh
 MODEL_NAME="openlm-research/open_llama_3b" bash download.sh
 MODEL_NAME="openlm-research/open_llama_3b" sbatch run_all.sh
 
-# Llama-3.2-3B-Instruct (private - requires HF_TOKEN)
-HF_TOKEN="hf_xxx" MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" bash download.sh
-HF_TOKEN="hf_xxx" MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_all.sh
+# Llama-3.2-3B-Instruct (private - requires HF_TOKEN set in .env)
+MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" bash download.sh
+MODEL_NAME="meta-llama/Llama-3.2-3B-Instruct" sbatch run_all.sh

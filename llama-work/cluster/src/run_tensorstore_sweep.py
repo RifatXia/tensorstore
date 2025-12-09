@@ -123,10 +123,13 @@ def save_tensorstore(model_state, save_dir, chunk_size_mb=64, concurrency_limit=
     saved_count = 0
     
     # dtype conversion based on global DTYPE setting
+    # dtype conversion
+    # note: bfloat16 is converted to float16 for tensorstore compatibility
+    # this maintains similar storage size (2 bytes) while ensuring numpy compatibility
     dtype_conversion = {
         'float16': (lambda x: x.detach().cpu().half().numpy(), '<f2'),
         'float32': (lambda x: x.detach().cpu().float().numpy(), '<f4'),
-        'bfloat16': (lambda x: x.detach().cpu().float().numpy(), '<f4')  # convert bfloat16 to float32
+        'bfloat16': (lambda x: x.detach().cpu().half().numpy(), '<f2')  # convert bfloat16 to float16
     }
     convert_fn, zarr_dtype = dtype_conversion[DTYPE]
     

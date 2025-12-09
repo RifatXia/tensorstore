@@ -500,6 +500,41 @@ each run gets a unique timestamped directory:
 - **results/** - plots and json files (tracked in git, pushed to github)
 - **easy comparison** - compare different runs by timestamp
 
+## dtype handling
+
+### automatic dtype detection
+
+the framework automatically detects each model's native dtype from its `config.json`:
+- **float16 models**: saved as float16 (2 bytes per parameter)
+- **float32 models**: saved as float32 (4 bytes per parameter)
+- **bfloat16 models**: converted to float16 for tensorstore (2 bytes per parameter)
+
+### why bfloat16 → float16 conversion?
+
+**technical limitation**: pytorch's bfloat16 cannot be directly converted to numpy arrays, which tensorstore requires.
+
+**solution**: convert bfloat16 → float16 before saving with tensorstore
+- ✅ maintains 2-byte storage efficiency
+- ✅ compatible with numpy/tensorstore
+- ✅ minimal precision loss for most use cases
+- ⚠️ slight precision difference vs native bfloat16
+
+**pytorch checkpoints**: pytorch's native `.pth` format (phase 1) handles bfloat16 natively without conversion.
+
+### override dtype
+
+force specific dtype for all phases:
+```bash
+# force float16 (smallest, fastest)
+DTYPE="float16" sbatch run_all.sh
+
+# force float32 (largest, highest precision)
+DTYPE="float32" sbatch run_all.sh
+
+# use model's default (recommended)
+DTYPE="auto" sbatch run_all.sh  # default
+```
+
 ## configuration
 
 all settings in `src/config.py`:

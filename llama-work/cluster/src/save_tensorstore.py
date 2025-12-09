@@ -31,10 +31,12 @@ def save_tensorstore(model, use_compression=False, use_concurrency=False, dtype=
     chunk_size_bytes = CHUNK_SIZE_MB * 1024 * 1024
     
     # dtype conversion
+    # note: bfloat16 is converted to float16 for tensorstore compatibility
+    # this maintains similar storage size (2 bytes) while ensuring numpy compatibility
     dtype_conversion = {
         'float16': (lambda x: x.detach().cpu().half().numpy(), '<f2'),
         'float32': (lambda x: x.detach().cpu().float().numpy(), '<f4'),
-        'bfloat16': (lambda x: x.detach().cpu().float().numpy(), '<f4')  # convert bfloat16 to float32
+        'bfloat16': (lambda x: x.detach().cpu().half().numpy(), '<f2')  # convert bfloat16 to float16
     }
     convert_fn, ts_dtype = dtype_conversion.get(dtype, dtype_conversion['float16'])
     

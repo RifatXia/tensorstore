@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# run all 6 checkpointing phases and generate comprehensive 6-way comparison
+# run all 3 checkpointing phases and generate comprehensive 3-way comparison
 
 import sys
 import time
@@ -23,7 +23,7 @@ sys.stdout.reconfigure(line_buffering=True)
 # parse command line arguments
 parser = argparse.ArgumentParser(description='run checkpointing phases with configurable options')
 parser.add_argument('--model', type=str, default=None, help='huggingface model name')
-parser.add_argument('--phases', type=str, default='1,2,3,4a,4b,4c', help='comma-separated phases to run (e.g., 1,2,3 or 1,4a,4c)')
+parser.add_argument('--phases', type=str, default='1,2,3', help='comma-separated phases to run (e.g., 1,2,3 or 1,2)')
 parser.add_argument('--chunk-size', type=int, default=64, help='chunk size in megabytes (default: 64)')
 parser.add_argument('--concurrency', type=int, default=None, help='tensorstore concurrency limit (default: tensorstore default, unlimited)')
 parser.add_argument('--device', type=str, default='cpu', help='device to use (default: cpu)')
@@ -59,7 +59,7 @@ phases_to_run = set(args.phases.split(','))
 print(f"phases to run: {sorted(phases_to_run)}")
 
 print("="*70)
-print(f"6-WAY CHECKPOINTING COMPARISON: {MODEL_NAME}")
+print(f"3-WAY CHECKPOINTING COMPARISON: {MODEL_NAME}")
 print(f"model type: {MODEL_TYPE}")
 print(f"run id: {RUN_ID}")
 print(f"dtype: {DTYPE}")
@@ -314,78 +314,6 @@ else:
     print("PHASE 3: T5X-OPTIMIZED (SKIPPED)")
     print(f"{'='*70}")
 
-# ============================================================================
-# PHASE 4A: CONCURRENCY ONLY
-# ============================================================================
-if '4a' in phases_to_run:
-    p4a_dir = os.path.join(MODEL_DIR, "phase4a_concurrency")
-    p4a_save_time, p4a_size, p4a_config = save_tensorstore_variant(
-        model_state, p4a_dir, "PHASE 4A: CONCURRENCY ONLY",
-        use_compression=False, use_concurrency=True, chunk_size_mb=args.chunk_size, concurrency_limit=args.concurrency
-    )
-    p4a_load_time = load_tensorstore_variant(p4a_dir, "PHASE 4A")
-
-    results['phases']['phase4a_concurrency'] = {
-        'save_time_ms': p4a_save_time,
-        'load_time_ms': p4a_load_time,
-        'file_size_bytes': p4a_size,
-        'file_size_gb': p4a_size / (1024**3),
-        'configuration': p4a_config
-    }
-    gc.collect()
-else:
-    print(f"\n{'='*70}")
-    print("PHASE 4A: CONCURRENCY ONLY (SKIPPED)")
-    print(f"{'='*70}")
-
-# ============================================================================
-# PHASE 4B: 1 MIB CHUNKS
-# ============================================================================
-if '4b' in phases_to_run:
-    p4b_dir = os.path.join(MODEL_DIR, "phase4b_chunks")
-    p4b_save_time, p4b_size, p4b_config = save_tensorstore_variant(
-        model_state, p4b_dir, "PHASE 4B: 1 MIB CHUNKS",
-        use_compression=False, use_concurrency=False, chunk_size_mb=1, concurrency_limit=args.concurrency
-    )
-    p4b_load_time = load_tensorstore_variant(p4b_dir, "PHASE 4B")
-
-    results['phases']['phase4b_chunks'] = {
-        'save_time_ms': p4b_save_time,
-        'load_time_ms': p4b_load_time,
-        'file_size_bytes': p4b_size,
-        'file_size_gb': p4b_size / (1024**3),
-        'configuration': p4b_config
-    }
-    gc.collect()
-else:
-    print(f"\n{'='*70}")
-    print("PHASE 4B: 1 MIB CHUNKS (SKIPPED)")
-    print(f"{'='*70}")
-
-# ============================================================================
-# PHASE 4C: COMPRESSION ONLY
-# ============================================================================
-if '4c' in phases_to_run:
-    p4c_dir = os.path.join(MODEL_DIR, "phase4c_compression")
-    p4c_save_time, p4c_size, p4c_config = save_tensorstore_variant(
-        model_state, p4c_dir, "PHASE 4C: COMPRESSION ONLY",
-        use_compression=True, use_concurrency=False, chunk_size_mb=args.chunk_size, concurrency_limit=args.concurrency
-    )
-    p4c_load_time = load_tensorstore_variant(p4c_dir, "PHASE 4C")
-
-    results['phases']['phase4c_compression'] = {
-        'save_time_ms': p4c_save_time,
-        'load_time_ms': p4c_load_time,
-        'file_size_bytes': p4c_size,
-        'file_size_gb': p4c_size / (1024**3),
-        'configuration': p4c_config
-    }
-    gc.collect()
-else:
-    print(f"\n{'='*70}")
-    print("PHASE 4C: COMPRESSION ONLY (SKIPPED)")
-    print(f"{'='*70}")
-
 del model_state
 gc.collect()
 
@@ -399,30 +327,21 @@ print("RESULTS SUMMARY")
 print(f"{'='*70}")
 
 # prepare data for visualization
-methods = ['pytorch', 'tensorstore(ts)', 't5x', 'ts+concurrency', 'ts+1mib', 'ts+compression']
+methods = ['PyTorch', 'TensorStore', 'T5X']
 save_times = [
     results['phases']['pytorch']['save_time_ms'],
     results['phases']['tensorstore']['save_time_ms'],
-    results['phases']['t5x']['save_time_ms'],
-    results['phases']['phase4a_concurrency']['save_time_ms'],
-    results['phases']['phase4b_chunks']['save_time_ms'],
-    results['phases']['phase4c_compression']['save_time_ms']
+    results['phases']['t5x']['save_time_ms']
 ]
 load_times = [
     results['phases']['pytorch']['load_time_ms'],
     results['phases']['tensorstore']['load_time_ms'],
-    results['phases']['t5x']['load_time_ms'],
-    results['phases']['phase4a_concurrency']['load_time_ms'],
-    results['phases']['phase4b_chunks']['load_time_ms'],
-    results['phases']['phase4c_compression']['load_time_ms']
+    results['phases']['t5x']['load_time_ms']
 ]
 file_sizes = [
     results['phases']['pytorch']['file_size_gb'],
     results['phases']['tensorstore']['file_size_gb'],
-    results['phases']['t5x']['file_size_gb'],
-    results['phases']['phase4a_concurrency']['file_size_gb'],
-    results['phases']['phase4b_chunks']['file_size_gb'],
-    results['phases']['phase4c_compression']['file_size_gb']
+    results['phases']['t5x']['file_size_gb']
 ]
 
 # print summary
@@ -432,17 +351,17 @@ for i, method in enumerate(methods):
     print(f"{method:<20} {save_times[i]:<12.1f} {load_times[i]:<12.1f} {file_sizes[i]:<10.2f}")
 
 # ============================================================================
-# GENERATE 6-WAY COMPARISON CHART
+# GENERATE 3-WAY COMPARISON CHART
 # ============================================================================
 if not args.skip_plots and len(results['phases']) > 0:
     print(f"\n{'='*70}")
     print("GENERATING VISUALIZATIONS")
     print(f"{'='*70}")
 
-colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c']
+colors = ['#3498db', '#e74c3c', '#2ecc71']
 
-fig, axes = plt.subplots(2, 3, figsize=(20, 12))
-fig.suptitle(f'6-Way Checkpointing Comparison - {MODEL_ID}', fontsize=18, fontweight='bold')
+fig, axes = plt.subplots(2, 3, figsize=(18, 10))
+fig.suptitle(f'3-Way Checkpointing Comparison - {MODEL_ID}', fontsize=18, fontweight='bold')
 
 # 1. save time
 ax = axes[0, 0]
@@ -522,11 +441,11 @@ for i, v in enumerate(efficiency):
     ax.text(i, v*1.02, f"{v:.0f}%", ha="center", fontsize=8, fontweight="bold")
 
 plt.tight_layout()
-plot_path = os.path.join(PLOTS_DIR, "6way_comparison.png")
+plot_path = os.path.join(PLOTS_DIR, "3way_comparison.png")
 plt.savefig(plot_path, dpi=150, bbox_inches="tight")
 plt.close()
 
-print(f"✓ 6-way comparison chart saved: {plot_path}")
+print(f"✓ 3-way comparison chart saved: {plot_path}")
 
 # ============================================================================
 # GENERATE TENSORSTORE VARIANTS CHART

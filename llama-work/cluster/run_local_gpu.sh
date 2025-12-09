@@ -11,7 +11,7 @@
 # environment variables:
 #   MODEL_NAME      - huggingface model name (default: openlm-research/open_llama_3b)
 #   DEVICE          - device to use: cpu or cuda (default: cpu)
-#   PHASES          - comma-separated phase numbers to run (default: 1,2,3,4a,4b,4c)
+#   PHASES          - comma-separated phase numbers to run (default: 1,2,3)
 #   CHUNK_SIZE_MB   - chunk size in megabytes (default: 64)
 #   CONCURRENCY     - tensorstore concurrency limit (default: none)
 #   DTYPE           - data type: auto, float16, float32, bfloat16 (default: auto)
@@ -34,7 +34,7 @@ fi
 
 # set defaults if not provided
 export MODEL_NAME="${MODEL_NAME:-openlm-research/open_llama_3b}"
-export PHASES="${PHASES:-1,2,3,4a,4b,4c}"
+export PHASES="${PHASES:-1,2,3}"
 export CHUNK_SIZE_MB="${CHUNK_SIZE_MB:-64}"
 export CONCURRENCY="${CONCURRENCY:-}"  # empty = tensorstore default
 export DTYPE="${DTYPE:-auto}"

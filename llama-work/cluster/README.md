@@ -205,7 +205,7 @@ ls results/*/plots/*.png
 | `MODEL_NAME` | openlm-research/open_llama_3b | huggingface model name |
 | `HF_TOKEN` | none | token for private/gated models |
 | `DTYPE` | auto | data type (auto/float16/float32/bfloat16) |
-| `PHASES` | 1,2,3,4a,4b,4c | phases to run |
+| `PHASES` | 1,2,3 | phases to run |
 | `CHUNK_SIZE_MB` | 64 | chunk size in mb |
 | `CONCURRENCY` | default (tensorstore) | tensorstore concurrency limit (empty=default) |
 | `DEVICE` | cpu (cluster) / cuda (local) | device (cpu/cuda) |
@@ -413,46 +413,28 @@ CLEAR_CACHE=0 bash run_local_gpu.sh
 
 ---
 
-## checkpointing phases (6 total)
+## checkpointing phases (3 total)
 
 ### phase 1: pytorch (baseline)
 - uses pytorch's native `torch.save()` and `torch.load()`
 - fastest save/load times
 - single .pth file
 - baseline for comparison
-- saves all 237 model parameters
+- handles all dtypes natively (including bfloat16)
 
 ### phase 2: tensorstore (basic)
 - tensorstore with zarr format
 - dynamic 64 mib chunking (adaptive per tensor)
-- separate zarr file per parameter (237 files)
+- separate zarr file per parameter
 - no compression, no concurrency
-- baseline for tensorstore variants
+- baseline for tensorstore approach
 
 ### phase 3: t5x-optimized tensorstore
 - t5x-style optimizations
 - dynamic 64 mib chunks + gzip compression (level 1)
 - high concurrency (128 concurrent file i/o ops)
 - optimized for distributed systems
-- ~23% smaller due to compression
-
-### phase 4a: tensorstore + concurrency only
-- tests impact of concurrency alone
-- 64 mib chunks, no compression
-- 128 concurrent operations
-- isolates concurrency benefit
-
-### phase 4b: tensorstore + 1 mib chunks
-- tests impact of smaller chunks
-- 1 mib chunks (vs 64 mib baseline)
-- no compression, no concurrency
-- isolates chunk size impact
-
-### phase 4c: tensorstore + compression only
-- tests impact of compression alone
-- 64 mib chunks + gzip compression
-- no concurrency
-- isolates compression benefit
+- ~20-30% smaller due to compression
 
 ## output files
 
@@ -465,23 +447,14 @@ saved_models/                                  # model checkpoints (gitignored)
     ├── tensorstore/                           # phase 2: basic tensorstore
     │   ├── *.zarr                            # 237 parameter files
     │   └── metadata.json
-    ├── t5x_tensorstore/                       # phase 3: t5x-optimized
-    │   ├── *.zarr                            # 237 parameter files (compressed)
-    │   └── metadata.json
-    ├── phase4a_concurrency/                   # phase 4a: concurrency only
-    │   ├── *.zarr
-    │   └── metadata.json
-    ├── phase4b_chunks/                        # phase 4b: 1 mib chunks
-    │   ├── *.zarr
-    │   └── metadata.json
-    └── phase4c_compression/                   # phase 4c: compression only
-        ├── *.zarr
+    └── t5x_tensorstore/                       # phase 3: t5x-optimized
+        ├── *.zarr                            # parameter files (compressed)
         └── metadata.json
 
 results/                                       # results (tracked in git)
 └── {timestamp}_{model_name}/                  # e.g., 20251204_020230_open_llama_3b/
     ├── plots/                                 # visualization charts
-    │   ├── 6way_comparison.png               # comprehensive 6-way comparison
+    │   ├── 3way_comparison.png               # comprehensive 3-way comparison
     │   └── tensorstore_variants.png          # tensorstore variants analysis
     ├── all_phases_results.json               # complete results data
     └── comparison_results.json               # file size comparison
@@ -566,10 +539,10 @@ RESULTS_DIR = f"results/{RUN_ID}/"           # plots, json (tracked)
 
 ## how it works
 
-### 6-phase comparison workflow
+### 3-phase comparison workflow
 
-1. **load model** - loads model from huggingface with float16 precision
-2. **run all 6 phases** - sequentially saves and loads with each method
+1. **load model** - loads model from huggingface with auto-detected dtype
+2. **run all 3 phases** - sequentially saves and loads with each method
 3. **collect metrics** - records save time, load time, file size for each phase
 4. **generate visualizations** - creates 2 comprehensive comparison charts
 5. **save results** - stores all data in JSON for analysis
@@ -601,7 +574,7 @@ sbatch run_all.sh
 
 ### visualization charts
 
-**chart 1: 6-way comprehensive comparison** (2x3 grid)
+**chart 1: 3-way comprehensive comparison** (2x3 grid)
 - save time comparison
 - load time comparison
 - file size comparison
@@ -610,9 +583,9 @@ sbatch run_all.sh
 - overall efficiency score
 
 **chart 2: tensorstore variants** (2x2 grid)
-- save time for all tensorstore variants
-- load time for all tensorstore variants
-- file size for all tensorstore variants
+- save time for tensorstore variants (basic vs t5x)
+- load time for tensorstore variants
+- file size for tensorstore variants
 - improvement vs basic tensorstore
 
 ### code structure
@@ -637,12 +610,12 @@ from config import MODEL_NAME, MODEL_ID, RUN_ID, MODEL_DIR, RESULTS_DIR, PLOTS_D
 
 ## features
 
-- **6-phase comparison**: comprehensive analysis of pytorch vs tensorstore variants
+- **3-phase comparison**: comprehensive analysis of pytorch vs tensorstore approaches
 - **fully dynamic**: all model names and paths from config
 - **organized structure**: each model in its own directory with plots
 - **automatic visualizations**: generates 2 comprehensive comparison charts
 - **detailed metrics**: save time, load time, file size for all phases
-- **isolation testing**: phases 4a-4c isolate individual optimizations
+- **dtype flexibility**: auto-detection or manual override (float16/float32/bfloat16)
 - **dynamic chunking**: automatic optimal chunk size per tensor
 - **easy to modify**: change model via environment variable or config
 - **slurm integration**: ready-to-use batch scripts

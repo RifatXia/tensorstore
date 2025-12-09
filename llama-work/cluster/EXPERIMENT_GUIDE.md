@@ -66,24 +66,19 @@ CHUNK_SIZE_MB=64 PHASES="2" sbatch run_all.sh
 
 ### 2. Test Different Configurations
 
-**Only Compression:**
+**Basic TensorStore:**
 ```bash
-PHASES="4c" CHUNK_SIZE_MB=64 sbatch run_all.sh
+PHASES="2" CHUNK_SIZE_MB=64 sbatch run_all.sh
 ```
 
-**Only Concurrency:**
-```bash
-PHASES="4a" CHUNK_SIZE_MB=64 sbatch run_all.sh
-```
-
-**Only Chunk Size Variation:**
-```bash
-PHASES="4b" sbatch run_all.sh  # Uses 1 MB chunks
-```
-
-**Full T5X Optimization:**
+**T5X Optimized (compression + concurrency):**
 ```bash
 PHASES="3" CHUNK_SIZE_MB=64 sbatch run_all.sh
+```
+
+**All Three Phases:**
+```bash
+PHASES="1,2,3" sbatch run_all.sh
 ```
 
 ### 3. Compare Multiple Chunk Sizes for Same Model
@@ -118,33 +113,30 @@ done
 ```
 
 ## 📋 Configuration Parameters
-
 ### Available Parameters
 
 | Parameter | Values | Description |
 |-----------|--------|-------------|
 | `CHUNK_SIZE_MB` | 1, 4, 16, 64, 128, etc. | Chunk size in megabytes |
-| `PHASES` | 1, 2, 3, 4a, 4b, 4c | Which phases to run |
+| `PHASES` | 1, 2, 3 | Which phases to run |
 | `DEVICE` | cpu, cuda | Device to use |
 | `SKIP_PLOTS` | 0, 1 | Skip plot generation |
 | `MODEL_NAME` | Any HF model | Model to test |
+| `DTYPE` | auto, float16, float32, bfloat16 | Data type |
 
-### Phase Configurations
+## 🔬 Phase Breakdown
 
 | Phase | Chunk Size | Compression | Concurrency | Purpose |
 |-------|------------|-------------|-------------|---------|
 | 1 | N/A | No | N/A | PyTorch baseline |
 | 2 | Custom | No | No | Basic TensorStore |
 | 3 | Custom | gzip-1 | 128 | T5X optimized |
-| 4a | Custom | No | 128 | Test concurrency |
-| 4b | 1 MB | No | No | Test small chunks |
-| 4c | Custom | gzip-1 | No | Test compression |
 
 ## 📊 Analyzing Results
 
 ### View Results JSON
 
-```bash
+{{ ... }}
 # View complete results
 cat saved_models/<model_id>/all_phases_results.json
 
@@ -184,63 +176,46 @@ for chunk in 1 4 8 16 32 64 128; do
 done
 
 # Compare results
-for chunk in 1 4 8 16 32 64 128; do
     echo "Chunk size: ${chunk} MB"
     # Results will be in separate runs
 done
-```
 
-### Scenario 2: Compression vs No Compression
+### Scenario 2: Basic vs Optimized TensorStore
 
-**Goal:** Measure compression impact
+**Goal:** Compare basic tensorstore with T5X optimizations
 
+**Steps:**
 ```bash
-# No compression (Phase 2)
+# Basic TensorStore (no compression, no concurrency)
 PHASES="2" CHUNK_SIZE_MB=64 sbatch run_all.sh
 
-# With compression (Phase 4c)
-PHASES="4c" CHUNK_SIZE_MB=64 sbatch run_all.sh
-
-# Compare
-jq '.phases.tensorstore, .phases.phase4c_compression' saved_models/*/all_phases_results.json
-```
-
-### Scenario 3: Concurrency Impact
-
-**Goal:** Measure concurrency benefit
-
-```bash
-# No concurrency (Phase 2)
-PHASES="2" CHUNK_SIZE_MB=64 sbatch run_all.sh
-
-# With concurrency (Phase 4a)
-PHASES="4a" CHUNK_SIZE_MB=64 sbatch run_all.sh
-
-# Compare
-jq '.phases.tensorstore, .phases.phase4a_concurrency' saved_models/*/all_phases_results.json
-```
-
-### Scenario 4: Full Optimization Stack
-
-**Goal:** Test each optimization individually and combined
-
-```bash
-# Baseline
-PHASES="2" CHUNK_SIZE_MB=64 sbatch run_all.sh
-
-# Individual optimizations
-PHASES="4a" CHUNK_SIZE_MB=64 sbatch run_all.sh  # Concurrency
-PHASES="4b" sbatch run_all.sh                    # Small chunks
-PHASES="4c" CHUNK_SIZE_MB=64 sbatch run_all.sh  # Compression
-
-# All combined
+# T5X Optimized (compression + concurrency)
 PHASES="3" CHUNK_SIZE_MB=64 sbatch run_all.sh
+
+# Compare
+jq '.phases.tensorstore, .phases.t5x' saved_models/*/all_phases_results.json
+```
+
+### Scenario 3: dtype Comparison
+
+**Goal:** Compare different data types
+
+**Steps:**
+```bash
+# Test float16
+DTYPE="float16" PHASES="1,2,3" sbatch run_all.sh
+
+# Test bfloat16
+DTYPE="bfloat16" PHASES="1,2,3" sbatch run_all.sh
+
+# Test float32
+DTYPE="float32" PHASES="1,2,3" sbatch run_all.sh
+
+# Compare file sizes
+jq '.dtype, .phases.pytorch.file_size_gb' saved_models/*/all_phases_results.json
 
 # Compare all
 jq '.phases' saved_models/*/all_phases_results.json
-```
-
-## 📈 Result Comparison Script
 
 Create a simple Python script to compare results:
 

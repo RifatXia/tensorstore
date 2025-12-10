@@ -9,8 +9,8 @@ MODEL_NAME="mistralai/Mistral-7B-v0.1" bash download.sh
 MODEL_NAME="mistralai/Mistral-7B-v0.1" sbatch run_all.sh
 
 # OpenLLaMA-3B (default)
-bash download.sh
-sbatch run_all.sh
+MODEL_NAME="openlm-research/open_llama_3b" bash download.sh
+MODEL_NAME="openlm-research/open_llama_3b" sbatch run_all.sh
 
 # Custom runs
 NUM_RUNS=5 sbatch run_all.sh  # 5 runs for higher confidence

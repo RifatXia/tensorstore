@@ -3,7 +3,7 @@
 #SBATCH --time=12:00:00
 #SBATCH --job-name=param-sweep
 #SBATCH --output=logs/sweep-%j.out
-#SBATCH --exclusive
+# #SBATCH --exclusive
 
 # tensorstore parameter sweep - optimize tensorstore configuration
 #

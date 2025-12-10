@@ -2,6 +2,13 @@
 # sweeps only run phase 2 (tensorstore) to optimize configuration
 # generates comparison plots with error bars
 
+# Available models:
+# Qwen/Qwen2.5-7B
+# mistralai/Mistral-7B-v0.1
+# openlm-research/open_llama_3b
+# openlm-research/open_llama_7b
+# meta-llama/Llama-3.2-3B-Instruct
+
 # chunk size sweep
 sbatch run_sweep.sh chunk 1,4,16,64
 MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh chunk 1,4,16,64

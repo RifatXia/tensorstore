@@ -11,11 +11,11 @@
 
 # chunk size sweep
 sbatch run_sweep.sh chunk 1,4,16,64
-MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh chunk 1,4,16,64
+MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh chunk 1,4,16,64,128,256
 
 # dtype sweep
 sbatch run_sweep.sh dtype float16,bfloat16,float32
-MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh dtype float16,bfloat16
+MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh dtype float16,float32
 
 # concurrency sweep
 sbatch run_sweep.sh concurrency 1,4,16,64,128

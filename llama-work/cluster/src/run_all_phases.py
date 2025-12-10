@@ -28,9 +28,14 @@ parser.add_argument('--chunk-size', type=int, default=64, help='chunk size in me
 parser.add_argument('--concurrency', type=int, default=None, help='tensorstore concurrency limit (default: tensorstore default, unlimited)')
 parser.add_argument('--device', type=str, default='cpu', help='device to use (default: cpu)')
 parser.add_argument('--dtype', type=str, default='auto', choices=['auto', 'float16', 'float32', 'bfloat16'], help='data type for model and storage (default: auto - uses model default)')
+parser.add_argument('--num-runs', type=int, default=3, help='number of runs for each phase (default: 3)')
 parser.add_argument('--skip-plots', action='store_true', help='skip plot generation')
 parser.add_argument('--no-clear-cache', action='store_true', help='disable cache clearing (enabled by default)')
 args = parser.parse_args()
+
+# number of runs for reliability
+NUM_RUNS = args.num_runs
+print(f"\nrunning each phase {NUM_RUNS} times for reliability")
 
 # update config with command line args
 if args.model:
@@ -107,9 +112,22 @@ results = {
     'model_type': MODEL_TYPE,
     'device': DEVICE,
     'dtype': DTYPE,
+    'num_runs': NUM_RUNS,
     'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
     'phases': {}
 }
+
+# helper function to calculate statistics
+def calculate_stats(values):
+    """calculate mean, std, min, max from list of values"""
+    values_array = np.array(values)
+    return {
+        'mean': float(np.mean(values_array)),
+        'std': float(np.std(values_array, ddof=1)) if len(values) > 1 else 0.0,
+        'min': float(np.min(values_array)),
+        'max': float(np.max(values_array)),
+        'runs': [float(v) for v in values]
+    }
 
 # helper function for tensorstore variants
 def save_tensorstore_variant(model_state, save_dir, phase_name, use_compression=False, 
@@ -222,31 +240,51 @@ def load_tensorstore_variant(save_dir, phase_name):
 # ============================================================================
 if '1' in phases_to_run:
     print(f"\n{'='*70}")
-    print("PHASE 1: PYTORCH (BASELINE)")
+    print(f"PHASE 1: PYTORCH (BASELINE) - {NUM_RUNS} runs")
     print(f"{'='*70}")
 
     pytorch_path = os.path.join(MODEL_DIR, "pytorch.pth")
+    pytorch_save_times = []
+    pytorch_load_times = []
     
-    # clear cache before save
-    clear_caches_if_enabled()
-    start_time = time.time()
-    torch.save(model.state_dict(), pytorch_path)
-    pytorch_save_time = (time.time() - start_time) * 1000
+    for run in range(NUM_RUNS):
+        print(f"\n--- Run {run + 1}/{NUM_RUNS} ---")
+        
+        # clear cache before save
+        clear_caches_if_enabled()
+        start_time = time.time()
+        torch.save(model.state_dict(), pytorch_path)
+        save_time = (time.time() - start_time) * 1000
+        pytorch_save_times.append(save_time)
+        print(f"✓ saved in {save_time:.1f} ms")
+        
+        # clear cache before load
+        clear_caches_if_enabled()
+        start_time = time.time()
+        state_dict = torch.load(pytorch_path, map_location='cpu', weights_only=True)
+        load_time = (time.time() - start_time) * 1000
+        pytorch_load_times.append(load_time)
+        print(f"✓ loaded in {load_time:.1f} ms")
+        
+        del state_dict
+        gc.collect()
+    
     pytorch_size = os.path.getsize(pytorch_path)
-
-    print(f"✓ saved in {pytorch_save_time:.1f} ms")
-    print(f"✓ size: {format_size(pytorch_size)}")
-
-    # clear cache before load
-    clear_caches_if_enabled()
-    start_time = time.time()
-    state_dict = torch.load(pytorch_path, map_location='cpu', weights_only=True)
-    pytorch_load_time = (time.time() - start_time) * 1000
-    print(f"✓ loaded in {pytorch_load_time:.1f} ms")
+    
+    # calculate statistics
+    save_stats = calculate_stats(pytorch_save_times)
+    load_stats = calculate_stats(pytorch_load_times)
+    
+    print(f"\n{'='*70}")
+    print(f"PHASE 1 SUMMARY ({NUM_RUNS} runs)")
+    print(f"{'='*70}")
+    print(f"save time: {save_stats['mean']:.1f} ± {save_stats['std']:.1f} ms")
+    print(f"load time: {load_stats['mean']:.1f} ± {load_stats['std']:.1f} ms")
+    print(f"file size: {format_size(pytorch_size)}")
 
     results['phases']['pytorch'] = {
-        'save_time_ms': pytorch_save_time,
-        'load_time_ms': pytorch_load_time,
+        'save_time_ms': save_stats,
+        'load_time_ms': load_stats,
         'file_size_bytes': pytorch_size,
         'file_size_gb': pytorch_size / (1024**3),
         'configuration': {
@@ -257,7 +295,6 @@ if '1' in phases_to_run:
         }
     }
 
-    del state_dict
     gc.collect()
 else:
     print(f"\n{'='*70}")
@@ -270,16 +307,42 @@ else:
 model_state = model.state_dict()
 
 if '2' in phases_to_run:
+    print(f"\n{'='*70}")
+    print(f"PHASE 2: TENSORSTORE (BASIC) - {NUM_RUNS} runs")
+    print(f"{'='*70}")
+    
     ts_dir = os.path.join(MODEL_DIR, "tensorstore")
-    ts_save_time, ts_size, ts_config = save_tensorstore_variant(
-        model_state, ts_dir, "PHASE 2: TENSORSTORE (BASIC)",
-        use_compression=False, use_concurrency=False, chunk_size_mb=args.chunk_size, concurrency_limit=args.concurrency
-    )
-    ts_load_time = load_tensorstore_variant(ts_dir, "PHASE 2")
+    ts_save_times = []
+    ts_load_times = []
+    
+    for run in range(NUM_RUNS):
+        print(f"\n--- Run {run + 1}/{NUM_RUNS} ---")
+        
+        ts_save_time, ts_size, ts_config = save_tensorstore_variant(
+            model_state, ts_dir, f"PHASE 2: TENSORSTORE (BASIC) - Run {run + 1}",
+            use_compression=False, use_concurrency=False, chunk_size_mb=args.chunk_size, concurrency_limit=args.concurrency
+        )
+        ts_save_times.append(ts_save_time)
+        
+        ts_load_time = load_tensorstore_variant(ts_dir, f"PHASE 2 - Run {run + 1}")
+        ts_load_times.append(ts_load_time)
+        
+        gc.collect()
+    
+    # calculate statistics
+    save_stats = calculate_stats(ts_save_times)
+    load_stats = calculate_stats(ts_load_times)
+    
+    print(f"\n{'='*70}")
+    print(f"PHASE 2 SUMMARY ({NUM_RUNS} runs)")
+    print(f"{'='*70}")
+    print(f"save time: {save_stats['mean']:.1f} ± {save_stats['std']:.1f} ms")
+    print(f"load time: {load_stats['mean']:.1f} ± {load_stats['std']:.1f} ms")
+    print(f"file size: {format_size(ts_size)}")
 
     results['phases']['tensorstore'] = {
-        'save_time_ms': ts_save_time,
-        'load_time_ms': ts_load_time,
+        'save_time_ms': save_stats,
+        'load_time_ms': load_stats,
         'file_size_bytes': ts_size,
         'file_size_gb': ts_size / (1024**3),
         'configuration': ts_config
@@ -294,16 +357,42 @@ else:
 # PHASE 3: T5X-OPTIMIZED
 # ============================================================================
 if '3' in phases_to_run:
+    print(f"\n{'='*70}")
+    print(f"PHASE 3: T5X-OPTIMIZED - {NUM_RUNS} runs")
+    print(f"{'='*70}")
+    
     t5x_dir = os.path.join(MODEL_DIR, "t5x_tensorstore")
-    t5x_save_time, t5x_size, t5x_config = save_tensorstore_variant(
-        model_state, t5x_dir, "PHASE 3: T5X-OPTIMIZED",
-        use_compression=True, use_concurrency=True, chunk_size_mb=args.chunk_size, concurrency_limit=args.concurrency
-    )
-    t5x_load_time = load_tensorstore_variant(t5x_dir, "PHASE 3")
+    t5x_save_times = []
+    t5x_load_times = []
+    
+    for run in range(NUM_RUNS):
+        print(f"\n--- Run {run + 1}/{NUM_RUNS} ---")
+        
+        t5x_save_time, t5x_size, t5x_config = save_tensorstore_variant(
+            model_state, t5x_dir, f"PHASE 3: T5X-OPTIMIZED - Run {run + 1}",
+            use_compression=True, use_concurrency=True, chunk_size_mb=args.chunk_size, concurrency_limit=args.concurrency
+        )
+        t5x_save_times.append(t5x_save_time)
+        
+        t5x_load_time = load_tensorstore_variant(t5x_dir, f"PHASE 3 - Run {run + 1}")
+        t5x_load_times.append(t5x_load_time)
+        
+        gc.collect()
+    
+    # calculate statistics
+    save_stats = calculate_stats(t5x_save_times)
+    load_stats = calculate_stats(t5x_load_times)
+    
+    print(f"\n{'='*70}")
+    print(f"PHASE 3 SUMMARY ({NUM_RUNS} runs)")
+    print(f"{'='*70}")
+    print(f"save time: {save_stats['mean']:.1f} ± {save_stats['std']:.1f} ms")
+    print(f"load time: {load_stats['mean']:.1f} ± {load_stats['std']:.1f} ms")
+    print(f"file size: {format_size(t5x_size)}")
 
     results['phases']['t5x'] = {
-        'save_time_ms': t5x_save_time,
-        'load_time_ms': t5x_load_time,
+        'save_time_ms': save_stats,
+        'load_time_ms': load_stats,
         'file_size_bytes': t5x_size,
         'file_size_gb': t5x_size / (1024**3),
         'configuration': t5x_config
@@ -328,15 +417,25 @@ print(f"{'='*70}")
 
 # prepare data for visualization
 methods = ['PyTorch', 'TensorStore', 'T5X']
-save_times = [
-    results['phases']['pytorch']['save_time_ms'],
-    results['phases']['tensorstore']['save_time_ms'],
-    results['phases']['t5x']['save_time_ms']
+save_times_mean = [
+    results['phases']['pytorch']['save_time_ms']['mean'],
+    results['phases']['tensorstore']['save_time_ms']['mean'],
+    results['phases']['t5x']['save_time_ms']['mean']
 ]
-load_times = [
-    results['phases']['pytorch']['load_time_ms'],
-    results['phases']['tensorstore']['load_time_ms'],
-    results['phases']['t5x']['load_time_ms']
+save_times_std = [
+    results['phases']['pytorch']['save_time_ms']['std'],
+    results['phases']['tensorstore']['save_time_ms']['std'],
+    results['phases']['t5x']['save_time_ms']['std']
+]
+load_times_mean = [
+    results['phases']['pytorch']['load_time_ms']['mean'],
+    results['phases']['tensorstore']['load_time_ms']['mean'],
+    results['phases']['t5x']['load_time_ms']['mean']
+]
+load_times_std = [
+    results['phases']['pytorch']['load_time_ms']['std'],
+    results['phases']['tensorstore']['load_time_ms']['std'],
+    results['phases']['t5x']['load_time_ms']['std']
 ]
 file_sizes = [
     results['phases']['pytorch']['file_size_gb'],
@@ -345,10 +444,10 @@ file_sizes = [
 ]
 
 # print summary
-print(f"\n{'method':<20} {'save(ms)':<12} {'load(ms)':<12} {'size(gb)':<10}")
-print("-" * 54)
+print(f"\n{'method':<20} {'save(ms)':<20} {'load(ms)':<20} {'size(gb)':<10}")
+print("-" * 70)
 for i, method in enumerate(methods):
-    print(f"{method:<20} {save_times[i]:<12.1f} {load_times[i]:<12.1f} {file_sizes[i]:<10.2f}")
+    print(f"{method:<20} {save_times_mean[i]:>8.1f} ± {save_times_std[i]:<6.1f}  {load_times_mean[i]:>8.1f} ± {load_times_std[i]:<6.1f}  {file_sizes[i]:<10.2f}")
 
 # ============================================================================
 # GENERATE 3-WAY COMPARISON CHART
@@ -363,27 +462,27 @@ colors = ['#3498db', '#e74c3c', '#2ecc71']
 fig, axes = plt.subplots(2, 3, figsize=(18, 10))
 fig.suptitle(f'3-Way Checkpointing Comparison - {MODEL_ID}', fontsize=18, fontweight='bold')
 
-# 1. save time
+# 1. save time with error bars
 ax = axes[0, 0]
-ax.bar(range(len(methods)), save_times, color=colors)
-ax.set_title("save time (lower is better)", fontsize=14, fontweight='bold')
+ax.bar(range(len(methods)), save_times_mean, yerr=save_times_std, color=colors, capsize=5, error_kw={'linewidth': 2})
+ax.set_title(f"save time ({NUM_RUNS} runs, lower is better)", fontsize=14, fontweight='bold')
 ax.set_ylabel("time (ms)", fontsize=12)
 ax.set_xticks(range(len(methods)))
 ax.set_xticklabels(methods, rotation=45, ha="right", fontsize=9)
 ax.grid(axis="y", alpha=0.3)
-for i, v in enumerate(save_times):
-    ax.text(i, v*1.02, f"{v:.0f}", ha="center", fontsize=8, fontweight="bold")
+for i, (mean, std) in enumerate(zip(save_times_mean, save_times_std)):
+    ax.text(i, mean*1.02, f"{mean:.0f}±{std:.0f}", ha="center", fontsize=8, fontweight="bold")
 
-# 2. load time
+# 2. load time with error bars
 ax = axes[0, 1]
-ax.bar(range(len(methods)), load_times, color=colors)
-ax.set_title("load time (lower is better)", fontsize=14, fontweight='bold')
+ax.bar(range(len(methods)), load_times_mean, yerr=load_times_std, color=colors, capsize=5, error_kw={'linewidth': 2})
+ax.set_title(f"load time ({NUM_RUNS} runs, lower is better)", fontsize=14, fontweight='bold')
 ax.set_ylabel("time (ms)", fontsize=12)
 ax.set_xticks(range(len(methods)))
 ax.set_xticklabels(methods, rotation=45, ha="right", fontsize=9)
 ax.grid(axis="y", alpha=0.3)
-for i, v in enumerate(load_times):
-    ax.text(i, v*1.02, f"{v:.0f}", ha="center", fontsize=8, fontweight="bold")
+for i, (mean, std) in enumerate(zip(load_times_mean, load_times_std)):
+    ax.text(i, mean*1.02, f"{mean:.0f}±{std:.0f}", ha="center", fontsize=8, fontweight="bold")
 
 # 3. file size
 ax = axes[0, 2]
@@ -398,8 +497,8 @@ for i, v in enumerate(file_sizes):
 
 # 4. save speedup vs pytorch
 ax = axes[1, 0]
-pytorch_save = save_times[0]
-speedup_save = [(pytorch_save / t) for t in save_times]
+pytorch_save = save_times_mean[0]
+speedup_save = [(pytorch_save / t) for t in save_times_mean]
 ax.bar(range(len(methods)), speedup_save, color=colors)
 ax.axhline(y=1.0, color="red", linestyle="--", linewidth=2, label="pytorch baseline")
 ax.set_title("save speedup vs pytorch (higher is better)", fontsize=14, fontweight='bold')
@@ -413,8 +512,8 @@ for i, v in enumerate(speedup_save):
 
 # 5. load speedup vs pytorch
 ax = axes[1, 1]
-pytorch_load = load_times[0]
-speedup_load = [(pytorch_load / t) for t in load_times]
+pytorch_load = load_times_mean[0]
+speedup_load = [(pytorch_load / t) for t in load_times_mean]
 ax.bar(range(len(methods)), speedup_load, color=colors)
 ax.axhline(y=1.0, color="red", linestyle="--", linewidth=2, label="pytorch baseline")
 ax.set_title("load speedup vs pytorch (higher is better)", fontsize=14, fontweight='bold')

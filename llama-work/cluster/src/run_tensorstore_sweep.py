@@ -25,8 +25,13 @@ parser.add_argument('--chunk-size', type=int, default=64, help='chunk size in me
 parser.add_argument('--concurrency', type=int, default=None, help='tensorstore concurrency limit (default: tensorstore default, unlimited)')
 parser.add_argument('--device', type=str, default='cpu', help='device to use (default: cpu)')
 parser.add_argument('--dtype', type=str, default='auto', choices=['auto', 'float16', 'float32', 'bfloat16'], help='data type for model and storage (default: auto - uses model default)')
+parser.add_argument('--num-runs', type=int, default=3, help='number of runs for reliability (default: 3)')
 parser.add_argument('--no-clear-cache', action='store_true', help='disable cache clearing (enabled by default)')
 args = parser.parse_args()
+
+# number of runs for reliability
+NUM_RUNS = args.num_runs
+print(f"\nrunning {NUM_RUNS} times for reliability")
 
 # set environment variables before importing config
 if args.model:
@@ -55,6 +60,7 @@ print(f"run id: {RUN_ID}")
 print(f"dtype: {DTYPE}")
 print(f"chunk size: {args.chunk_size} MB")
 print(f"concurrency: {args.concurrency if args.concurrency else 'default (tensorstore)'}")
+print(f"num runs: {NUM_RUNS}")
 print(f"clear cache: {not args.no_clear_cache}")
 print("="*70)
 
@@ -97,9 +103,22 @@ results = {
     'dtype': DTYPE,
     'chunk_size_mb': args.chunk_size,
     'concurrency': args.concurrency if args.concurrency else 'default',
+    'num_runs': NUM_RUNS,
     'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
     'phases': {}
 }
+
+# helper function to calculate statistics
+def calculate_stats(values):
+    """calculate mean, std, min, max from list of values"""
+    values_array = np.array(values)
+    return {
+        'mean': float(np.mean(values_array)),
+        'std': float(np.std(values_array, ddof=1)) if len(values) > 1 else 0.0,
+        'min': float(np.min(values_array)),
+        'max': float(np.max(values_array)),
+        'runs': [float(v) for v in values]
+    }
 
 # tensorstore save function - exact copy from run_all_phases.py
 def save_tensorstore(model_state, save_dir, chunk_size_mb=64, concurrency_limit=None):
@@ -201,24 +220,47 @@ def load_tensorstore(save_dir):
     
     return load_time
 
-# run tensorstore phase
+# run tensorstore phase with multiple runs
 print(f"\n{'='*70}")
-print("PHASE 2: TENSORSTORE (BASIC)")
+print(f"PHASE 2: TENSORSTORE (BASIC) - {NUM_RUNS} runs")
 print(f"{'='*70}")
 
 model_state = model.state_dict()
 ts_dir = os.path.join(MODEL_DIR, "tensorstore")
 
-ts_save_time, ts_size, ts_count = save_tensorstore(
-    model_state, ts_dir, 
-    chunk_size_mb=args.chunk_size, 
-    concurrency_limit=args.concurrency
-)
-ts_load_time = load_tensorstore(ts_dir)
+ts_save_times = []
+ts_load_times = []
+
+for run in range(NUM_RUNS):
+    print(f"\n--- Run {run + 1}/{NUM_RUNS} ---")
+    
+    ts_save_time, ts_size, ts_count = save_tensorstore(
+        model_state, ts_dir, 
+        chunk_size_mb=args.chunk_size, 
+        concurrency_limit=args.concurrency
+    )
+    ts_save_times.append(ts_save_time)
+    
+    ts_load_time = load_tensorstore(ts_dir)
+    ts_load_times.append(ts_load_time)
+    
+    gc.collect()
+
+# calculate statistics
+save_stats = calculate_stats(ts_save_times)
+load_stats = calculate_stats(ts_load_times)
+
+print(f"\n{'='*70}")
+print(f"TENSORSTORE RESULTS ({NUM_RUNS} runs)")
+print(f"{'='*70}")
+print(f"save time: {save_stats['mean']:.1f} ± {save_stats['std']:.1f} ms")
+print(f"load time: {load_stats['mean']:.1f} ± {load_stats['std']:.1f} ms")
+print(f"file size: {format_size(ts_size)}")
+print(f"parameters: {ts_count}")
 
 results['phases']['tensorstore'] = {
-    'save_time_ms': ts_save_time,
-    'load_time_ms': ts_load_time,
+    'save_time_ms': save_stats,
+    'load_time_ms': load_stats,
     'file_size_bytes': ts_size,
     'file_size_gb': ts_size / (1024**3),
     'parameters_saved': ts_count,
@@ -230,14 +272,6 @@ results['phases']['tensorstore'] = {
         'dynamic_chunking': True
     }
 }
-
-print(f"\n{'='*70}")
-print("TENSORSTORE RESULTS")
-print(f"{'='*70}")
-print(f"save time: {ts_save_time:.1f} ms")
-print(f"load time: {ts_load_time:.1f} ms")
-print(f"file size: {format_size(ts_size)}")
-print(f"parameters: {ts_count}")
 
 # cleanup
 del model

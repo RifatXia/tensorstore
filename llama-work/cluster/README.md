@@ -4,11 +4,13 @@ modular checkpointing framework comparing pytorch, tensorstore, and t5x-optimize
 
 ## ⚡ key features
 
+- **statistical reliability** - 3 runs per phase by default with mean ± std tracking
+- **error bars in plots** - visualizations show confidence intervals
 - **private model support** - use gated models with `HF_TOKEN` (llama 3.2, llama 3, etc.)
 - **auto dtype detection** - automatically uses model's default precision from config.json
 - **timestamped runs** - each run creates unique directory, enabling multiple experiments
 - **gpu support** - local gpu execution with nvidia cuda
-- **parameter sweeps** - compare different chunk sizes or dtypes automatically
+- **parameter sweeps** - compare different chunk sizes or dtypes automatically (3 runs each)
 - **cache clearing** - accurate timing with system cache clearing
 - **no hardcoded model names** - all code uses `MODEL_NAME` from config
 - **works with any llama model** - public or private, just set `MODEL_NAME` and go
@@ -208,6 +210,7 @@ ls results/*/plots/*.png
 | `PHASES` | 1,2,3 | phases to run |
 | `CHUNK_SIZE_MB` | 64 | chunk size in mb |
 | `CONCURRENCY` | default (tensorstore) | tensorstore concurrency limit (empty=default) |
+| `NUM_RUNS` | 3 | number of runs per phase for reliability |
 | `DEVICE` | cpu (cluster) / cuda (local) | device (cpu/cuda) |
 | `SKIP_PLOTS` | 0 | skip plots (0/1) |
 | `CLEAR_CACHE` | 1 (local) / 0 (cluster) | clear cache before operations (0/1) |
@@ -539,13 +542,38 @@ RESULTS_DIR = f"results/{RUN_ID}/"           # plots, json (tracked)
 
 ## how it works
 
-### 3-phase comparison workflow
+### 3-phase comparison workflow with reliability
 
 1. **load model** - loads model from huggingface with auto-detected dtype
-2. **run all 3 phases** - sequentially saves and loads with each method
-3. **collect metrics** - records save time, load time, file size for each phase
-4. **generate visualizations** - creates 2 comprehensive comparison charts
-5. **save results** - stores all data in JSON for analysis
+2. **run all 3 phases** - each phase runs 3 times (configurable via `NUM_RUNS`)
+3. **collect statistics** - calculates mean, std, min, max for save/load times
+4. **generate visualizations** - creates charts with error bars showing ± std
+5. **save results** - stores all data in JSON with complete statistics
+
+**json output format:**
+```json
+{
+  "num_runs": 3,
+  "phases": {
+    "pytorch": {
+      "save_time_ms": {
+        "mean": 6377.5,
+        "std": 123.4,
+        "min": 6254.1,
+        "max": 6500.9,
+        "runs": [6377.5, 6254.1, 6500.9]
+      },
+      "load_time_ms": { "mean": ..., "std": ..., ... }
+    }
+  }
+}
+```
+
+**benefits:**
+- statistical reliability with confidence intervals
+- identifies outliers and variability
+- publication-ready results with error bars
+- customizable: `NUM_RUNS=5` for higher confidence, `NUM_RUNS=1` for quick testing
 
 ### dynamic model handling
 

@@ -82,10 +82,11 @@ ls saved_models/<model_id>/plots/
 
 ## Environment Variables
 - `MODEL_NAME` - model to use (default: openlm-research/open_llama_3b)
-- `PHASES` - which phases to run (default: 1,2,3,4a,4b,4c)
+- `PHASES` - which phases to run (default: 1,2,3)
 - `CHUNK_SIZE_MB` - chunk size (default: 64)
-- `DTYPE` - data type: float16, float32, bfloat16 (default: float16)
+- `DTYPE` - data type: auto, float16, float32, bfloat16 (default: auto)
 - `DEVICE` - cpu or cuda (default: cpu)
+- `NUM_RUNS` - number of runs per phase for reliability (default: 3)
 - `SKIP_PLOTS` - set to 1 to skip plots (default: 0)
 
 ## Examples
@@ -134,7 +135,13 @@ saved_models/<model_id>/
 ```
 
 ## JSON Output Includes
-- Save/load times
+- Save/load times with statistics (mean, std, min, max, runs array)
 - File sizes
 - Configuration: chunk_size_mb, compression, concurrency, dtype, parameters_saved
-- Model metadata: model_name, model_type, device, dtype, timestamp
+- Model metadata: model_name, model_type, device, dtype, num_runs, timestamp
+
+## Reliability Features
+- **3 runs by default**: Each phase runs 3 times for statistical reliability
+- **Statistics tracked**: Mean, standard deviation, min, max for all timing measurements
+- **Error bars in plots**: Visualizations show mean ± std for save/load times
+- **Customizable**: Set `NUM_RUNS` to change number of runs (e.g., `NUM_RUNS=5`)

@@ -19,6 +19,7 @@
 #   CONCURRENCY     - tensorstore concurrency limit (default: tensorstore default)
 #   DTYPE           - data type: auto, float16, float32, bfloat16 (default: auto)
 #   DEVICE          - device to use (default: cpu)
+#   NUM_RUNS        - number of runs per phase for reliability (default: 3)
 #   SKIP_PLOTS      - set to 1 to skip plot generation (default: 0)
 #   HF_TOKEN        - huggingface token for private/gated models (optional)
 #   RUN_TIMESTAMP   - timestamp for this run (default: auto-generated)
@@ -43,6 +44,7 @@ export CHUNK_SIZE_MB="${CHUNK_SIZE_MB:-64}"
 export CONCURRENCY="${CONCURRENCY:-}"  # empty = tensorstore default
 export DTYPE="${DTYPE:-auto}"
 export DEVICE="${DEVICE:-cpu}"
+export NUM_RUNS="${NUM_RUNS:-3}"
 export SKIP_PLOTS="${SKIP_PLOTS:-0}"
 
 # generate timestamp for this run if not provided
@@ -63,6 +65,7 @@ echo "  chunk size: ${CHUNK_SIZE_MB} mb"
 echo "  concurrency: ${CONCURRENCY:-default (tensorstore)}"
 echo "  dtype: $DTYPE"
 echo "  device: $DEVICE"
+echo "  num runs: $NUM_RUNS (for reliability)"
 echo "  skip plots: $SKIP_PLOTS"
 echo "  cache: $HF_HOME"
 echo "  hf token: ${HF_TOKEN:+set (private models enabled)}${HF_TOKEN:-not set (public models only)}"
@@ -96,6 +99,7 @@ python -u run_all_phases.py \
     $([ -n "$CONCURRENCY" ] && echo "--concurrency $CONCURRENCY") \
     --dtype "$DTYPE" \
     --device "$DEVICE" \
+    --num-runs "$NUM_RUNS" \
     $([ "$SKIP_PLOTS" = "1" ] && echo "--skip-plots")
 echo ""
 

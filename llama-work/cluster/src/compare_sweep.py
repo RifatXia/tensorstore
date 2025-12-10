@@ -69,21 +69,42 @@ if not sweep_results:
 phases = ['tensorstore']
 phase_labels = ['TensorStore']
 
-# prepare data for plotting
+# prepare data for plotting (handle both old single-value and new stats format)
 param_values = [r['value'] for r in sweep_results]
-save_times = {phase: [] for phase in phases}
-load_times = {phase: [] for phase in phases}
+save_times_mean = {phase: [] for phase in phases}
+save_times_std = {phase: [] for phase in phases}
+load_times_mean = {phase: [] for phase in phases}
+load_times_std = {phase: [] for phase in phases}
 file_sizes = {phase: [] for phase in phases}
 
 for result in sweep_results:
     for phase in phases:
         if phase in result['data']['phases']:
-            save_times[phase].append(result['data']['phases'][phase]['save_time_ms'])
-            load_times[phase].append(result['data']['phases'][phase]['load_time_ms'])
-            file_sizes[phase].append(result['data']['phases'][phase]['file_size_gb'])
+            phase_data = result['data']['phases'][phase]
+            
+            # handle new statistics format (dict with mean/std) or old format (single value)
+            save_time = phase_data['save_time_ms']
+            load_time = phase_data['load_time_ms']
+            
+            if isinstance(save_time, dict):
+                # new format with statistics
+                save_times_mean[phase].append(save_time['mean'])
+                save_times_std[phase].append(save_time['std'])
+                load_times_mean[phase].append(load_time['mean'])
+                load_times_std[phase].append(load_time['std'])
+            else:
+                # old format (single value)
+                save_times_mean[phase].append(save_time)
+                save_times_std[phase].append(0)
+                load_times_mean[phase].append(load_time)
+                load_times_std[phase].append(0)
+            
+            file_sizes[phase].append(phase_data['file_size_gb'])
         else:
-            save_times[phase].append(0)
-            load_times[phase].append(0)
+            save_times_mean[phase].append(0)
+            save_times_std[phase].append(0)
+            load_times_mean[phase].append(0)
+            load_times_std[phase].append(0)
             file_sizes[phase].append(0)
 
 # create comparison plots
@@ -100,31 +121,39 @@ colors = [cmap(i % 10) for i in range(n_bars)]  # cycle through 10 colors if nee
 # create 3-panel comparison plot for tensorstore
 fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(18, 5))
 
-# plot 1: save time
-if any(save_times['tensorstore']):
-    bars1 = ax1.bar(x, save_times['tensorstore'], width, color=colors, alpha=0.8, edgecolor='black', linewidth=1.5)
+# plot 1: save time with error bars
+if any(save_times_mean['tensorstore']):
+    bars1 = ax1.bar(x, save_times_mean['tensorstore'], width, yerr=save_times_std['tensorstore'], 
+                    color=colors, alpha=0.8, edgecolor='black', linewidth=1.5, capsize=5, error_kw={'linewidth': 2})
     ax1.set_xlabel(f'{args.sweep_param.capitalize()} Value', fontweight='bold', fontsize=12)
     ax1.set_ylabel('Save Time (ms)', fontweight='bold', fontsize=12)
-    ax1.set_title('TensorStore Save Time', fontweight='bold', fontsize=14)
+    ax1.set_title('TensorStore Save Time (3 runs)', fontweight='bold', fontsize=14)
     ax1.set_xticks(x)
     ax1.set_xticklabels(param_values)
     ax1.grid(alpha=0.3, axis='y')
-    # add value labels on bars
-    for i, v in enumerate(save_times['tensorstore']):
-        ax1.text(i, v, f'{v:.0f}', ha='center', va='bottom', fontweight='bold', fontsize=9)
+    # add value labels on bars with std
+    for i, (mean, std) in enumerate(zip(save_times_mean['tensorstore'], save_times_std['tensorstore'])):
+        if std > 0:
+            ax1.text(i, mean, f'{mean:.0f}±{std:.0f}', ha='center', va='bottom', fontweight='bold', fontsize=9)
+        else:
+            ax1.text(i, mean, f'{mean:.0f}', ha='center', va='bottom', fontweight='bold', fontsize=9)
 
-# plot 2: load time
-if any(load_times['tensorstore']):
-    bars2 = ax2.bar(x, load_times['tensorstore'], width, color=colors, alpha=0.8, edgecolor='black', linewidth=1.5)
+# plot 2: load time with error bars
+if any(load_times_mean['tensorstore']):
+    bars2 = ax2.bar(x, load_times_mean['tensorstore'], width, yerr=load_times_std['tensorstore'],
+                    color=colors, alpha=0.8, edgecolor='black', linewidth=1.5, capsize=5, error_kw={'linewidth': 2})
     ax2.set_xlabel(f'{args.sweep_param.capitalize()} Value', fontweight='bold', fontsize=12)
     ax2.set_ylabel('Load Time (ms)', fontweight='bold', fontsize=12)
-    ax2.set_title('TensorStore Load Time', fontweight='bold', fontsize=14)
+    ax2.set_title('TensorStore Load Time (3 runs)', fontweight='bold', fontsize=14)
     ax2.set_xticks(x)
     ax2.set_xticklabels(param_values)
     ax2.grid(alpha=0.3, axis='y')
-    # add value labels on bars
-    for i, v in enumerate(load_times['tensorstore']):
-        ax2.text(i, v, f'{v:.0f}', ha='center', va='bottom', fontweight='bold', fontsize=9)
+    # add value labels on bars with std
+    for i, (mean, std) in enumerate(zip(load_times_mean['tensorstore'], load_times_std['tensorstore'])):
+        if std > 0:
+            ax2.text(i, mean, f'{mean:.0f}±{std:.0f}', ha='center', va='bottom', fontweight='bold', fontsize=9)
+        else:
+            ax2.text(i, mean, f'{mean:.0f}', ha='center', va='bottom', fontweight='bold', fontsize=9)
 
 # plot 3: file size
 if any(file_sizes['tensorstore']):

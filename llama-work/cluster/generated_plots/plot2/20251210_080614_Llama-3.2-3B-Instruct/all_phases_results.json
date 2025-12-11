@@ -1,0 +1,110 @@
+{
+  "model_name": "meta-llama/Llama-3.2-3B-Instruct",
+  "model_id": "Llama-3.2-3B-Instruct",
+  "run_id": "20251210_080614_Llama-3.2-3B-Instruct",
+  "model_type": "llama",
+  "device": "cpu",
+  "dtype": "bfloat16",
+  "num_runs": 3,
+  "timestamp": "2025-12-10 08:07:07",
+  "phases": {
+    "pytorch": {
+      "save_time_ms": {
+        "mean": 72082.12796847026,
+        "std": 76396.36936224138,
+        "min": 27495.949268341064,
+        "max": 160295.31860351562,
+        "runs": [
+          160295.31860351562,
+          27495.949268341064,
+          28455.116033554077
+        ]
+      },
+      "load_time_ms": {
+        "mean": 36169.76443926493,
+        "std": 22636.463721092005,
+        "min": 22770.261764526367,
+        "max": 62305.29427528381,
+        "runs": [
+          62305.29427528381,
+          23433.73727798462,
+          22770.261764526367
+        ]
+      },
+      "file_size_bytes": 6425600791,
+      "file_size_gb": 5.984307072125375,
+      "configuration": {
+        "method": "torch.save",
+        "dtype": "bfloat16",
+        "compression": "none",
+        "format": "pytorch"
+      }
+    },
+    "tensorstore": {
+      "save_time_ms": {
+        "mean": 73292.56423314412,
+        "std": 5949.456197309032,
+        "min": 67551.35774612427,
+        "max": 79430.42016029358,
+        "runs": [
+          67551.35774612427,
+          79430.42016029358,
+          72895.91479301453
+        ]
+      },
+      "load_time_ms": {
+        "mean": 57067.16497739156,
+        "std": 214.20054683583285,
+        "min": 56893.14889907837,
+        "max": 57306.392192840576,
+        "runs": [
+          57306.392192840576,
+          56893.14889907837,
+          57001.95384025574
+        ]
+      },
+      "file_size_bytes": 7210964136,
+      "file_size_gb": 6.7157336845994,
+      "configuration": {
+        "chunk_size_mb": 64,
+        "compression": "none",
+        "concurrency": 1,
+        "dtype": "bfloat16",
+        "parameters_saved": 255
+      }
+    },
+    "t5x": {
+      "save_time_ms": {
+        "mean": 757706.2710126241,
+        "std": 26707.813484409784,
+        "min": 727664.9966239929,
+        "max": 778764.1820907593,
+        "runs": [
+          727664.9966239929,
+          778764.1820907593,
+          766689.6343231201
+        ]
+      },
+      "load_time_ms": {
+        "mean": 376759.2447598775,
+        "std": 65927.30410895064,
+        "min": 337423.02083969116,
+        "max": 452871.18315696716,
+        "runs": [
+          452871.18315696716,
+          339983.53028297424,
+          337423.02083969116
+        ]
+      },
+      "file_size_bytes": 5575446044,
+      "file_size_gb": 5.1925387643277645,
+      "configuration": {
+        "chunk_size_mb": 64,
+        "compression": "gzip-1",
+        "concurrency": "default",
+        "dtype": "bfloat16",
+        "parameters_saved": 255
+      }
+    }
+  }
+}

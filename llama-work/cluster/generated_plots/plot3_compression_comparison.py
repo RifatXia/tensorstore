@@ -190,11 +190,110 @@ if len(compression_data) >= 2:
     plt.savefig(output_file, dpi=150, bbox_inches='tight')
     print(f"\n✓ compression comparison saved: {output_file}")
     plt.close()
+    
+    # save individual plots
+    # save time only
+    fig_save = plt.figure(figsize=(10, 7))
+    ax = fig_save.add_subplot(111)
+    for idx, model_id in enumerate(models):
+        save_times = all_data[model_id]['save_times']
+        full_name = model_full_names.get(model_id, model_id)
+        offset = (idx - 0.5) * width
+        bars = ax.bar(x_pos + offset, save_times, width,
+                     label=full_name, color=model_colors[idx], alpha=0.8)
+        for bar in bars:
+            height = bar.get_height()
+            if height > 0:
+                ax.text(bar.get_x() + bar.get_width()/2., height,
+                       f'{height:.1f}', ha='center', va='bottom', fontsize=8)
+    ax.set_title('Save Time Comparison', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Compression Type', fontsize=13, fontweight='bold')
+    ax.set_ylabel('Time (s)', fontsize=13, fontweight='bold')
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(compression_types, fontsize=11, fontweight='bold')
+    ax.tick_params(axis='y', labelsize=11)
+    ax.ticklabel_format(style='plain', axis='y')
+    for label in ax.get_yticklabels():
+        label.set_fontweight('bold')
+    ax.legend(fontsize=11, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
+    ax.grid(axis='y', alpha=0.3)
+    ax.set_ylim(top=max([max(all_data[m]['save_times']) for m in models]) * 1.3)
+    plt.tight_layout()
+    save_file = data_dir / "compression_comparison_save.png"
+    plt.savefig(save_file, dpi=150, bbox_inches='tight')
+    print(f"✓ save time plot saved: {save_file}")
+    plt.close()
+    
+    # load time only
+    fig_load = plt.figure(figsize=(10, 7))
+    ax = fig_load.add_subplot(111)
+    for idx, model_id in enumerate(models):
+        load_times = all_data[model_id]['load_times']
+        full_name = model_full_names.get(model_id, model_id)
+        offset = (idx - 0.5) * width
+        bars = ax.bar(x_pos + offset, load_times, width,
+                     label=full_name, color=model_colors[idx], alpha=0.8)
+        for bar in bars:
+            height = bar.get_height()
+            if height > 0:
+                ax.text(bar.get_x() + bar.get_width()/2., height,
+                       f'{height:.1f}', ha='center', va='bottom', fontsize=8)
+    ax.set_title('Load Time Comparison', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Compression Type', fontsize=13, fontweight='bold')
+    ax.set_ylabel('Time (s)', fontsize=13, fontweight='bold')
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(compression_types, fontsize=11, fontweight='bold')
+    ax.tick_params(axis='y', labelsize=11)
+    ax.ticklabel_format(style='plain', axis='y')
+    for label in ax.get_yticklabels():
+        label.set_fontweight('bold')
+    ax.legend(fontsize=11, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
+    ax.grid(axis='y', alpha=0.3)
+    ax.set_ylim(top=max([max(all_data[m]['load_times']) for m in models]) * 1.3)
+    plt.tight_layout()
+    load_file = data_dir / "compression_comparison_load.png"
+    plt.savefig(load_file, dpi=150, bbox_inches='tight')
+    print(f"✓ load time plot saved: {load_file}")
+    plt.close()
+    
+    # file size only
+    fig_size = plt.figure(figsize=(10, 7))
+    ax = fig_size.add_subplot(111)
+    for idx, model_id in enumerate(models):
+        file_sizes = all_data[model_id]['file_sizes']
+        full_name = model_full_names.get(model_id, model_id)
+        offset = (idx - 0.5) * width
+        bars = ax.bar(x_pos + offset, file_sizes, width,
+                     label=full_name, color=model_colors[idx], alpha=0.8)
+        for bar in bars:
+            height = bar.get_height()
+            if height > 0:
+                ax.text(bar.get_x() + bar.get_width()/2., height,
+                       f'{height:.2f}', ha='center', va='bottom', fontsize=8)
+    ax.set_title('File Size Comparison', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Compression Type', fontsize=13, fontweight='bold')
+    ax.set_ylabel('File Size (GB)', fontsize=13, fontweight='bold')
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(compression_types, fontsize=11, fontweight='bold')
+    ax.tick_params(axis='y', labelsize=11)
+    for label in ax.get_yticklabels():
+        label.set_fontweight('bold')
+    ax.legend(fontsize=11, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
+    ax.grid(axis='y', alpha=0.3)
+    ax.set_ylim(top=max([max(all_data[m]['file_sizes']) for m in models]) * 1.3)
+    plt.tight_layout()
+    size_file = data_dir / "compression_comparison_size.png"
+    plt.savefig(size_file, dpi=150, bbox_inches='tight')
+    print(f"✓ file size plot saved: {size_file}")
+    plt.close()
 
 print("\n" + "="*70)
 print("✓ compression comparison plot generated successfully!")
 print("="*70)
-print(f"\noutput file:")
-print(f"  - {data_dir}/compression_comparison.png")
+print(f"\noutput files:")
+print(f"  - {data_dir}/compression_comparison.png (combined)")
+print(f"  - {data_dir}/compression_comparison_save.png (save time)")
+print(f"  - {data_dir}/compression_comparison_load.png (load time)")
+print(f"  - {data_dir}/compression_comparison_size.png (file size)")
 print(f"\nmodels compared: {', '.join([model_full_names.get(m, m) for m in models])}")
 print(f"compression types: {', '.join(compression_types)}")

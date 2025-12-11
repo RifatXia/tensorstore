@@ -82,6 +82,8 @@ All experiments were conducted on a consistent hardware platform to ensure repro
 
 Each checkpointing operation was performed three times, and the mean, standard deviation, minimum, and maximum values were recorded to account for system variability. Cache clearing was performed between runs on local systems to ensure accurate timing measurements, though this was disabled on cluster systems where sudo access was unavailable.
 
+**Model Loading and Memory Management:** During the experiments, models are primarily loaded onto the GPU for inference and checkpoint operations. However, with the limited 4GB GPU memory available on the NVIDIA GeForce GTX 1650, larger models cannot fit entirely in GPU memory. The Hugging Face Transformers library's `device_map="auto"` parameter enables automatic memory management, where PyTorch intelligently offloads model layers to CPU RAM or even disk storage when GPU memory is insufficient. This offloading mechanism partitions the model across available memory hierarchies, keeping the most frequently accessed layers on the GPU while moving less critical components to slower storage tiers. For the 7B models (approximately 14GB in float16), significant portions reside in CPU memory during loading, with only the active layers being transferred to GPU memory during forward passes. This automatic offloading is essential for running models that exceed available GPU memory but introduces additional data transfer overhead during model operations.
+
 ### TensorStore Configuration Details
 
 The TensorStore implementation uses the following key parameters:
@@ -94,11 +96,21 @@ The TensorStore implementation uses the following key parameters:
 
 **Compression:** When enabled, gzip compression at level 1 was used to balance compression ratio with computational overhead. Higher compression levels were avoided due to diminishing returns and increased CPU usage.
 
-**Data Type:** Models were saved using their native precision when possible. For bfloat16 models, conversion to float16 was necessary because PyTorch's bfloat16 tensors cannot be directly converted to NumPy arrays, which TensorStore requires. This conversion maintains 2-byte storage efficiency while ensuring compatibility.
+**Data Type:** Models were saved using their native precision when possible. TensorStore uses NumPy's dtype notation for specifying data types: `<f2` represents float16 (2 bytes per element), `<f4` represents float32 (4 bytes per element), and `<f8` represents float64 (8 bytes per element). The `<f2` dtype was predominantly used in this study to minimize storage requirements while maintaining acceptable precision for model weights. The total checkpoint size is calculated as: **Total Size = Number of Parameters × Bytes per Parameter**. For example, a 3 billion parameter model stored in float16 (`<f2`) requires approximately 3,000,000,000 × 2 = 6 GB of storage, while the same model in float32 (`<f4`) would require 12 GB. For bfloat16 models, conversion to float16 was necessary because PyTorch's bfloat16 tensors cannot be directly converted to NumPy arrays, which TensorStore requires. This conversion maintains 2-byte storage efficiency while ensuring compatibility.
 
-**Chunk Size:** Dynamic chunking was implemented where each tensor is divided into chunks of approximately 64 MB. For tensors smaller than the chunk size, a single chunk is used. For larger tensors, multiple chunks are created to enable parallel I/O.
+**Chunk Size:** Dynamic chunking was implemented where each tensor is divided into chunks of approximately 64 MB. The T5X approach uses a target chunk size of `_DESIRED_CHUNK_SIZE_BYTES = 64 × 1024 × 1024 = 67,108,864 bytes` (64 MiB). The chunk shape calculation follows this algorithm:
 
-**Concurrency:** The T5X-optimized approach [11] uses a concurrency limit of 128, allowing up to 128 file operations to proceed simultaneously. This is controlled through TensorStore's context configuration.
+1. Calculate target number of elements: `target_elements = _DESIRED_CHUNK_SIZE_BYTES // dtype.itemsize`
+2. For float16 (`<f2`): `target_elements = 67,108,864 // 2 = 33,554,432 elements`
+3. For float32 (`<f4`): `target_elements = 67,108,864 // 4 = 16,777,216 elements`
+
+The `calculate_chunk_shape()` function then determines the optimal chunk dimensions based on the tensor's shape and the target number of elements. For example, a tensor with shape `[4096, 4096]` (16,777,216 elements total) would be chunked into dimensions that keep each chunk at approximately 64 MB. If a tensor has 33,554,432 elements and uses float16, it would fit in a single 64 MB chunk. Larger tensors are divided into multiple chunks with dimensions calculated to maintain the 64 MB target per chunk. This approach ensures consistent chunk sizes regardless of the underlying data type, optimizing I/O performance across different model architectures.
+
+For tensors smaller than the chunk size, a single chunk is used. For larger tensors, multiple chunks are created to enable parallel I/O operations.
+
+**Concurrency:** The T5X-optimized approach [11] uses a concurrency limit of 128 (`file_io_concurrency=128`), allowing up to 128 file operations to proceed simultaneously. This is controlled through TensorStore's context configuration.
+
+**Compression Algorithm:** The T5X implementation employs gzip compression at level 1, specified in the Zarr metadata as `{'id': 'gzip', 'level': 1}`. This compression level provides a balance between compression ratio and computational overhead, with level 1 being the fastest gzip compression setting while still achieving some file size reduction.
 
 ---
 
@@ -112,7 +124,13 @@ The comparison of the three checkpointing approaches across all four models show
 
 The T5X-optimized approach falls between the two extremes, with save times of 60 to 150 seconds for 3B models and 120 to 280 seconds for 7B models. Load times are 25 to 40 seconds for 3B models and 35 to 55 seconds for 7B models. File sizes are comparable across all three methods, ranging from 2.6 to 2.8 GB for 3B models and 6.5 to 6.9 GB for 7B models, with the T5X approach showing 2 to 5 percent reduction due to compression.
 
-The performance differences stem from fundamental architectural differences. PyTorch's native serialization writes data sequentially with minimal overhead, leveraging the operating system's optimized file I/O. TensorStore's chunked format requires hundreds of separate file operations, each with associated metadata and filesystem overhead. The T5X optimizations improve upon basic TensorStore through higher concurrency and compression, but the fundamental overhead of the chunked format remains. For local disk operations, PyTorch's approach is **10 to 20 times faster for saves** and **5 to 8 times faster for loads**.
+The performance differences stem from fundamental architectural differences between the three approaches:
+
+**Why PyTorch Outperforms Both TensorStore Variants:** PyTorch's native checkpointing uses a single file with a single write operation, employing a native binary format optimized specifically for single-machine, single-framework use. The entire model state dictionary is serialized using Python's pickle protocol and written sequentially to disk in one continuous operation. This approach leverages the operating system's highly optimized sequential I/O path, minimizing system calls and filesystem overhead. In contrast, TensorStore is designed for distributed, cross-framework use cases, which necessitates a more complex chunked storage format. While chunking enables features like partial model loading and distributed access, it adds significant overhead for local disk operations where these features are unnecessary. For local disk operations, PyTorch's approach is **10 to 20 times faster for saves** and **5 to 8 times faster for loads**.
+
+**Why Basic TensorStore is Slower Than T5X-Optimized TensorStore for Saving:** The basic TensorStore implementation uses default concurrency settings (typically concurrency=1), meaning chunks are written sequentially one at a time. Each chunk write operation must complete before the next begins, resulting in hundreds of sequential I/O operations with associated filesystem overhead. In contrast, T5X-optimized TensorStore employs high concurrency (128 concurrent operations), allowing it to write up to 128 chunks simultaneously. This parallelization significantly reduces total save time by overlapping I/O operations and better utilizing the storage system's bandwidth. Additionally, T5X uses larger effective chunk sizes through its optimized chunking algorithm, resulting in fewer total I/O operations compared to the basic implementation.
+
+**Why T5X-Optimized TensorStore is Slower Than Basic TensorStore for Loading:** Despite its faster save performance, T5X-optimized TensorStore shows slower load times due to gzip compression overhead. During loading, every compressed chunk must be decompressed before the data can be used, adding significant CPU processing time. The basic TensorStore implementation stores data uncompressed, allowing direct memory mapping of chunks without decompression overhead. While basic TensorStore has a greater number of smaller chunks (which theoretically enables better read concurrency), the decompression penalty in T5X outweighs any concurrency advantages during the load phase. The CPU-bound decompression process becomes the bottleneck, making T5X loads 30 to 50 percent slower than basic TensorStore despite the higher concurrency settings.
 
 ### Compression Impact Analysis
 
@@ -120,7 +138,9 @@ The compression experiments reveal that gzip compression provides minimal benefi
 
 Llama-3.2-3B shows similar patterns, with save times increasing from 160 seconds to 200 seconds (25 percent slower) and load times from 20 seconds to 28 seconds (40 percent slower). File size reduction is again minimal at approximately 3 percent. The 7B models exhibit the same behavior with proportionally similar overhead.
 
-The poor compression ratio occurs because modern neural network weights consist of floating-point numbers with high entropy. Unlike text or structured data, these numerical values lack the repetitive patterns that compression algorithms exploit. The compression overhead costs significant CPU time processing every byte of data during both save and load operations, while yielding minimal storage savings. For local storage where disk space is abundant, compression is counterproductive. However, in bandwidth-constrained scenarios such as cloud storage where network transfer costs dominate, the small file size reduction might justify the compression overhead.
+The poor compression ratio occurs because modern neural network weights consist of floating-point numbers with high entropy. Unlike text or structured data, these numerical values lack the repetitive patterns that compression algorithms exploit. Pre-trained model weights are already optimized and distributed across the numerical range, making them inherently incompressible. The compression overhead costs significant CPU time processing every byte of data during both save and load operations, while yielding minimal storage savings (typically 2 to 5 percent reduction).
+
+For local storage where disk space is abundant and I/O bandwidth is high, compression is counterproductive—the CPU cycles spent compressing and decompressing data far exceed any benefits from slightly smaller files. However, in bandwidth-constrained scenarios such as cloud storage where network transfer costs dominate, the small file size reduction might justify the compression overhead. In distributed training environments with slow network links between nodes, reducing checkpoint size by even 3 to 5 percent could save meaningful time during checkpoint synchronization across hundreds of machines.
 
 ### Concurrency Scaling Characteristics
 

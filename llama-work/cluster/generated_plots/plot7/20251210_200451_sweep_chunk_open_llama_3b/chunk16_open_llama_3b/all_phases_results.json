@@ -1,0 +1,28 @@
+{
+  "model_name": "openlm-research/open_llama_3b",
+  "run_id": "20251210_200451_sweep_chunk_open_llama_3b/chunk16_open_llama_3b",
+  "model_type": "llama",
+  "device": "cpu",
+  "dtype": "float16",
+  "chunk_size_mb": 16,
+  "concurrency": "default",
+  "compression": "none",
+  "num_runs": 1,
+  "timestamp": "2025-12-10 20:52:58",
+  "phases": {
+    "tensorstore": {
+      "save_time_ms": 346661.2243652344,
+      "load_time_ms": 201944.6506500244,
+      "file_size_bytes": 6852856669,
+      "file_size_gb": 6.382220116443932,
+      "parameters_saved": 237,
+      "configuration": {
+        "chunk_size_mb": 16,
+        "concurrency": "default",
+        "dtype": "float16",
+        "compression": "none",
+        "dynamic_chunking": true
+      }
+    }
+  }
+}

@@ -39,7 +39,7 @@ This study implements a comprehensive benchmarking framework to evaluate TensorS
 
 Three checkpointing methods were implemented and compared:
 
-**PyTorch Native Checkpointing:** This baseline approach uses PyTorch's [10] native `torch.save()` function with no compression. It serializes the entire model state dictionary into a single `.pth` file using Python's pickle protocol. This method is highly optimized for sequential I/O and serves as the performance baseline against which TensorStore approaches are measured.
+**PyTorch Native Checkpointing:** This baseline approach uses PyTorch's [10] native `torch.save()` function with no compression. It serializes the entire model state dictionary into a single `.pth` file using Python's pickle protocol. The implementation calls `torch.save(model.state_dict(), save_path)` which writes all model parameters in a single sequential operation. Loading is performed with `torch.load(save_path, map_location='cpu')` followed by `model.load_state_dict(state_dict)`. This method is highly optimized for sequential I/O and serves as the performance baseline against which TensorStore approaches are measured.
 
 **TensorStore Basic Implementation:** This approach uses TensorStore [1] with the Zarr format [3], implementing dynamic 64 MB chunking where each model parameter is stored as a separate Zarr array. No compression or concurrency optimizations are applied, providing a baseline for TensorStore's performance characteristics. Each parameter is stored in its own `.zarr` directory with associated metadata, resulting in hundreds of individual directories for a typical transformer model.
 
@@ -49,13 +49,13 @@ Three checkpointing methods were implemented and compared:
 
 Four transformer-based language models were selected to represent different scales and architectures:
 
-- **OpenLLaMA-3B:** A 3.4 billion parameter open-source model with approximately 6.4 GB checkpoint size. This model uses float16 precision and serves as the baseline for 3B-scale models.
+- **OpenLLaMA-3B:** A 3.4 billion parameter open-source model (openlm-research/open_llama_3b) with approximately 6.4 GB checkpoint size. This model uses float16 precision and serves as the baseline for 3B-scale models.
 
-- **Llama-3.2-3B-Instruct:** A 3 billion parameter instruction-tuned model with approximately 6 GB checkpoint size. This model provides a comparison point for different 3B architectures.
+- **Llama-3.2-3B-Instruct:** A 3 billion parameter instruction-tuned model (meta-llama/Llama-3.2-3B-Instruct) with approximately 6 GB checkpoint size. This is a gated model requiring Hugging Face authentication token. This model provides a comparison point for different 3B architectures.
 
-- **Qwen2.5-7B:** A 7 billion parameter model with approximately 14 GB checkpoint size. This model uses bfloat16 precision natively, requiring conversion to float16 for TensorStore compatibility.
+- **Qwen2.5-7B:** A 7 billion parameter model (Qwen/Qwen2.5-7B) with approximately 14 GB checkpoint size. This model uses bfloat16 precision natively, requiring conversion to float16 for TensorStore compatibility. The model requires `trust_remote_code=True` for loading due to custom model architecture code.
 
-- **Mistral-7B-v0.1:** A 7 billion parameter model with approximately 14 GB checkpoint size. This model provides architectural diversity in the 7B parameter range.
+- **Mistral-7B-v0.1:** A 7 billion parameter model (mistralai/Mistral-7B-v0.1) with approximately 14 GB checkpoint size. This model provides architectural diversity in the 7B parameter range.
 
 ### Parameter Sweeps
 
@@ -80,9 +80,13 @@ All experiments were conducted on a consistent hardware platform to ensure repro
 | **RAM** | 16GB DDR4 |
 | **Storage** | 1TB NVMe SSD |
 
-Each checkpointing operation was performed three times, and the mean, standard deviation, minimum, and maximum values were recorded to account for system variability. Cache clearing was performed between runs on local systems to ensure accurate timing measurements, though this was disabled on cluster systems where sudo access was unavailable.
+Each checkpointing operation was performed three times, and the mean, standard deviation, minimum, and maximum values were recorded to account for system variability. This statistical approach ensures reliable performance measurements by capturing variance across multiple runs. The results JSON files include all individual run times along with computed statistics (mean, std, min, max) for comprehensive analysis.
 
-**Model Loading and Memory Management:** During the experiments, models are primarily loaded onto the GPU for inference and checkpoint operations. However, with the limited 4GB GPU memory available on the NVIDIA GeForce GTX 1650, larger models cannot fit entirely in GPU memory. The Hugging Face Transformers library's `device_map="auto"` parameter enables automatic memory management, where PyTorch intelligently offloads model layers to CPU RAM or even disk storage when GPU memory is insufficient. This offloading mechanism partitions the model across available memory hierarchies, keeping the most frequently accessed layers on the GPU while moving less critical components to slower storage tiers. For the 7B models (approximately 14GB in float16), significant portions reside in CPU memory during loading, with only the active layers being transferred to GPU memory during forward passes. This automatic offloading is essential for running models that exceed available GPU memory but introduces additional data transfer overhead during model operations.
+**Cache Clearing Protocol:** To ensure accurate timing measurements, system caches were cleared between runs using `sync` and `echo 3 > /proc/sys/vm/drop_caches` on Linux systems. This drops the page cache, dentries, and inodes, preventing cached data from artificially inflating performance. GPU caches were also cleared using `torch.cuda.empty_cache()` and `torch.cuda.synchronize()` when running on CUDA devices. Cache clearing was disabled on cluster systems where sudo access was unavailable, which may introduce some measurement variance due to filesystem caching effects.
+
+**Model Loading and Memory Management:** Models are loaded using Hugging Face's `AutoModelForCausalLM.from_pretrained()` with several key parameters: `dtype` specifies the precision (float16, float32, or bfloat16), `low_cpu_mem_usage=True` minimizes CPU memory during loading, `local_files_only=True` prevents internet access on compute nodes (critical for cluster environments), and `trust_remote_code=True` allows models with custom architecture code (required for Qwen models). An automatic dtype detection mechanism reads the model's `config.json` from the Hugging Face cache to determine the native precision, defaulting to float16 if unspecified.
+
+During the experiments, models are primarily loaded onto the GPU for inference and checkpoint operations. However, with the limited 4GB GPU memory available on the NVIDIA GeForce GTX 1650, larger models cannot fit entirely in GPU memory. The Hugging Face Transformers library's `device_map="auto"` parameter enables automatic memory management, where PyTorch intelligently offloads model layers to CPU RAM or even disk storage when GPU memory is insufficient. This offloading mechanism partitions the model across available memory hierarchies, keeping the most frequently accessed layers on the GPU while moving less critical components to slower storage tiers. For the 7B models (approximately 14GB in float16), significant portions reside in CPU memory during loading, with only the active layers being transferred to GPU memory during forward passes. This automatic offloading is essential for running models that exceed available GPU memory but introduces additional data transfer overhead during model operations.
 
 ### TensorStore Configuration Details
 
@@ -104,9 +108,17 @@ The TensorStore implementation uses the following key parameters:
 2. For float16 (`<f2`): `target_elements = 67,108,864 // 2 = 33,554,432 elements`
 3. For float32 (`<f4`): `target_elements = 67,108,864 // 4 = 16,777,216 elements`
 
-The `calculate_chunk_shape()` function then determines the optimal chunk dimensions based on the tensor's shape and the target number of elements. For example, a tensor with shape `[4096, 4096]` (16,777,216 elements total) would be chunked into dimensions that keep each chunk at approximately 64 MB. If a tensor has 33,554,432 elements and uses float16, it would fit in a single 64 MB chunk. Larger tensors are divided into multiple chunks with dimensions calculated to maintain the 64 MB target per chunk. This approach ensures consistent chunk sizes regardless of the underlying data type, optimizing I/O performance across different model architectures.
+The `calculate_chunk_shape()` function then determines the optimal chunk dimensions based on the tensor's shape and the target number of elements. The algorithm works by iteratively halving the largest dimension until the total number of elements fits within the target:
 
-For tensors smaller than the chunk size, a single chunk is used. For larger tensors, multiple chunks are created to enable parallel I/O operations.
+```python
+while np.prod(chunk_shape) > target_elements and max(chunk_shape) > 1:
+    max_idx = chunk_shape.index(max(chunk_shape))
+    chunk_shape[max_idx] = max(1, chunk_shape[max_idx] // 2)
+```
+
+For example, a tensor with shape `[4096, 4096]` (16,777,216 elements total) would be chunked into dimensions that keep each chunk at approximately 64 MB. If a tensor has 33,554,432 elements and uses float16, it would fit in a single 64 MB chunk. Larger tensors are divided into multiple chunks with dimensions calculated to maintain the 64 MB target per chunk. This approach ensures consistent chunk sizes regardless of the underlying data type, optimizing I/O performance across different model architectures.
+
+For tensors smaller than the chunk size, a single chunk is used. For larger tensors, multiple chunks are created to enable parallel I/O operations. Each parameter is stored in a separate `.zarr` directory with its own metadata file, resulting in hundreds of directories for a typical transformer model (e.g., 100+ parameters for a 3B model).
 
 **Concurrency:** The T5X-optimized approach [11] uses a concurrency limit of 128 (`file_io_concurrency=128`), allowing up to 128 file operations to proceed simultaneously. This is controlled through TensorStore's context configuration.
 
@@ -134,13 +146,15 @@ The performance differences stem from fundamental architectural differences betw
 
 ### Compression Impact Analysis
 
-The compression experiments reveal that gzip compression provides minimal benefits for neural network checkpoints while imposing significant performance penalties. For OpenLLaMA-3B, save times increase from approximately 140 seconds without compression to 180 seconds with gzip, representing a 28 percent slowdown. Load times similarly increase from 18 to 20 seconds up to 25 to 30 seconds, a 35 to 50 percent increase. The file size reduction is minimal, decreasing from 2.60 GB to 2.55 GB, only a 2 percent reduction.
+The compression experiments reveal a complex trade-off between storage savings and performance overhead. For **OpenLLaMA-3B**, save times increase dramatically from 628.5 seconds without compression to 1121.2 seconds with gzip compression, representing a **78 percent slowdown**. Interestingly, load times show a slight improvement, decreasing from 415.8 seconds to 407.8 seconds (2 percent faster), likely due to reduced I/O volume offsetting decompression overhead. The file size reduction is substantial at **23 percent**, decreasing from 6.38 GB to 4.92 GB.
 
-Llama-3.2-3B shows similar patterns, with save times increasing from 160 seconds to 200 seconds (25 percent slower) and load times from 20 seconds to 28 seconds (40 percent slower). File size reduction is again minimal at approximately 3 percent. The 7B models exhibit the same behavior with proportionally similar overhead.
+**Llama-3.2-3B-Instruct** exhibits even more dramatic patterns. Save times increase from 299.8 seconds to 945.8 seconds with gzip, a **216 percent slowdown** (more than 3× slower). Load times improve from 390.4 seconds to 369.2 seconds (5 percent faster). File size reduction is similar at **23 percent**, from 6.72 GB to 5.19 GB.
 
-The poor compression ratio occurs because modern neural network weights consist of floating-point numbers with high entropy. Unlike text or structured data, these numerical values lack the repetitive patterns that compression algorithms exploit. Pre-trained model weights are already optimized and distributed across the numerical range, making them inherently incompressible. The compression overhead costs significant CPU time processing every byte of data during both save and load operations, while yielding minimal storage savings (typically 2 to 5 percent reduction).
+The compression results demonstrate that while gzip achieves meaningful storage reduction (approximately 23 percent for both 3B models), the save performance penalty is severe—ranging from 78 to 216 percent slower depending on the model. The variation in save time overhead between models (78% vs 216%) suggests that compression performance depends heavily on the specific weight distributions and parameter structures of each architecture. Models with more compressible weight patterns may experience greater overhead as the compression algorithm works harder to find patterns.
 
-For local storage where disk space is abundant and I/O bandwidth is high, compression is counterproductive—the CPU cycles spent compressing and decompressing data far exceed any benefits from slightly smaller files. However, in bandwidth-constrained scenarios such as cloud storage where network transfer costs dominate, the small file size reduction might justify the compression overhead. In distributed training environments with slow network links between nodes, reducing checkpoint size by even 3 to 5 percent could save meaningful time during checkpoint synchronization across hundreds of machines.
+The load time improvements with compression (2-5 percent faster) are counterintuitive but can be explained by the reduced I/O volume. Reading 4.92 GB from disk is faster than reading 6.38 GB, and for these models, the I/O time savings slightly outweigh the CPU decompression overhead. However, this benefit is minimal compared to the massive save time penalty.
+
+For local storage where disk space is abundant and I/O bandwidth is high, compression is generally counterproductive for saving operations—the CPU cycles spent compressing data far exceed any benefits from smaller files. However, the 23 percent storage reduction could be valuable in bandwidth-constrained scenarios such as cloud storage where network transfer costs dominate, or in distributed training environments where checkpoint synchronization across hundreds of machines benefits from reduced data volume. The slight load time improvement suggests compression might be acceptable for read-heavy workloads where checkpoints are loaded frequently but saved infrequently.
 
 ### Concurrency Scaling Characteristics
 

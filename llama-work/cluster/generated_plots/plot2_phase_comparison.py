@@ -39,6 +39,7 @@ if len(phase_data) >= 2:
     models = list(phase_data.keys())[:4]  # take up to 4 models
     model_colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12']
     phases = ['pytorch', 'tensorstore', 't5x']
+    phase_labels = ['PyTorch', 'TensorStore (ours)', 'T5X using TensorStore']
     
     # collect data for all models
     all_data = {}
@@ -92,7 +93,7 @@ if len(phase_data) >= 2:
     ax_save.set_xlabel('phase', fontsize=13, fontweight='bold')
     ax_save.set_ylabel('time (s)', fontsize=13, fontweight='bold')
     ax_save.set_xticks(x_pos)
-    ax_save.set_xticklabels(phases, fontsize=11, fontweight='bold')
+    ax_save.set_xticklabels(phase_labels, fontsize=11, fontweight='bold')
     ax_save.tick_params(axis='y', labelsize=11)
     # format y-axis to show actual values without scientific notation
     ax_save.ticklabel_format(style='plain', axis='y')
@@ -123,7 +124,7 @@ if len(phase_data) >= 2:
     ax_load.set_xlabel('phase', fontsize=13, fontweight='bold')
     ax_load.set_ylabel('time (s)', fontsize=13, fontweight='bold')
     ax_load.set_xticks(x_pos)
-    ax_load.set_xticklabels(phases, fontsize=11, fontweight='bold')
+    ax_load.set_xticklabels(phase_labels, fontsize=11, fontweight='bold')
     ax_load.tick_params(axis='y', labelsize=11)
     # format y-axis to show actual values without scientific notation
     ax_load.ticklabel_format(style='plain', axis='y')
@@ -154,7 +155,7 @@ if len(phase_data) >= 2:
     ax_size.set_xlabel('phase', fontsize=13, fontweight='bold')
     ax_size.set_ylabel('file size (gb)', fontsize=13, fontweight='bold')
     ax_size.set_xticks(x_pos)
-    ax_size.set_xticklabels(phases, fontsize=11, fontweight='bold')
+    ax_size.set_xticklabels(phase_labels, fontsize=11, fontweight='bold')
     ax_size.tick_params(axis='y', labelsize=11)
     for label in ax_size.get_yticklabels():
         label.set_fontweight('bold')

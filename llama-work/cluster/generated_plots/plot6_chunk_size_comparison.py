@@ -43,7 +43,7 @@ for model_id, chunk_types in chunk_data.items():
 # chunk size comparison plot (save time, load time, and file size)
 # ============================================================================
 if len(chunk_data) >= 2:
-    fig, axes = plt.subplots(1, 3, figsize=(20, 7))
+    fig, axes = plt.subplots(1, 3, figsize=(40, 7))
     fig.suptitle('Chunk Size Impact: Model Comparison', fontsize=16, fontweight='bold', y=0.98)
     
     models = list(chunk_data.keys())[:4]  # take up to 4 models

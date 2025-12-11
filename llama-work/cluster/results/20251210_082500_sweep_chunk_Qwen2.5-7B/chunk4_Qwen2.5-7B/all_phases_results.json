@@ -1,0 +1,47 @@
+{
+  "model_name": "Qwen/Qwen2.5-7B",
+  "run_id": "20251210_082500_sweep_chunk_Qwen2.5-7B/chunk4_Qwen2.5-7B",
+  "model_type": "qwen",
+  "device": "cpu",
+  "dtype": "bfloat16",
+  "chunk_size_mb": 4,
+  "concurrency": "default",
+  "num_runs": 3,
+  "timestamp": "2025-12-10 09:55:06",
+  "phases": {
+    "tensorstore": {
+      "save_time_ms": {
+        "mean": 516732.99105962116,
+        "std": 84535.208834054,
+        "min": 433516.238451004,
+        "max": 602527.684211731,
+        "runs": [
+          602527.684211731,
+          433516.238451004,
+          514155.05051612854
+        ]
+      },
+      "load_time_ms": {
+        "mean": 226194.81873512268,
+        "std": 29810.55598657028,
+        "min": 202356.7533493042,
+        "max": 259619.1816329956,
+        "runs": [
+          202356.7533493042,
+          216608.52122306824,
+          259619.1816329956
+        ]
+      },
+      "file_size_bytes": 15206911409,
+      "file_size_gb": 14.162539885379374,
+      "parameters_saved": 339,
+      "configuration": {
+        "chunk_size_mb": 4,
+        "concurrency": "default",
+        "dtype": "bfloat16",
+        "compression": "none",
+        "dynamic_chunking": true
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "model_name": "mistralai/Mistral-7B-v0.1",
+  "run_id": "20251210_200649_sweep_concurrency_Mistral-7B-v0.1/concurrency16_Mistral-7B-v0.1",
+  "model_type": "mistral",
+  "device": "cpu",
+  "dtype": "bfloat16",
+  "chunk_size_mb": 64,
+  "concurrency": 16,
+  "compression": "none",
+  "num_runs": 1,
+  "timestamp": "2025-12-10 20:56:41",
+  "phases": {
+    "tensorstore": {
+      "save_time_ms": 485623.0947971344,
+      "load_time_ms": 393350.14271736145,
+      "file_size_bytes": 14481641361,
+      "file_size_gb": 13.487079516984522,
+      "parameters_saved": 291,
+      "configuration": {
+        "chunk_size_mb": 64,
+        "concurrency": 16,
+        "dtype": "bfloat16",
+        "compression": "none",
+        "dynamic_chunking": true
+      }
+    }
+  }
+}

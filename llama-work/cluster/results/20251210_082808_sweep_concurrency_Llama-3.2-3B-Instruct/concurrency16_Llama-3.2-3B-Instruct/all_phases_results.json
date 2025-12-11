@@ -1,0 +1,47 @@
+{
+  "model_name": "meta-llama/Llama-3.2-3B-Instruct",
+  "run_id": "20251210_082808_sweep_concurrency_Llama-3.2-3B-Instruct/concurrency16_Llama-3.2-3B-Instruct",
+  "model_type": "llama",
+  "device": "cpu",
+  "dtype": "bfloat16",
+  "chunk_size_mb": 64,
+  "concurrency": 16,
+  "num_runs": 3,
+  "timestamp": "2025-12-10 10:11:04",
+  "phases": {
+    "tensorstore": {
+      "save_time_ms": {
+        "mean": 275795.99261283875,
+        "std": 30896.26268708888,
+        "min": 241021.3406085968,
+        "max": 300084.16867256165,
+        "runs": [
+          286282.4685573578,
+          300084.16867256165,
+          241021.3406085968
+        ]
+      },
+      "load_time_ms": {
+        "mean": 369537.5023682912,
+        "std": 40235.28148154339,
+        "min": 331572.5917816162,
+        "max": 411712.1341228485,
+        "runs": [
+          365327.78120040894,
+          411712.1341228485,
+          331572.5917816162
+        ]
+      },
+      "file_size_bytes": 7210964136,
+      "file_size_gb": 6.7157336845994,
+      "parameters_saved": 255,
+      "configuration": {
+        "chunk_size_mb": 64,
+        "concurrency": 16,
+        "dtype": "bfloat16",
+        "compression": "none",
+        "dynamic_chunking": true
+      }
+    }
+  }
+}

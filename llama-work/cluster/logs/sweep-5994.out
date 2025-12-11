@@ -1,0 +1,9 @@
+slurmstepd-ares-comp-10: error: Could not run slurm task_prolog [/etc/slurm/task.prolog]: Permission denied
+==========================================
+parameter sweep - cluster run
+==========================================
+job started: Wed Dec 10 08:08:34 PM CST 2025
+node: ares-comp-10
+job id: 5994
+==========================================
+error: sweep parameter must be 'chunk', 'dtype', or 'concurrency'

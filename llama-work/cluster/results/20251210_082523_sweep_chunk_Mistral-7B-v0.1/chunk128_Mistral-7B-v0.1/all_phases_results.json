@@ -1,0 +1,47 @@
+{
+  "model_name": "mistralai/Mistral-7B-v0.1",
+  "run_id": "20251210_082523_sweep_chunk_Mistral-7B-v0.1/chunk128_Mistral-7B-v0.1",
+  "model_type": "mistral",
+  "device": "cpu",
+  "dtype": "bfloat16",
+  "chunk_size_mb": 128,
+  "concurrency": "default",
+  "num_runs": 3,
+  "timestamp": "2025-12-10 11:37:58",
+  "phases": {
+    "tensorstore": {
+      "save_time_ms": {
+        "mean": 340610.72572072345,
+        "std": 58284.789154249935,
+        "min": 275897.9113101959,
+        "max": 388976.6733646393,
+        "runs": [
+          388976.6733646393,
+          356957.5924873352,
+          275897.9113101959
+        ]
+      },
+      "load_time_ms": {
+        "mean": 372022.0829645793,
+        "std": 155253.97437711406,
+        "min": 197188.09604644775,
+        "max": 493769.8836326599,
+        "runs": [
+          493769.8836326599,
+          425108.2692146301,
+          197188.09604644775
+        ]
+      },
+      "file_size_bytes": 14481645859,
+      "file_size_gb": 13.487083706073463,
+      "parameters_saved": 291,
+      "configuration": {
+        "chunk_size_mb": 128,
+        "concurrency": "default",
+        "dtype": "bfloat16",
+        "compression": "none",
+        "dynamic_chunking": true
+      }
+    }
+  }
+}

@@ -98,12 +98,12 @@ if len(concurrency_data) >= 2:
                 ax_save.text(bar.get_x() + bar.get_width()/2., height,
                             f'{height:.1f}', ha='center', va='bottom', fontsize=8)
     
-    ax_save.set_title('save time comparison', fontsize=14, fontweight='bold')
-    ax_save.set_xlabel('concurrency limit', fontsize=13, fontweight='bold')
-    ax_save.set_ylabel('time (s)', fontsize=13, fontweight='bold')
+    ax_save.set_title('save time comparison', fontsize=15, fontweight='bold')
+    ax_save.set_xlabel('concurrency limit', fontsize=14, fontweight='bold')
+    ax_save.set_ylabel('time (s)', fontsize=14, fontweight='bold')
     ax_save.set_xticks(x_pos)
-    ax_save.set_xticklabels(concurrency_values, fontsize=11, fontweight='bold')
-    ax_save.tick_params(axis='y', labelsize=11)
+    ax_save.set_xticklabels(concurrency_values, fontsize=12, fontweight='bold')
+    ax_save.tick_params(axis='y', labelsize=12)
     # format y-axis to show actual values without scientific notation
     ax_save.ticklabel_format(style='plain', axis='y')
     for label in ax_save.get_yticklabels():
@@ -129,12 +129,12 @@ if len(concurrency_data) >= 2:
                 ax_load.text(bar.get_x() + bar.get_width()/2., height,
                             f'{height:.1f}', ha='center', va='bottom', fontsize=8)
     
-    ax_load.set_title('load time comparison', fontsize=14, fontweight='bold')
-    ax_load.set_xlabel('concurrency limit', fontsize=13, fontweight='bold')
-    ax_load.set_ylabel('time (s)', fontsize=13, fontweight='bold')
+    ax_load.set_title('load time comparison', fontsize=15, fontweight='bold')
+    ax_load.set_xlabel('concurrency limit', fontsize=14, fontweight='bold')
+    ax_load.set_ylabel('time (s)', fontsize=14, fontweight='bold')
     ax_load.set_xticks(x_pos)
-    ax_load.set_xticklabels(concurrency_values, fontsize=11, fontweight='bold')
-    ax_load.tick_params(axis='y', labelsize=11)
+    ax_load.set_xticklabels(concurrency_values, fontsize=12, fontweight='bold')
+    ax_load.tick_params(axis='y', labelsize=12)
     # format y-axis to show actual values without scientific notation
     ax_load.ticklabel_format(style='plain', axis='y')
     for label in ax_load.get_yticklabels():
@@ -160,12 +160,12 @@ if len(concurrency_data) >= 2:
                 ax_size.text(bar.get_x() + bar.get_width()/2., height,
                             f'{height:.2f}', ha='center', va='bottom', fontsize=8)
     
-    ax_size.set_title('file size comparison', fontsize=14, fontweight='bold')
-    ax_size.set_xlabel('concurrency limit', fontsize=13, fontweight='bold')
-    ax_size.set_ylabel('file size (gb)', fontsize=13, fontweight='bold')
+    ax_size.set_title('file size comparison', fontsize=15, fontweight='bold')
+    ax_size.set_xlabel('concurrency limit', fontsize=14, fontweight='bold')
+    ax_size.set_ylabel('file size (gb)', fontsize=14, fontweight='bold')
     ax_size.set_xticks(x_pos)
-    ax_size.set_xticklabels(concurrency_values, fontsize=11, fontweight='bold')
-    ax_size.tick_params(axis='y', labelsize=11)
+    ax_size.set_xticklabels(concurrency_values, fontsize=12, fontweight='bold')
+    ax_size.tick_params(axis='y', labelsize=12)
     for label in ax_size.get_yticklabels():
         label.set_fontweight('bold')
     ax_size.legend(fontsize=11, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
@@ -181,7 +181,7 @@ if len(concurrency_data) >= 2:
         "• Device: CPU\n"
         "• Variable: Concurrency (1, 4, 16, 64, 128)"
     )
-    fig.text(0.5, -0.02, config_text, ha='center', fontsize=11, fontweight='bold',
+    fig.text(0.5, -0.02, config_text, ha='center', fontsize=12, fontweight='bold',
              bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.3),
              family='monospace', transform=fig.transFigure)
     
@@ -209,12 +209,12 @@ if len(concurrency_data) >= 2:
             if height > 0:
                 ax.text(bar.get_x() + bar.get_width()/2., height,
                        f'{height:.1f}', ha='center', va='bottom', fontsize=8)
-    ax.set_title('Save Time Comparison', fontsize=14, fontweight='bold')
-    ax.set_xlabel('Concurrency', fontsize=13, fontweight='bold')
-    ax.set_ylabel('Time (s)', fontsize=13, fontweight='bold')
+    ax.set_title('Save Time Comparison', fontsize=15, fontweight='bold')
+    ax.set_xlabel('Concurrency', fontsize=14, fontweight='bold')
+    ax.set_ylabel('Time (s)', fontsize=14, fontweight='bold')
     ax.set_xticks(x_pos)
-    ax.set_xticklabels(concurrency_values, fontsize=11, fontweight='bold')
-    ax.tick_params(axis='y', labelsize=11)
+    ax.set_xticklabels(concurrency_values, fontsize=12, fontweight='bold')
+    ax.tick_params(axis='y', labelsize=12)
     ax.ticklabel_format(style='plain', axis='y')
     for label in ax.get_yticklabels():
         label.set_fontweight('bold')
@@ -241,12 +241,12 @@ if len(concurrency_data) >= 2:
             if height > 0:
                 ax.text(bar.get_x() + bar.get_width()/2., height,
                        f'{height:.1f}', ha='center', va='bottom', fontsize=8)
-    ax.set_title('Load Time Comparison', fontsize=14, fontweight='bold')
-    ax.set_xlabel('Concurrency', fontsize=13, fontweight='bold')
-    ax.set_ylabel('Time (s)', fontsize=13, fontweight='bold')
+    ax.set_title('Load Time Comparison', fontsize=15, fontweight='bold')
+    ax.set_xlabel('Concurrency', fontsize=14, fontweight='bold')
+    ax.set_ylabel('Time (s)', fontsize=14, fontweight='bold')
     ax.set_xticks(x_pos)
-    ax.set_xticklabels(concurrency_values, fontsize=11, fontweight='bold')
-    ax.tick_params(axis='y', labelsize=11)
+    ax.set_xticklabels(concurrency_values, fontsize=12, fontweight='bold')
+    ax.tick_params(axis='y', labelsize=12)
     ax.ticklabel_format(style='plain', axis='y')
     for label in ax.get_yticklabels():
         label.set_fontweight('bold')
@@ -273,12 +273,12 @@ if len(concurrency_data) >= 2:
             if height > 0:
                 ax.text(bar.get_x() + bar.get_width()/2., height,
                        f'{height:.2f}', ha='center', va='bottom', fontsize=8)
-    ax.set_title('File Size Comparison', fontsize=14, fontweight='bold')
-    ax.set_xlabel('Concurrency', fontsize=13, fontweight='bold')
-    ax.set_ylabel('File Size (GB)', fontsize=13, fontweight='bold')
+    ax.set_title('File Size Comparison', fontsize=15, fontweight='bold')
+    ax.set_xlabel('Concurrency', fontsize=14, fontweight='bold')
+    ax.set_ylabel('File Size (GB)', fontsize=14, fontweight='bold')
     ax.set_xticks(x_pos)
-    ax.set_xticklabels(concurrency_values, fontsize=11, fontweight='bold')
-    ax.tick_params(axis='y', labelsize=11)
+    ax.set_xticklabels(concurrency_values, fontsize=12, fontweight='bold')
+    ax.tick_params(axis='y', labelsize=12)
     for label in ax.get_yticklabels():
         label.set_fontweight('bold')
     ax.legend(fontsize=11, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)

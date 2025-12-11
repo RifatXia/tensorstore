@@ -89,17 +89,17 @@ if len(phase_data) >= 2:
                 ax_save.text(bar.get_x() + bar.get_width()/2., height,
                             f'{height:.1f}', ha='center', va='bottom', fontsize=8)
     
-    ax_save.set_title('save time comparison', fontsize=14, fontweight='bold')
-    ax_save.set_xlabel('phase', fontsize=13, fontweight='bold')
-    ax_save.set_ylabel('time (s)', fontsize=13, fontweight='bold')
+    ax_save.set_title('save time comparison', fontsize=15, fontweight='bold')
+    ax_save.set_xlabel('phase', fontsize=14, fontweight='bold')
+    ax_save.set_ylabel('time (s)', fontsize=14, fontweight='bold')
     ax_save.set_xticks(x_pos)
-    ax_save.set_xticklabels(phase_labels, fontsize=11, fontweight='bold')
-    ax_save.tick_params(axis='y', labelsize=11)
+    ax_save.set_xticklabels(phase_labels, fontsize=12, fontweight='bold')
+    ax_save.tick_params(axis='y', labelsize=12)
     # format y-axis to show actual values without scientific notation
     ax_save.ticklabel_format(style='plain', axis='y')
     for label in ax_save.get_yticklabels():
         label.set_fontweight('bold')
-    ax_save.legend(fontsize=10, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
+    ax_save.legend(fontsize=11, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
     ax_save.grid(axis='y', alpha=0.3)
     # add some padding at the top for labels
     ax_save.set_ylim(top=max([max(all_data[m]['save_times']) for m in models]) * 1.3)
@@ -120,17 +120,17 @@ if len(phase_data) >= 2:
                 ax_load.text(bar.get_x() + bar.get_width()/2., height,
                             f'{height:.1f}', ha='center', va='bottom', fontsize=8)
     
-    ax_load.set_title('load time comparison', fontsize=14, fontweight='bold')
-    ax_load.set_xlabel('phase', fontsize=13, fontweight='bold')
-    ax_load.set_ylabel('time (s)', fontsize=13, fontweight='bold')
+    ax_load.set_title('load time comparison', fontsize=15, fontweight='bold')
+    ax_load.set_xlabel('phase', fontsize=14, fontweight='bold')
+    ax_load.set_ylabel('time (s)', fontsize=14, fontweight='bold')
     ax_load.set_xticks(x_pos)
-    ax_load.set_xticklabels(phase_labels, fontsize=11, fontweight='bold')
-    ax_load.tick_params(axis='y', labelsize=11)
+    ax_load.set_xticklabels(phase_labels, fontsize=12, fontweight='bold')
+    ax_load.tick_params(axis='y', labelsize=12)
     # format y-axis to show actual values without scientific notation
     ax_load.ticklabel_format(style='plain', axis='y')
     for label in ax_load.get_yticklabels():
         label.set_fontweight('bold')
-    ax_load.legend(fontsize=10, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
+    ax_load.legend(fontsize=11, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
     ax_load.grid(axis='y', alpha=0.3)
     # add some padding at the top for labels
     ax_load.set_ylim(top=max([max(all_data[m]['load_times']) for m in models]) * 1.3)
@@ -151,15 +151,15 @@ if len(phase_data) >= 2:
                 ax_size.text(bar.get_x() + bar.get_width()/2., height,
                             f'{height:.2f}', ha='center', va='bottom', fontsize=8)
     
-    ax_size.set_title('file size comparison', fontsize=14, fontweight='bold')
-    ax_size.set_xlabel('phase', fontsize=13, fontweight='bold')
-    ax_size.set_ylabel('file size (gb)', fontsize=13, fontweight='bold')
+    ax_size.set_title('file size comparison', fontsize=15, fontweight='bold')
+    ax_size.set_xlabel('phase', fontsize=14, fontweight='bold')
+    ax_size.set_ylabel('file size (gb)', fontsize=14, fontweight='bold')
     ax_size.set_xticks(x_pos)
-    ax_size.set_xticklabels(phase_labels, fontsize=11, fontweight='bold')
-    ax_size.tick_params(axis='y', labelsize=11)
+    ax_size.set_xticklabels(phase_labels, fontsize=12, fontweight='bold')
+    ax_size.tick_params(axis='y', labelsize=12)
     for label in ax_size.get_yticklabels():
         label.set_fontweight('bold')
-    ax_size.legend(fontsize=10, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
+    ax_size.legend(fontsize=11, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
     ax_size.grid(axis='y', alpha=0.3)
     # add some padding at the top for labels
     ax_size.set_ylim(top=max([max(all_data[m]['file_sizes']) for m in models]) * 1.3)
@@ -186,24 +186,26 @@ if len(phase_data) >= 2:
     # save time only
     fig_save = plt.figure(figsize=(10, 7))
     ax = fig_save.add_subplot(111)
+    # center the group of 4 bars around each x position
+    bar_offset = width * (len(models) - 1) / 2
     for i, model_id in enumerate(models):
-        bars = ax.bar(x_pos + i * width, all_data[model_id]['save_times'], width, 
+        bars = ax.bar(x_pos - bar_offset + i * width, all_data[model_id]['save_times'], width, 
                      label=model_full_names.get(model_id, model_id), color=model_colors[i], alpha=0.8)
         for bar in bars:
             height = bar.get_height()
             if height > 0:
                 ax.text(bar.get_x() + bar.get_width()/2., height,
                        f'{height:.1f}', ha='center', va='bottom', fontsize=8)
-    ax.set_title('Save Time Comparison', fontsize=14, fontweight='bold')
-    ax.set_xlabel('Phase', fontsize=13, fontweight='bold')
-    ax.set_ylabel('Time (s)', fontsize=13, fontweight='bold')
+    ax.set_title('Save Time Comparison', fontsize=15, fontweight='bold')
+    ax.set_xlabel('Phase', fontsize=14, fontweight='bold')
+    ax.set_ylabel('Time (s)', fontsize=14, fontweight='bold')
     ax.set_xticks(x_pos)
-    ax.set_xticklabels(phase_labels, fontsize=11, fontweight='bold')
-    ax.tick_params(axis='y', labelsize=11)
+    ax.set_xticklabels(phase_labels, fontsize=12, fontweight='bold')
+    ax.tick_params(axis='y', labelsize=12)
     ax.ticklabel_format(style='plain', axis='y')
     for label in ax.get_yticklabels():
         label.set_fontweight('bold')
-    ax.legend(fontsize=10, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
+    ax.legend(fontsize=11, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
     ax.grid(axis='y', alpha=0.3)
     ax.set_ylim(top=max([max(all_data[m]['save_times']) for m in models]) * 1.3)
     plt.tight_layout()
@@ -215,24 +217,26 @@ if len(phase_data) >= 2:
     # load time only
     fig_load = plt.figure(figsize=(10, 7))
     ax = fig_load.add_subplot(111)
+    # center the group of 4 bars around each x position
+    bar_offset = width * (len(models) - 1) / 2
     for i, model_id in enumerate(models):
-        bars = ax.bar(x_pos + i * width, all_data[model_id]['load_times'], width, 
+        bars = ax.bar(x_pos - bar_offset + i * width, all_data[model_id]['load_times'], width, 
                      label=model_full_names.get(model_id, model_id), color=model_colors[i], alpha=0.8)
         for bar in bars:
             height = bar.get_height()
             if height > 0:
                 ax.text(bar.get_x() + bar.get_width()/2., height,
                        f'{height:.1f}', ha='center', va='bottom', fontsize=8)
-    ax.set_title('Load Time Comparison', fontsize=14, fontweight='bold')
-    ax.set_xlabel('Phase', fontsize=13, fontweight='bold')
-    ax.set_ylabel('Time (s)', fontsize=13, fontweight='bold')
+    ax.set_title('Load Time Comparison', fontsize=15, fontweight='bold')
+    ax.set_xlabel('Phase', fontsize=14, fontweight='bold')
+    ax.set_ylabel('Time (s)', fontsize=14, fontweight='bold')
     ax.set_xticks(x_pos)
-    ax.set_xticklabels(phase_labels, fontsize=11, fontweight='bold')
-    ax.tick_params(axis='y', labelsize=11)
+    ax.set_xticklabels(phase_labels, fontsize=12, fontweight='bold')
+    ax.tick_params(axis='y', labelsize=12)
     ax.ticklabel_format(style='plain', axis='y')
     for label in ax.get_yticklabels():
         label.set_fontweight('bold')
-    ax.legend(fontsize=10, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
+    ax.legend(fontsize=11, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
     ax.grid(axis='y', alpha=0.3)
     ax.set_ylim(top=max([max(all_data[m]['load_times']) for m in models]) * 1.3)
     plt.tight_layout()
@@ -244,23 +248,25 @@ if len(phase_data) >= 2:
     # file size only
     fig_size = plt.figure(figsize=(10, 7))
     ax = fig_size.add_subplot(111)
+    # center the group of 4 bars around each x position
+    bar_offset = width * (len(models) - 1) / 2
     for i, model_id in enumerate(models):
-        bars = ax.bar(x_pos + i * width, all_data[model_id]['file_sizes'], width, 
+        bars = ax.bar(x_pos - bar_offset + i * width, all_data[model_id]['file_sizes'], width, 
                      label=model_full_names.get(model_id, model_id), color=model_colors[i], alpha=0.8)
         for bar in bars:
             height = bar.get_height()
             if height > 0:
                 ax.text(bar.get_x() + bar.get_width()/2., height,
                        f'{height:.2f}', ha='center', va='bottom', fontsize=8)
-    ax.set_title('File Size Comparison', fontsize=14, fontweight='bold')
-    ax.set_xlabel('Phase', fontsize=13, fontweight='bold')
-    ax.set_ylabel('File Size (GB)', fontsize=13, fontweight='bold')
+    ax.set_title('File Size Comparison', fontsize=15, fontweight='bold')
+    ax.set_xlabel('Phase', fontsize=14, fontweight='bold')
+    ax.set_ylabel('File Size (GB)', fontsize=14, fontweight='bold')
     ax.set_xticks(x_pos)
-    ax.set_xticklabels(phase_labels, fontsize=11, fontweight='bold')
-    ax.tick_params(axis='y', labelsize=11)
+    ax.set_xticklabels(phase_labels, fontsize=12, fontweight='bold')
+    ax.tick_params(axis='y', labelsize=12)
     for label in ax.get_yticklabels():
         label.set_fontweight('bold')
-    ax.legend(fontsize=10, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
+    ax.legend(fontsize=11, loc='upper left', bbox_to_anchor=(0, 1), framealpha=0.9)
     ax.grid(axis='y', alpha=0.3)
     ax.set_ylim(top=max([max(all_data[m]['file_sizes']) for m in models]) * 1.3)
     plt.tight_layout()

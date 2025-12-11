@@ -3,9 +3,9 @@
 
 ## INTRODUCTION
 
-Managing and processing large multi-dimensional datasets is a significant challenge in data-intensive fields like neuroscience and machine learning. Even a single dataset may require terabytes or petabytes of data storage. Such datasets are also challenging to work with as users may read and write data at irregular intervals and varying scales. TensorStore [1] is an open-source C++ and Python library designed to read and write large multi-dimensional arrays efficiently. It provides a uniform API for reading and writing different array formats like Zarr [3] and N5 [4]. It also integrates with various storage backends, including in-memory storage, local file systems, Amazon S3, and Google Cloud Storage to store the array dataset.
+Managing and processing large multi-dimensional datasets is a significant challenge in data-intensive fields like neuroscience and machine learning. Even a single dataset may require terabytes or petabytes of data storage. Such datasets are also challenging to work with as users may read and write data at irregular intervals and varying scales. TensorStore [1] is an open-source C++ and Python library designed to read and write large multi-dimensional arrays efficiently. It provides a uniform API for reading and writing different array formats, with Zarr [3] being widely used for its efficiency and compatibility. It also integrates with various storage backends, including in-memory storage, local file systems, Amazon S3, and Google Cloud Storage to store the array dataset.
 
-One challenge that arises during large language model training is efficiently reading and writing the model parameters, and TensorStore has already been used to address these challenges. It has been applied to manage checkpoints associated with large-scale models trained with JAX and has been integrated with frameworks such as T5X [12] and Pathways. Model parallelism is used to partition the full set of parameters, which can occupy more than a terabyte of memory, over hundreds of TPUs. TensorStore can be used to address computational challenges in large-scale connectomic datasets, efficiently managing some of the largest and most accessed datasets with Google Cloud Storage as the underlying object storage system [2].
+One challenge that arises during large language model training is efficiently reading and writing the model parameters, and TensorStore has already been used to address these challenges. It has been applied to manage checkpoints associated with large-scale models trained with JAX and has been integrated with frameworks such as T5X [11] and Pathways. Model parallelism is used to partition the full set of parameters, which can occupy more than a terabyte of memory, over hundreds of TPUs. TensorStore can be used to address computational challenges in large-scale connectomic datasets, efficiently managing some of the largest and most accessed datasets with Google Cloud Storage as the underlying object storage system [2].
 
 This report extends previous work on TensorStore benchmarking by conducting comprehensive experiments on large language model checkpointing. While previous studies focused on basic TensorStore configurations with synthetic datasets, this work evaluates TensorStore's performance with real-world transformer models ranging from 3 billion to 7 billion parameters. The experiments systematically compare PyTorch's native checkpointing against TensorStore implementations, examining the impact of compression, concurrency, and chunk size parameters across multiple model architectures.
 
@@ -13,9 +13,9 @@ This report extends previous work on TensorStore benchmarking by conducting comp
 
 ## BACKGROUND
 
-TensorStore [1] is an open-source Python and C++ library made for effective multi-dimensional array manipulation and storing. It is especially handy for dealing with big datasets that cannot be stored in memory. It supports Zarr [3] and N5 [4] for efficient multi-dimensional data storage and retrieval. The Zarr data format is a community-maintained format for large-scale n-dimensional data and it enables simple, fast serialization of NumPy-like arrays and supports multi-scale n-dimensional image storage for applications like light and electron microscopy. It is a cloud-friendly format that enables chunked, compressed storage for distributed and parallel processing.
+TensorStore [1] is an open-source Python and C++ library made for effective multi-dimensional array manipulation and storing. It is especially handy for dealing with big datasets that cannot be stored in memory. This study uses Zarr [3] as the storage format for efficient multi-dimensional data storage and retrieval. The Zarr data format is a community-maintained format for large-scale n-dimensional data and it enables simple, fast serialization of NumPy-like arrays and supports multi-scale n-dimensional image storage for applications like light and electron microscopy. It is a cloud-friendly format that enables chunked, compressed storage for distributed and parallel processing.
 
-On the other hand, N5 [4] is optimized for large-scale scientific datasets like bioinformatics and microscopy. The N5 API specifies the primitive operations needed to store large chunked n-dimensional tensors, and arbitrary meta-data in a hierarchy of groups. Besides those, Google Cloud Storage (GCS) [9] serves as a scalable backend for storing large, multi-dimensional datasets. TensorStore facilitates parallel I/O operations and smooth integration with cloud-based workflows by utilizing GCS's stability and performance to effectively handle and retrieve large volumes of scientific and machine learning data.
+Zarr provides excellent compatibility with Python's scientific computing ecosystem, particularly with NumPy arrays, making it ideal for storing neural network parameters. Google Cloud Storage (GCS) [8] serves as a scalable backend for storing large, multi-dimensional datasets. TensorStore facilitates parallel I/O operations and smooth integration with cloud-based workflows by utilizing GCS's stability and performance to effectively handle and retrieve large volumes of scientific and machine learning data.
 
 For large language model checkpointing, TensorStore offers several advantages over traditional approaches. First, its chunked storage format allows for partial model loading, which is critical when working with models that exceed available memory. Second, the separation of individual parameters into distinct Zarr arrays enables fine-grained access patterns, allowing selective parameter updates without loading the entire checkpoint. Third, TensorStore's support for concurrent I/O operations can potentially accelerate checkpoint operations in distributed training scenarios. However, these advantages come with trade-offs in terms of metadata overhead and local disk performance, which this study systematically evaluates.
 
@@ -23,9 +23,9 @@ For large language model checkpointing, TensorStore offers several advantages ov
 
 ## RELATED WORKS
 
-In previous research, the bandwidth of checkpoint creation was measured with and without TensorStore CHFS using T5X [5][12]. To measure the bandwidth, the parameter size of the T5 1.1 model was changed, and the model was divided into 8, 16, and 32 nodes. Furthermore, the StateTransformer inputs model and dataset partitions from a previous PTC, creates updated partitions for a new PTC' after a resource change, while the TensorStore maintains the model and dataset state partitions in a hierarchical virtual in-memory file system, offering APIs for model checkpointing and enabling the ingestion of training data [6].
+In previous research, the bandwidth of checkpoint creation was measured with and without TensorStore CHFS using T5X [4][11]. To measure the bandwidth, the parameter size of the T5 1.1 model was changed, and the model was divided into 8, 16, and 32 nodes. Furthermore, the StateTransformer inputs model and dataset partitions from a previous PTC, creates updated partitions for a new PTC' after a resource change, while the TensorStore maintains the model and dataset state partitions in a hierarchical virtual in-memory file system, offering APIs for model checkpointing and enabling the ingestion of training data [5].
 
-The neuroglancer_precomputed driver is used to access the Janelia FlyEM Hemibrain 1.1 segmentation dataset, as shown in the TensorStore Python tutorial [8]. The dataset is stored in uint64 format with a resolution of 8x8x8 microns per voxel, and users can open it asynchronously by providing the Google Cloud Storage path. Using TensorStore's caching and parallelism features, the tutorial shows how to create 3D views, slice data, and read particular sections of the given dataset.
+The neuroglancer_precomputed driver is used to access the Janelia FlyEM Hemibrain 1.1 segmentation dataset, as shown in the TensorStore Python tutorial [7]. The dataset is stored in uint64 format with a resolution of 8x8x8 microns per voxel, and users can open it asynchronously by providing the Google Cloud Storage path. Using TensorStore's caching and parallelism features, the tutorial shows how to create 3D views, slice data, and read particular sections of the given dataset.
 
 Recent work has also explored TensorStore's application in production machine learning systems. Google's research [2] on large-scale model training demonstrates TensorStore's effectiveness in managing checkpoints for models with hundreds of billions of parameters distributed across thousands of accelerators. However, these studies primarily focus on distributed cloud environments rather than single-machine local disk scenarios, which represent a common use case in research and development settings.
 
@@ -39,11 +39,11 @@ This study implements a comprehensive benchmarking framework to evaluate TensorS
 
 Three checkpointing methods were implemented and compared:
 
-**PyTorch Native Checkpointing:** This baseline approach uses PyTorch's [11] native `torch.save()` function with no compression. It serializes the entire model state dictionary into a single `.pth` file using Python's pickle protocol. This method is highly optimized for sequential I/O and serves as the performance baseline against which TensorStore approaches are measured.
+**PyTorch Native Checkpointing:** This baseline approach uses PyTorch's [10] native `torch.save()` function with no compression. It serializes the entire model state dictionary into a single `.pth` file using Python's pickle protocol. This method is highly optimized for sequential I/O and serves as the performance baseline against which TensorStore approaches are measured.
 
-**TensorStore Basic Implementation:** This approach uses TensorStore [1] with the Zarr format [3], implementing dynamic 64 MB chunking where each model parameter is stored as a separate Zarr array. No compression or concurrency optimizations are applied, providing a baseline for TensorStore's performance characteristics. Each parameter requires its own metadata file, resulting in hundreds of individual files for a typical transformer model.
+**TensorStore Basic Implementation:** This approach uses TensorStore [1] with the Zarr format [3], implementing dynamic 64 MB chunking where each model parameter is stored as a separate Zarr array. No compression or concurrency optimizations are applied, providing a baseline for TensorStore's performance characteristics. Each parameter is stored in its own `.zarr` directory with associated metadata, resulting in hundreds of individual directories for a typical transformer model.
 
-**T5X-Optimized TensorStore:** This implementation incorporates optimizations from Google's T5X framework [12], including dynamic 64 MB chunks with gzip compression at level 1 and high concurrency with 128 concurrent file I/O operations. The compression reduces storage requirements while the high concurrency aims to hide I/O latency through parallel operations.
+**T5X-Optimized TensorStore:** This implementation incorporates optimizations from Google's T5X framework [11], including dynamic 64 MB chunks with gzip compression at level 1 and high concurrency with 128 concurrent file I/O operations. The compression reduces storage requirements while the high concurrency aims to hide I/O latency through parallel operations.
 
 ### Model Selection
 
@@ -86,9 +86,9 @@ Each checkpointing operation was performed three times, and the mean, standard d
 
 The TensorStore implementation uses the following key parameters:
 
-**Driver:** The Zarr driver [3] was selected over N5 [4] based on previous benchmarking showing superior performance for local file systems. Zarr provides better compatibility with Python's scientific computing ecosystem and offers more efficient metadata handling.
+**Driver:** The Zarr driver [3] was selected for this study. Zarr provides excellent compatibility with Python's scientific computing ecosystem, particularly with NumPy arrays, and offers efficient metadata handling for storing neural network parameters.
 
-**Key-Value Store:** The 'file' kvstore driver [6] was used for local filesystem storage, with paths automatically generated based on model names and timestamps. This ensures organized storage and prevents conflicts between different experimental runs.
+**Key-Value Store:** The 'file' kvstore driver [5] was used for local filesystem storage, with paths automatically generated based on model names and timestamps. This ensures organized storage and prevents conflicts between different experimental runs.
 
 **Metadata:** Each Zarr array includes metadata specifying the tensor's shape, data type (float16, float32, or bfloat16 converted to float16), and chunk dimensions. The metadata overhead becomes significant when storing hundreds of individual parameters.
 
@@ -98,7 +98,7 @@ The TensorStore implementation uses the following key parameters:
 
 **Chunk Size:** Dynamic chunking was implemented where each tensor is divided into chunks of approximately 64 MB. For tensors smaller than the chunk size, a single chunk is used. For larger tensors, multiple chunks are created to enable parallel I/O.
 
-**Concurrency:** The T5X-optimized approach [12] uses a concurrency limit of 128, allowing up to 128 file operations to proceed simultaneously. This is controlled through TensorStore's context configuration.
+**Concurrency:** The T5X-optimized approach [11] uses a concurrency limit of 128, allowing up to 128 file operations to proceed simultaneously. This is controlled through TensorStore's context configuration.
 
 ---
 
@@ -204,20 +204,18 @@ Several promising directions emerge from this research:
 
 [3] Zarr, "Zarr Documentation," Zarr. [Online]. Available: https://zarr.dev/
 
-[4] Saalfeld, S., "N5," GitHub. [Online]. Available: https://github.com/saalfeldlab/n5
+[4] M. Wagenländer et al., "Tenplex: Dynamic parallelism for deep learning using parallelizable tensor collections," Proc. ACM SIGOPS 30th Symp. Operating Systems Principles, 2024, pp. 195–210. doi: 10.1145/3694715.3695975.
 
-[5] M. Wagenländer et al., "Tenplex: Dynamic parallelism for deep learning using parallelizable tensor collections," Proc. ACM SIGOPS 30th Symp. Operating Systems Principles, 2024, pp. 195–210. doi: 10.1145/3694715.3695975.
+[5] Google, "TensorStore Index," Google. [Online]. Available: https://google.github.io/tensorstore/index.html
 
-[6] Google, "TensorStore Index," Google. [Online]. Available: https://google.github.io/tensorstore/index.html
+[6] H. Wong, "SPoSTG105s3: Poster presentation," SC23, [Online]. Available: https://sc23.supercomputing.org/proceedings/src_poster/poster_files/spostg105s3-file1.pdf
 
-[7] H. Wong, "SPoSTG105s3: Poster presentation," SC23, [Online]. Available: https://sc23.supercomputing.org/proceedings/src_poster/poster_files/spostg105s3-file1.pdf
+[7] Google, "Reading the Janelia FlyEM Hemibrain Dataset," TensorStore Python Tutorial. [Online]. Available: https://google.github.io/tensorstore/python/tutorial.html#reading-the-janelia-flyem-hemibrain-dataset
 
-[8] Google, "Reading the Janelia FlyEM Hemibrain Dataset," TensorStore Python Tutorial. [Online]. Available: https://google.github.io/tensorstore/python/tutorial.html#reading-the-janelia-flyem-hemibrain-dataset
+[8] Google, "gcs Key-Value Store driver," TensorStore Documentation. [Online]. Available: https://google.github.io/tensorstore/kvstore/gcs/index.html
 
-[9] Google, "gcs Key-Value Store driver," TensorStore Documentation. [Online]. Available: https://google.github.io/tensorstore/kvstore/gcs/index.html
+[9] Hugging Face, "Transformers Documentation," [Online]. Available: https://huggingface.co/docs/transformers/
 
-[10] Hugging Face, "Transformers Documentation," [Online]. Available: https://huggingface.co/docs/transformers/
+[10] PyTorch, "PyTorch Documentation," [Online]. Available: https://pytorch.org/docs/stable/index.html
 
-[11] PyTorch, "PyTorch Documentation," [Online]. Available: https://pytorch.org/docs/stable/index.html
-
-[12] Google, "T5X Checkpoints API Reference," T5X Documentation. [Online]. Available: https://t5x.readthedocs.io/en/latest/api_reference/t5x.checkpoints.html
+[11] Google, "T5X Checkpoints API Reference," T5X Documentation. [Online]. Available: https://t5x.readthedocs.io/en/latest/api_reference/t5x.checkpoints.html

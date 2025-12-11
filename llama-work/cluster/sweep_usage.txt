@@ -20,3 +20,7 @@ MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh dtype float16,float32
 # concurrency sweep
 sbatch run_sweep.sh concurrency 1,4,16,64,128
 MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh concurrency 1,4,16,64,128
+
+# compression sweep
+sbatch run_sweep.sh compression none,gzip
+MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh compression none,gzip

@@ -16,7 +16,7 @@
 #   MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh chunk 1,4,16,64
 #
 # arguments:
-#   $1 - parameter to sweep: 'chunk', 'dtype', or 'concurrency'
+#   $1 - parameter to sweep: 'chunk', 'dtype', 'concurrency', or 'compression'
 #   $2 - comma-separated values to test
 #
 # environment variables:
@@ -111,14 +111,23 @@ for VALUE in "${VALUES[@]}"; do
         export CHUNK_SIZE_MB=$VALUE
         export DTYPE="${DTYPE:-auto}"
         export CONCURRENCY="${CONCURRENCY:-}"
+        export COMPRESSION="${COMPRESSION:-none}"
     elif [ "$SWEEP_PARAM" = "dtype" ]; then
         export DTYPE=$VALUE
         export CHUNK_SIZE_MB="${CHUNK_SIZE_MB:-64}"
         export CONCURRENCY="${CONCURRENCY:-}"
-    else
+        export COMPRESSION="${COMPRESSION:-none}"
+    elif [ "$SWEEP_PARAM" = "concurrency" ]; then
         export CONCURRENCY=$VALUE
         export CHUNK_SIZE_MB="${CHUNK_SIZE_MB:-64}"
         export DTYPE="${DTYPE:-auto}"
+        export COMPRESSION="${COMPRESSION:-none}"
+    else
+        # compression sweep
+        export COMPRESSION=$VALUE
+        export CHUNK_SIZE_MB="${CHUNK_SIZE_MB:-64}"
+        export DTYPE="${DTYPE:-auto}"
+        export CONCURRENCY="${CONCURRENCY:-}"
     fi
     
     # run experiment on cluster using tensorstore-only sweep runner
@@ -129,6 +138,7 @@ for VALUE in "${VALUES[@]}"; do
         $([ -n "$CONCURRENCY" ] && echo "--concurrency $CONCURRENCY") \
         --dtype "$DTYPE" \
         --device "$DEVICE" \
+        --compression "$COMPRESSION" \
         --num-runs 1
     cd ..
     

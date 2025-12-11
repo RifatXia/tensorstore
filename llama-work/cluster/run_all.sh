@@ -2,7 +2,7 @@
 #SBATCH --nodes=1
 #SBATCH --job-name=model-checkpoint
 #SBATCH --output=logs/checkpoint-%j.out
-#SBATCH --exclusive
+# #SBATCH --exclusive
 
 # main script to run all checkpointing phases with configurable options
 #

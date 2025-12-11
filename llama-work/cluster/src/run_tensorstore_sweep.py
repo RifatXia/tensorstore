@@ -25,6 +25,7 @@ parser.add_argument('--chunk-size', type=int, default=64, help='chunk size in me
 parser.add_argument('--concurrency', type=int, default=None, help='tensorstore concurrency limit (default: tensorstore default, unlimited)')
 parser.add_argument('--device', type=str, default='cpu', help='device to use (default: cpu)')
 parser.add_argument('--dtype', type=str, default='auto', choices=['auto', 'float16', 'float32', 'bfloat16'], help='data type for model and storage (default: auto - uses model default)')
+parser.add_argument('--compression', type=str, default='none', choices=['none', 'gzip'], help='compression type (default: none)')
 parser.add_argument('--num-runs', type=int, default=1, help='number of runs (default: 1 for sweeps)')
 parser.add_argument('--no-clear-cache', action='store_true', help='disable cache clearing (enabled by default)')
 args = parser.parse_args()
@@ -62,6 +63,7 @@ print(f"run id: {RUN_ID}")
 print(f"dtype: {DTYPE}")
 print(f"chunk size: {args.chunk_size} MB")
 print(f"concurrency: {args.concurrency if args.concurrency else 'default (tensorstore)'}")
+print(f"compression: {args.compression}")
 print(f"num runs: {NUM_RUNS}")
 print(f"clear cache: {not args.no_clear_cache}")
 print("="*70)
@@ -105,17 +107,18 @@ results = {
     'dtype': DTYPE,
     'chunk_size_mb': args.chunk_size,
     'concurrency': args.concurrency if args.concurrency else 'default',
+    'compression': args.compression,
     'num_runs': NUM_RUNS,
     'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
     'phases': {}
 }
 
-# tensorstore save function - exact copy from run_all_phases.py
-def save_tensorstore(model_state, save_dir, chunk_size_mb=64, concurrency_limit=None):
-    """save model using tensorstore with dynamic chunking"""
+# tensorstore save function with compression support
+def save_tensorstore(model_state, save_dir, chunk_size_mb=64, concurrency_limit=None, compression='none'):
+    """save model using tensorstore with dynamic chunking and optional compression"""
     os.makedirs(save_dir, exist_ok=True)
     print(f"\n{'='*70}")
-    print(f"TENSORSTORE: saving")
+    print(f"TENSORSTORE: saving (compression: {compression})")
     print(f"{'='*70}")
     
     # only set context if concurrency is enabled AND a limit is specified
@@ -160,6 +163,13 @@ def save_tensorstore(model_state, save_dir, chunk_size_mb=64, concurrency_limit=
                     'chunks': chunk_shape
                 }
             }
+            
+            # add compression if enabled
+            if compression == 'gzip':
+                spec['metadata']['compressor'] = {
+                    'id': 'gzip',
+                    'level': 1
+                }
             
             if context:
                 store = ts.open(spec, create=True, delete_existing=True, context=context).result()
@@ -221,7 +231,8 @@ ts_dir = os.path.join(MODEL_DIR, "tensorstore")
 ts_save_time, ts_size, ts_count = save_tensorstore(
     model_state, ts_dir, 
     chunk_size_mb=args.chunk_size, 
-    concurrency_limit=args.concurrency
+    concurrency_limit=args.concurrency,
+    compression=args.compression
 )
 
 ts_load_time = load_tensorstore(ts_dir)
@@ -246,7 +257,7 @@ results['phases']['tensorstore'] = {
         'chunk_size_mb': args.chunk_size,
         'concurrency': args.concurrency if args.concurrency else 'default',
         'dtype': DTYPE,
-        'compression': 'none',
+        'compression': args.compression,
         'dynamic_chunking': True
     }
 }

@@ -1,6 +1,5 @@
 #!/bin/bash
 #SBATCH --nodes=1
-#SBATCH --time=12:00:00
 #SBATCH --job-name=param-sweep
 #SBATCH --output=logs/sweep-%j.out
 # #SBATCH --exclusive
@@ -24,7 +23,6 @@
 #   MODEL_NAME      - huggingface model name (default: openlm-research/open_llama_3b)
 #   PHASES          - phases to run (default: 2 - tensorstore only)
 #   DEVICE          - device to use (default: cpu)
-#   NUM_RUNS        - number of runs per configuration for reliability (default: 3)
 #   HF_TOKEN        - huggingface token for private/gated models (optional)
 
 echo "=========================================="
@@ -63,7 +61,6 @@ echo "=========================================="
 export MODEL_NAME="${MODEL_NAME:-openlm-research/open_llama_3b}"
 export PHASES="${PHASES:-2}"  # sweep only runs phase 2 (tensorstore) by default
 export DEVICE="${DEVICE:-cpu}"
-export NUM_RUNS="${NUM_RUNS:-3}"
 
 # use shared storage cache
 export HF_HOME=/mnt/common/$USER/huggingface_cache
@@ -93,7 +90,6 @@ echo "configuration:"
 echo "  sweep id: $SWEEP_ID"
 echo "  phases: $PHASES"
 echo "  device: $DEVICE"
-echo "  num runs: $NUM_RUNS (per configuration)"
 echo ""
 
 # convert comma-separated values to array
@@ -133,7 +129,7 @@ for VALUE in "${VALUES[@]}"; do
         $([ -n "$CONCURRENCY" ] && echo "--concurrency $CONCURRENCY") \
         --dtype "$DTYPE" \
         --device "$DEVICE" \
-        --num-runs "$NUM_RUNS"
+        --num-runs 1
     cd ..
     
     echo ""

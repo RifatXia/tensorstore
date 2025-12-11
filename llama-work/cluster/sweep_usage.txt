@@ -1,6 +1,6 @@
-# Sweep Usage (3 runs per configuration by default)
+# Sweep Usage (single run per configuration for speed)
 # sweeps only run phase 2 (tensorstore) to optimize configuration
-# generates comparison plots with error bars
+# generates comparison plots
 
 # Available models:
 # Qwen/Qwen2.5-7B
@@ -20,7 +20,3 @@ MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh dtype float16,float32
 # concurrency sweep
 sbatch run_sweep.sh concurrency 1,4,16,64,128
 MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh concurrency 1,4,16,64,128
-
-# custom runs per configuration
-NUM_RUNS=5 sbatch run_sweep.sh chunk 1,4,16,64  # 5 runs each
-NUM_RUNS=1 sbatch run_sweep.sh chunk 1,4,16,64  # 1 run each (quick test)

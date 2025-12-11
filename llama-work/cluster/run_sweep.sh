@@ -7,12 +7,13 @@
 # tensorstore parameter sweep - optimize tensorstore configuration
 #
 # sweeps only phase 2 (basic tensorstore) to find optimal settings
-# compares: chunk size, dtype, and file_io concurrency
+# compares: chunk size, dtype, file_io concurrency, and compression
 #
 # usage:
 #   sbatch run_sweep.sh chunk 1,4,16,64                       # sweep chunk sizes
 #   sbatch run_sweep.sh dtype float16,bfloat16,float32        # sweep dtypes
 #   sbatch run_sweep.sh concurrency 1,4,16,64,128             # sweep file_io concurrency
+#   sbatch run_sweep.sh compression none,gzip                 # sweep compression
 #   MODEL_NAME="Qwen/Qwen2.5-7B" sbatch run_sweep.sh chunk 1,4,16,64
 #
 # arguments:
@@ -34,12 +35,13 @@ echo "job id: $SLURM_JOB_ID"
 echo "=========================================="
 
 if [ $# -lt 2 ]; then
-    echo "usage: sbatch run_sweep.sh <chunk|dtype|concurrency> <comma-separated-values>"
+    echo "usage: sbatch run_sweep.sh <chunk|dtype|concurrency|compression> <comma-separated-values>"
     echo ""
     echo "examples:"
     echo "  sbatch run_sweep.sh chunk 1,4,16,64"
     echo "  sbatch run_sweep.sh dtype float16,bfloat16,float32"
     echo "  sbatch run_sweep.sh concurrency 1,4,16,64,128"
+    echo "  sbatch run_sweep.sh compression none,gzip"
     echo "  MODEL_NAME=\"Qwen/Qwen2.5-7B\" sbatch run_sweep.sh chunk 1,4,16,64"
     exit 1
 fi
@@ -48,8 +50,8 @@ SWEEP_PARAM=$1
 SWEEP_VALUES=$2
 
 # validate sweep parameter
-if [ "$SWEEP_PARAM" != "chunk" ] && [ "$SWEEP_PARAM" != "dtype" ] && [ "$SWEEP_PARAM" != "concurrency" ]; then
-    echo "error: sweep parameter must be 'chunk', 'dtype', or 'concurrency'"
+if [ "$SWEEP_PARAM" != "chunk" ] && [ "$SWEEP_PARAM" != "dtype" ] && [ "$SWEEP_PARAM" != "concurrency" ] && [ "$SWEEP_PARAM" != "compression" ]; then
+    echo "error: sweep parameter must be 'chunk', 'dtype', 'concurrency', or 'compression'"
     exit 1
 fi
 
